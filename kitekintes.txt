@@ -1,0 +1,24 @@
+Számos erre a célre létrehozott szoftver készült már, ingyenes/fizetős, platformfüggetlen/
+valamely platformra létrehozott, interaktív/automatikus. Az interaktív használat itt azt
+jelenti, hogy mi adunk meg órarendet, melynek ütközésmentességét leteszteljük a programmal,
+ami jelzésünkre adja, mi mivel ütközik és milyen lehetőségeink vannak a kiküszöbölésre. 
+A legnépszerűbb applikációkat hasonlítom össze:
+-TimeTabler: A legrégebbi, mai napig nagyon népszerű órarendütemező, olyan extra funkciókkal,
+             mint a részmunkaidős tanárok felvétele a rendszerbe és a választható
+             tanóra-időtartamok (szimpla vagy dupla órák). Interaktív módon is használható. 
+             Ingyenesen letölthető egy demo verzió nem megváltoztatható, demo adatokkal és 
+             tutorial videóval. Előfizetés nincs, csak megvásárlás lehetséges. 
+             Platformfüggetlen, telefonos verzióval viszont nem rendelkezik.
+-Schedule Builder: Ingyenes, webes alkalmazás. Csak az alapfunkciókkal rendelkezik,
+                   nincsenek extrák, illetve nem elérhető az automatikus használat sem.
+                   Platformfüggetlen.
+-Prime TimeTable: Macintosh, Linux, Android és IOS rendszereken egyaránt elérhető, viszont
+                  Windowson nem. Rendelkezik ugyanazokkal a funkciókkal, mint a TimeTabler,
+                  beleértve az interaktív használatot is. 30 napos próbaverzióval vagy éves
+                  előfizetéssel lehet használni.
+-aSc TimeTables: A legjobbnak választott órarendgeneráló applikáció. Interaktív és
+                 automatikus használat, extra funkciók, próbaverzió. Előfizetés nincs, csak
+                 megvásárlás lehetséges, használata Windowsra és Macintoshra korlátozódik.
+Mint látható, mindegyik fizetős applikáció rendelkezik automatikus és interaktív használati
+lehetőséggel, valamint az extra funkciókkal. A nyomtatási és exportálási lehetőségekkel
+pedig az ingyenes Schedule Builder is. 
