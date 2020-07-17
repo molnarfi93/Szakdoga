@@ -1,0 +1,17 @@
+A háromtényezős esetben osztályokat, tanárokat és tantermeket rendeltem egymáshoz. Ehhez a
+halmazlefedési feladatot alkalmaztam, ami abban különbözik a halmazfelbontásitól, hogy
+1:N hozzárendelés van, ugyanis egy tanárhoz több osztályt és tantárgyat is rendelhetünk, sőt
+ugye kell is többet hozzárendelni. Mivel a hagyományos optimalizálási módszerek esetén két
+tényezővel tudunk dolgozni (ezért is lesz hasznos a mesterséges intelligencia nyújtotta
+optimalizálási módszer, a genetikus algoritmus használata), így a háromból két tényezőt
+összevontam. A tanárok és tantárgyak kettőse így 1 entitást alkot, ezáltal egy adott osztályt
+annyiszor hoztam létre, ahány tantárgy van az adott évfolyamon. A párosításmátrixban két
+feltételtől is függ, hogy 0 vagy 1 kerül a rublikába. Egyrészt, hogy az adott tanár tudja-e
+tanítani az adott tantárgyat, illetve hogy az adott osztálynak van-e ilyen tárgya (a 11. és
+12. évfolyamon pl. nincs fizika, csak fakt van belőle). A minimalizálás pedig itt arra 
+vonatkozik, hogy minél kisebb legyen a tanárok heti óraszámai közötti eltérés, ne fordulhasson
+elő, hogy mondjuk míg valaki 30 órát tart egy héten, addig más 5-öt. A futtatás után kapott
+eredményt látva megállapítható, hogy amennyire lehetett, sikerült kiküszöbölni a tanárok
+egyenlőtlen terhelését, megkaptuk a lehető legoptimálisabb osztály-tanár-tantárgy
+hozzárendelés-mátrixot, amely meghatározza, hogy egy adott osztálynak egy adott tantárgyat
+melyik tanár tartsa. 
