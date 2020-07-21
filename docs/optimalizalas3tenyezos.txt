@@ -14,4 +14,5 @@ elő, hogy mondjuk míg valaki 30 órát tart egy héten, addig más 5-öt. A fu
 eredményt látva megállapítható, hogy amennyire lehetett, sikerült kiküszöbölni a tanárok
 egyenlőtlen terhelését, megkaptuk a lehető legoptimálisabb osztály-tanár-tantárgy
 hozzárendelés-mátrixot, amely meghatározza, hogy egy adott osztálynak egy adott tantárgyat
-melyik tanár tartsa. 
+melyik tanár tartsa.
+

@@ -10,4 +10,4 @@ Ezenkívül a szótár típusú változó is rendelkezésre áll ebben a nyelvbe
 használni fogok. Ez az adattípus abban különbözik a tömbtől, hogy az elemei rendelkeznek
 azonosító névvel vagy kóddal, ennek megadásával lehet rájuk hivatkozni, nem tömbindexszel.
 A szemétgyűjtés automatikusan történik, nem lesz szükség memóriafelszabadításra és
-memóriafoglalásra az algoritmus során kiszelektálódó, illetve létrejövő egyedek kapcsán.     
+memóriafoglalásra az algoritmus során kiszelektálódó, illetve létrejövő egyedek kapcsán.
