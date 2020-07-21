@@ -1,19 +1,24 @@
-%25 és 40 közt generált véletlenszámok lesznek az osztályok létszámai, 
-%a termek esetében pedig 30 és 45 között generálunk%
-letszamok=randi([25 40],1,20); 
-kapacitasok=randi([30 45],1,50);
-%kiszámítjuk az évfolyamok összesített létszámát%
-sum1=0;
-sum2=0;
-sum3=0;
-sum4=0;
-for i=1:20
-    if (i<=5) sum1=sum1+letszamok(i);
-    elseif (i>5 && i<=10) sum2=sum2+letszamok(i);
-    elseif (i>10 && i<=15) sum3=sum3+letszamok(i);
-    else sum4=sum4+letszamok(i);
-    end
+N_BASE_CLASSES = 20
+N_LANG_CLASSES = 20
+N_FACT_CLASSES = 20
+
+N_ROOMS = 50
+
+% Generate random numbers for the classes
+n_students = randi([25 40], 1, N_BASE_CLASSES);
+room_capacity = randi([30 45], 1, N_ROOMS);
+
+n_students_in_grades = zeros(4, 1);
+for i = 1:20
+    grade = calc_grade(i);
+    n_students_in_grades(grade) += n_students(i);
 end
+
+'Number of students in base classes'
+[[1;2;3;4] n_students_in_grades]
+
+return
+
 %ezeket felhasználva kijelöljük a nyelvi, illetve fakultációs csoportok
 %látszámát, évfolyamonként%
 for i=21:60
