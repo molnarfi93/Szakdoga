@@ -112,18 +112,42 @@ kaptam, egyet arra az esetre, amikor kizárólag "alaposztályok" vannak, mivel 
 időablakokra és kettőt a fakultációs órákat is tartalmazó időablakokra, mert faktos órák
 csak a 11. és 12. évfolyamon vannak. 
 
+% TODO: A konkrét évfolyam nem feltétlenül szükséges. Elegendő csak, hogy 2 évfolyam van, de mindegy, hogy az melyik pontosan.
+
+% TODO: A konkrét számértékek helyett valamilyen változóknak vagy nevesített konstansoknak kellene lenniük.
+
 A feladat formalizálása során $A$ a párosításmátrix, $C$ a költségmátrix és $X$ a 
 megoldásmátrix (hozzárendelés-mátrix), mivel 50 tanterem van, így $j$ maximális értéke 50 és
 mivel egyidőben legfeljebb 25 osztálynak lehet tanórája, $i$ maximális értéke 25:
 
-$$A_{ij}=\cases 1,& \hbox{ha az $i$-edik osztály létszáma nem nagyobb mint a $j$-edik terem kapacitása}\\0&
-\hbox{egyébként} \endcases$$
+% TODO: A szöveges leírások helyett is formalizált, főként relációkkal történő megadások kellenének!
 
-$$X_{ij}=\cases 1,& \hbox{ha az $i$-edik osztálynak a $j$-edik teremben lesz a tanóra}\\0&
-\hbox{egyébként} \endcases$$
+\[
+A_{ij} =
+\begin{cases}
+1, & \hbox{ha az $i$-edik osztály létszáma nem nagyobb mint a $j$-edik terem kapacitása}, \\
+0, & \hbox{egyébként}.
+\end{cases}
+\]
 
-$$C_{ij}=\cases kapacitás_j-létszám_i,& \hbox{ha } X_{ij}=1\\NaN&
-\hbox{egyébként} \endcases$$
+\[
+X_{ij} =
+\begin{cases}
+1, & \hbox{ha az $i$-edik osztálynak a $j$-edik teremben lesz a tanóra}, \\
+0&
+\hbox{egyébként}.
+\end{cases}
+\]
+
+% TODO: A NaN helyett valamilyen végtelen érték kellene például.
+
+\[
+C_{ij} =
+\begin{cases}
+kapacitás_j-létszám_i, & \hbox{ha } X_{ij}=1, \\
+NaN & \hbox{egyébként}.
+\end{cases}
+\]
 
 $$\sum^n_{j=1} C_jX_j \rightarrow \hbox{min}$$
 
@@ -153,14 +177,31 @@ melyik tanár tartsa.
 
 A feladat formalizálása:
 
-$$A_{ij}=\cases 1,& \hbox{ha az $i$-edik osztály-tantárgy kettősben szereplő tantárgyat tudja tanítani a $j$-edik tanár}\\
-0& \hbox{egyébként} \endcases$$
+\[
+A_{ij} =
+\begin{cases}
+1, & \hbox{ha az $i$-edik osztály-tantárgy kettősben szereplő tantárgyat tudja tanítani a $j$-edik tanár} \\
+0, & \hbox{egyébként}.
+\end{cases}
+\]
 
-$$X_{ij}=\cases 1,& \hbox{ha az $i$-edik osztály-tantárgy kettősben szereplő osztálynak az ugyanezen kettősben szereplő
-tantárgyat a $j$-edik tanár fogja tartani}\\0& \hbox{egyébként} \endcases$$
+\[
+X_{ij} =
+\begin{cases}
+1, & \hbox{ha az $i$-edik osztály-tantárgy kettősben szereplő osztálynak az ugyanezen kettősben szereplő tantárgyat a $j$-edik tanár fogja tartani} \\
+0, & \hbox{egyébként}.
+\end{cases}
+\]
 
-$$C_{ij}=\cases heti óraszám_j+heti óraszám_i,& \hbox{ha } X_{ij}=1\\heti óraszám_j&
-\hbox{egyébként} \endcases$$
+% TODO: A szöveges nevek helyett inkább változók kellenének. (Programozás esetében jobb a név, viszont ott angol változat kellene.)
+
+\[
+C_{ij} =
+\begin{cases}
+heti óraszám_j+heti óraszám_i,& \hbox{ha } X_{ij}=1, \\
+heti óraszám_j, & \hbox{egyébként}.
+\end{cases}
+\]
 
 $$\sum^n_{j=1} \vert C_jX_j-C_{j+1}X_{j+1}\vert \rightarrow \hbox{min}$$
 
