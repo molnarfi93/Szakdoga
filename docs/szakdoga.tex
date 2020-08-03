@@ -74,14 +74,13 @@
 \newenvironment{starred}
 {\noindent\color{Maroon}}{\bigskip}
 
-
 \begin{document}
 
 \begin{center}
     \huge \textbf{Optimalizálási problémák} 
 \end{center}
 
-\section{Két tényezős változat}
+\section{Kéttényezős változat}
 
 Mielőtt nekilátnék a nagy műnek, a genetikus algoritmus létrehozásának, még további
 információkat kell szerezni a probléma lemodellezésének teljessé tételéhez. Ezt úgy fogom
@@ -112,48 +111,60 @@ kaptam, egyet arra az esetre, amikor kizárólag "alaposztályok" vannak, mivel 
 időablakokra és kettőt a fakultációs órákat is tartalmazó időablakokra, mert faktos órák
 csak a 11. és 12. évfolyamon vannak. 
 
-% TODO: A konkrét évfolyam nem feltétlenül szükséges. Elegendő csak, hogy 2 évfolyam van, de mindegy, hogy az melyik pontosan.
+A feladat formalizálása:
 
-% TODO: A konkrét számértékek helyett valamilyen változóknak vagy nevesített konstansoknak kellene lenniük.
+$$A_{ij}=\cases 1,& \hbox{ha az $i$-edik osztály létszáma nem nagyobb mint a $j$-edik terem kapacitása}\\0&
+\hbox{egyébként} \endcases$$
 
-A feladat formalizálása során $A$ a párosításmátrix, $C$ a költségmátrix és $X$ a 
-megoldásmátrix (hozzárendelés-mátrix), mivel 50 tanterem van, így $j$ maximális értéke 50 és
-mivel egyidőben legfeljebb 25 osztálynak lehet tanórája, $i$ maximális értéke 25:
+$$X_{ij}=\cases 1,& \hbox{ha az $i$-edik osztálynak a $j$-edik teremben lesz a tanóra}\\0&
+\hbox{egyébként} \endcases$$
 
-% TODO: A szöveges leírások helyett is formalizált, főként relációkkal történő megadások kellenének!
+$$C_{ij}=\cases k_j-l_i,& \hbox{ha } X_{ij}=1\\NaN&
+\hbox{egyébként} \endcases$$
 
-\[
-A_{ij} =
-\begin{cases}
-1, & \hbox{ha az $i$-edik osztály létszáma nem nagyobb mint a $j$-edik terem kapacitása}, \\
-0, & \hbox{egyébként}.
-\end{cases}
-\]
+$$\sum_{j=1}^m C_jX_j \rightarrow \hbox{min}$$
 
-\[
-X_{ij} =
-\begin{cases}
-1, & \hbox{ha az $i$-edik osztálynak a $j$-edik teremben lesz a tanóra}, \\
-0&
-\hbox{egyébként}.
-\end{cases}
-\]
+$$\sum_{j=1}^m A_{ij}X_j=1\qquad i=1, 2, \ldots, n \qquad j=1, 2, \ldots, m$$
 
-% TODO: A NaN helyett valamilyen végtelen érték kellene például.
+Jelölések:
+\begin{itemize}
+    \item $A \in \{0;1\}^2: párosításmátrix$
+    \item $X \in \{0;1\}^2: hozzárendelés-mátrix$
+    \item $C \in \Bbb{N}^2: költségmátrix$
+    \item $l \in \Bbb{N}: osztályok létszámai$
+    \item $k \in \Bbb{N}: tantermek kapacitásai$
+    \item $n: osztályok száma$
+    \item $m: tantermek száma$
+\end{itemize}
 
-\[
-C_{ij} =
-\begin{cases}
-kapacitás_j-létszám_i, & \hbox{ha } X_{ij}=1, \\
-NaN & \hbox{egyébként}.
-\end{cases}
-\]
+Összes lehetséges esetek száma:
 
-$$\sum^n_{j=1} C_jX_j \rightarrow \hbox{min}$$
+$$P=\sum_{i=1}^n h_i \qquad  \hbox{, ahol} h_i \hbox{azon termek száma, ahová az} $i$\hbox{-edik osztály befér}$$
 
-$$\sum^n_{j=1} A_{ij}X_j=1\qquad i=1, 2, \ldots, 25$$
+Összes lehetséges megoldások száma:
 
-$$X_j\in \{0;1\} \qquad j=1, 2, \ldots, 50$$
+$$P=\sum_{i=1}^n h_i-(i-1) \qquad \hbox{, ahol} h_i \hbox{azon termek száma, ahová az} $i$\hbox{-edik osztály befér}$$  
+
+A kapott optimumok:
+\begin{itemize}
+    \item 12 alapesetben
+    \item 25 abban az esetben, amikor a 9. évfolyamon nyelvi órák vannak
+    \item 14 abban az esetben, amikor a 10. évfolyamon nyelvi órák vannak
+    \item 24 abban az esetben, amikor a 11. évfolyamon nyelvi órák vannak
+    \item 23 abban az esetben, amikor a 12. évfolyamon nyelvi órák vannak
+    \item 173 abban az esetben, amikor a 11. évfolyamon fakultációs órák vannak
+    \item 171 abban az esetben, amikor a 12. évfolyamon fakultációs órák vannak
+\end{itemize}
+
+Nézzük az összes lehetséges esetek és lehetséges megoldások számát az alapesetben, az eredeti példa esetén,
+illetve évfolyamonként 6, 7, 8 osztályra kibővített esetben (ahol a termek számát plusz egy évfolyamonkénti osztály
+esetén 5-tel növeltem): 
+
+\begin{tabular}
+& 5 & 6 & 7 & 8\\
+Összes esetek & 1,1*10^{23} & 1,4*10^{31} & 1,7*10^{38} & 2*10^{46}\\ 
+Összes megoldások & 5,3*10^{16} & 3,5*10^{22} & 1,5*10^{26} & 3,3*10^{31}\\
+\end{tabular}
 
 \section{Háromtényezős változat}
 
@@ -177,37 +188,48 @@ melyik tanár tartsa.
 
 A feladat formalizálása:
 
-\[
-A_{ij} =
-\begin{cases}
-1, & \hbox{ha az $i$-edik osztály-tantárgy kettősben szereplő tantárgyat tudja tanítani a $j$-edik tanár} \\
-0, & \hbox{egyébként}.
-\end{cases}
-\]
+$$A_{ij}=\cases 1,& \hbox{ha az $i$-edik osztály-tantárgy kettősben szereplő tantárgyat tudja tanítani a $j$-edik tanár}\\
+0& \hbox{egyébként} \endcases$$
 
-\[
-X_{ij} =
-\begin{cases}
-1, & \hbox{ha az $i$-edik osztály-tantárgy kettősben szereplő osztálynak az ugyanezen kettősben szereplő tantárgyat a $j$-edik tanár fogja tartani} \\
-0, & \hbox{egyébként}.
-\end{cases}
-\]
+$$X_{ij}=\cases 1,& \hbox{ha az $i$-edik osztály-tantárgy kettősben szereplő osztálynak az ugyanezen kettősben szereplő
+tantárgyat a $j$-edik tanár fogja tartani}\\0& \hbox{egyébként} \endcases$$
 
-% TODO: A szöveges nevek helyett inkább változók kellenének. (Programozás esetében jobb a név, viszont ott angol változat kellene.)
+$$t_j=\cases t_j+o_i,& \hbox{ha } X_{ij}=1\\t_j&
+\hbox{egyébként} \endcases$$
 
-\[
-C_{ij} =
-\begin{cases}
-heti óraszám_j+heti óraszám_i,& \hbox{ha } X_{ij}=1, \\
-heti óraszám_j, & \hbox{egyébként}.
-\end{cases}
-\]
+$$\sum_{j=1}^m \vert t_jX_j-\overline{t}\vert \rightarrow \hbox{min}$$
 
-$$\sum^n_{j=1} \vert C_jX_j-C_{j+1}X_{j+1}\vert \rightarrow \hbox{min}$$
+$$\sum_{j=1}^m A_{ij}X_j=1\qquad i=1, 2, \ldots, n \qquad j=1, 2, \ldots, m$
 
-$$\sum^n_{j=1} A_{ij}X_j=1\qquad i=1, 2, \ldots, 220$$
+Jelölések:
+\begin{itemize}
+    \item $A \in \{0;1\}^2: párosításmátrix$
+    \item $X \in \{0;1\}^2: hozzárendelés-mátrix$
+    \item $t \in \Bbb{N}: tanárok heti óraszámai$
+    \item $o \in \Bbb{N}: osztályok heti óraszámai$
+    \item $n: osztály-tantárgy kettősök száma$
+    \item $m: tanárok száma$
+\end{itemize}
 
-$$X_j\in \{0;1\} \qquad j=1, 2, \ldots, 30$$
+Összes lehetséges esetek száma:
+
+$$P=m^n$$
+
+Összes lehetséges megoldások száma:
+
+$$P=\sum_{k=1}^p v_k^{u_k} \qquad \hbox{, ahol} p \hbox{a különböző tantárgyak száma, } v_k \hbox{ megmutatja,
+hogy a } k\hbox{-adik tárgyat hány különböző tanár tudja oktatni, az } u_k \hbox{ pedig hogy hány osztálynak és/vagy
+csoportnak kell tanulnia ezt a tárgyat}$$
+
+A kapott optimum: 110.
+
+Végül a lehetséges esetek és megoldások száma (a tanárok számát plusz egy évfolyamonkénti osztály esetén 3-mal növeltem):
+
+\begin{tabular}
+& 5 & 6 & 7 & 8\\
+Összes esetek & 9,3*10^{325} & 6,5*10^{395} & 7,8*10^{467} & 9,2*10^{541}\\ 
+Összes megoldások & 1,1*10^{132} & 2*10^{168} & 4,2*10^{208} & 1,2*10^{249}\\
+\end{tabular}
 
 \bibliographystyle{acm}
 \bibliography{references}
