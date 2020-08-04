@@ -111,39 +111,65 @@ kaptam, egyet arra az esetre, amikor kizárólag "alaposztályok" vannak, mivel 
 időablakokra és kettőt a fakultációs órákat is tartalmazó időablakokra, mert faktos órák
 csak a 11. és 12. évfolyamon vannak. 
 
-A feladat formalizálása:
+\subsection{A feladat formalizálása}
 
-$$A_{ij}=\cases 1,& \hbox{ha az $i$-edik osztály létszáma nem nagyobb mint a $j$-edik terem kapacitása}\\0&
-\hbox{egyébként} \endcases$$
+Jelölések:
+\begin{itemize}
+    \item $n$: osztályok száma, $n \in \mathbb{N}$,
+    \item $m$: tantermek száma, $m \in \mathbb{N}$,
+    \item $l \in \Bbb{N}$: osztályok létszámai
+    \item $k \in \Bbb{N}$: tantermek kapacitásai
+    \item $A \in \{0;1\}^{n \times m}$: párosításmátrix
+\[
+A_{ij} =
+\begin{cases}
+1, & l_i \leq k_j, \\
+0, & \hbox{egyébként}.
+\end{cases}
+\]
+    \item $X \in \{0;1\}^2$: hozzárendelés-mátrix
+    \item $C \in \Bbb{N}^2$: költségmátrix
+\end{itemize}
 
-$$X_{ij}=\cases 1,& \hbox{ha az $i$-edik osztálynak a $j$-edik teremben lesz a tanóra}\\0&
-\hbox{egyébként} \endcases$$
 
-$$C_{ij}=\cases k_j-l_i,& \hbox{ha } X_{ij}=1\\NaN&
-\hbox{egyébként} \endcases$$
+
+\[
+X_{ij} =
+\begin{cases}
+1, & \hbox{ha az $i$-edik osztálynak a $j$-edik teremben lesz a tanóra}, \\
+0&
+\hbox{egyébként}.
+\end{cases}
+\]
+
+% TODO: A NaN helyett valamilyen végtelen érték kellene például.
+
+\[
+C_{ij} =
+\begin{cases}
+k_j-létszám_i, & \hbox{ha } X_{ij}=1, \\
+NaN & \hbox{egyébként}.
+\end{cases}
+\]
+
+\subsection{Az optimalizálási probléma}
 
 $$\sum_{j=1}^m C_jX_j \rightarrow \hbox{min}$$
 
 $$\sum_{j=1}^m A_{ij}X_j=1\qquad i=1, 2, \ldots, n \qquad j=1, 2, \ldots, m$$
 
-Jelölések:
-\begin{itemize}
-    \item $A \in \{0;1\}^2: párosításmátrix$
-    \item $X \in \{0;1\}^2: hozzárendelés-mátrix$
-    \item $C \in \Bbb{N}^2: költségmátrix$
-    \item $l \in \Bbb{N}: osztályok létszámai$
-    \item $k \in \Bbb{N}: tantermek kapacitásai$
-    \item $n: osztályok száma$
-    \item $m: tantermek száma$
-\end{itemize}
 
 Összes lehetséges esetek száma:
 
-$$P=\sum_{i=1}^n h_i \qquad  \hbox{, ahol} h_i \hbox{azon termek száma, ahová az} $i$\hbox{-edik osztály befér}$$
+$$
+P=\sum_{i=1}^n h_i \qquad \hbox{, ahol} h_i \hbox{azon termek száma, ahová az} i \hbox{-edik osztály befér}
+$$
 
 Összes lehetséges megoldások száma:
 
-$$P=\sum_{i=1}^n h_i-(i-1) \qquad \hbox{, ahol} h_i \hbox{azon termek száma, ahová az} $i$\hbox{-edik osztály befér}$$  
+$$
+P=\sum_{i=1}^n h_i-(i-1) \qquad \hbox{, ahol} h_i \hbox{azon termek száma, ahová az} i \hbox{-edik osztály befér}
+$$  
 
 A kapott optimumok:
 \begin{itemize}
@@ -160,10 +186,12 @@ Nézzük az összes lehetséges esetek és lehetséges megoldások számát az a
 illetve évfolyamonként 6, 7, 8 osztályra kibővített esetben (ahol a termek számát plusz egy évfolyamonkénti osztály
 esetén 5-tel növeltem): 
 
-\begin{tabular}
-& 5 & 6 & 7 & 8\\
-Összes esetek & 1,1*10^{23} & 1,4*10^{31} & 1,7*10^{38} & 2*10^{46}\\ 
-Összes megoldások & 5,3*10^{16} & 3,5*10^{22} & 1,5*10^{26} & 3,3*10^{31}\\
+\begin{tabular}{l|c|c|c|c|}
+& 5 & 6 & 7 & 8 \\
+\hline
+Összes esetek & $1,1 \cdot 10^{23}$ & $1,4 \cdot 10^{31}$ & $1,7 \cdot 10^{38}$ & $2 \cdot 10^{46}$ \\ 
+Összes megoldások & $5,3 \cdot 10^{16}$ & $3,5 \cdot 10^{22}$ & $1,5 \cdot 10^{26}$ & $3,3 \cdot 10^{31}$ \\
+\hline
 \end{tabular}
 
 \section{Háromtényezős változat}
@@ -188,18 +216,37 @@ melyik tanár tartsa.
 
 A feladat formalizálása:
 
-$$A_{ij}=\cases 1,& \hbox{ha az $i$-edik osztály-tantárgy kettősben szereplő tantárgyat tudja tanítani a $j$-edik tanár}\\
-0& \hbox{egyébként} \endcases$$
+\[
+A_{ij} =
+\begin{cases}
+1, & \hbox{ha az $i$-edik osztály-tantárgy kettősben szereplő tantárgyat tudja tanítani a $j$-edik tanár} \\
+0, & \hbox{egyébként}.
+\end{cases}
+\]
 
-$$X_{ij}=\cases 1,& \hbox{ha az $i$-edik osztály-tantárgy kettősben szereplő osztálynak az ugyanezen kettősben szereplő
-tantárgyat a $j$-edik tanár fogja tartani}\\0& \hbox{egyébként} \endcases$$
+\[
+X_{ij} =
+\begin{cases}
+1, & \hbox{ha az $i$-edik osztály-tantárgy kettősben szereplő osztálynak az ugyanezen kettősben szereplő tantárgyat a $j$-edik tanár fogja tartani} \\
+0, & \hbox{egyébként}.
+\end{cases}
+\]
 
-$$t_j=\cases t_j+o_i,& \hbox{ha } X_{ij}=1\\t_j&
-\hbox{egyébként} \endcases$$
+% TODO: A szöveges nevek helyett inkább változók kellenének. (Programozás esetében jobb a név, viszont ott angol változat kellene.)
+
+\[
+C_{ij} =
+\begin{cases}
+heti óraszám_j+heti óraszám_i,& \hbox{ha } X_{ij}=1, \\
+heti óraszám_j, & \hbox{egyébként}.
+\end{cases}
+\]
 
 $$\sum_{j=1}^m \vert t_jX_j-\overline{t}\vert \rightarrow \hbox{min}$$
 
-$$\sum_{j=1}^m A_{ij}X_j=1\qquad i=1, 2, \ldots, n \qquad j=1, 2, \ldots, m$
+$$
+\sum_{j=1}^m A_{ij} X_j=1\qquad i=1, 2, \ldots, n \qquad j=1, 2, \ldots, m
+$$
 
 Jelölések:
 \begin{itemize}
@@ -217,18 +264,22 @@ $$P=m^n$$
 
 Összes lehetséges megoldások száma:
 
-$$P=\sum_{k=1}^p v_k^{u_k} \qquad \hbox{, ahol} p \hbox{a különböző tantárgyak száma, } v_k \hbox{ megmutatja,
+$$
+P=\sum_{k=1}^p v_k^{u_k} \qquad \hbox{, ahol} p \hbox{a különböző tantárgyak száma, } v_k \hbox{ megmutatja,
 hogy a } k\hbox{-adik tárgyat hány különböző tanár tudja oktatni, az } u_k \hbox{ pedig hogy hány osztálynak és/vagy
-csoportnak kell tanulnia ezt a tárgyat}$$
+csoportnak kell tanulnia ezt a tárgyat}
+$$
 
 A kapott optimum: 110.
 
 Végül a lehetséges esetek és megoldások száma (a tanárok számát plusz egy évfolyamonkénti osztály esetén 3-mal növeltem):
 
-\begin{tabular}
-& 5 & 6 & 7 & 8\\
-Összes esetek & 9,3*10^{325} & 6,5*10^{395} & 7,8*10^{467} & 9,2*10^{541}\\ 
-Összes megoldások & 1,1*10^{132} & 2*10^{168} & 4,2*10^{208} & 1,2*10^{249}\\
+\begin{tabular}{l|c|c|c|c|}
+& 5 & 6 & 7 & 8 \\
+\hline
+Összes esetek & $9,3*10^{325}$ & $6,5*10^{395}$ & $7,8*10^{467}$ & $9,2*10^{541}$ \\ 
+Összes megoldások & $1,1*10^{132}$ & $2*10^{168}$ & $4,2*10^{208}$ & $1,2*10^{249}$ \\
+\hline
 \end{tabular}
 
 \bibliographystyle{acm}
