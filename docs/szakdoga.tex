@@ -115,23 +115,30 @@ csak a 11. és 12. évfolyamon vannak.
 
 Jelölések:
 \begin{itemize}
-    \item $n$: osztályok száma, $n \in \mathbb{N}$,
-    \item $m$: tantermek száma, $m \in \mathbb{N}$,
-    \item $l \in \Bbb{N}$: osztályok létszámai
-    \item $k \in \Bbb{N}$: tantermek kapacitásai
+    \item $n \in \Bbb{N}$: osztályok száma
+    \item $m \in \Bbb{N}$: tantermek száma
+    \item $l \in \Bbb{N}^n$: osztályok létszámai
+    \item $k \in \Bbb{N}^m$: tantermek kapacitásai
+    \item $C \in \Bbb{N}^{n \times m}$: költségmátrix
     \item $A \in \{0;1\}^{n \times m}$: párosításmátrix
+    \item $X \in \{0;1\}^{n \times m}$: hozzárendelés-mátrix
+\end{itemize}
+
+\[
+C_{ij} =
+\begin{cases}
+k_j-l_i, & \hbox{ha } X_{ij}=1, \\
+\infty & \hbox{egyébként}.
+\end{cases}
+\]
+
 \[
 A_{ij} =
 \begin{cases}
-1, & l_i \leq k_j, \\
+1, & \hbox{ha } l_i \leq k_j, \\
 0, & \hbox{egyébként}.
 \end{cases}
 \]
-    \item $X \in \{0;1\}^2$: hozzárendelés-mátrix
-    \item $C \in \Bbb{N}^2$: költségmátrix
-\end{itemize}
-
-
 
 \[
 X_{ij} =
@@ -142,35 +149,23 @@ X_{ij} =
 \end{cases}
 \]
 
-% TODO: A NaN helyett valamilyen végtelen érték kellene például.
-
-\[
-C_{ij} =
-\begin{cases}
-k_j-létszám_i, & \hbox{ha } X_{ij}=1, \\
-NaN & \hbox{egyébként}.
-\end{cases}
-\]
-
-\subsection{Az optimalizálási probléma}
-
 $$\sum_{j=1}^m C_jX_j \rightarrow \hbox{min}$$
 
-$$\sum_{j=1}^m A_{ij}X_j=1\qquad i=1, 2, \ldots, n \qquad j=1, 2, \ldots, m$$
+$$\sum_{j=1}^m A_{ij}X_j=1$$
 
+$$i=1, 2, \ldots, n$$
 
+$$j=1, 2, \ldots, m$$
 Összes lehetséges esetek száma:
 
 $$
-P=\sum_{i=1}^n h_i \qquad \hbox{, ahol} h_i \hbox{azon termek száma, ahová az} i \hbox{-edik osztály befér}
+P=\prod_{i=1}^n h_i \qquad \hbox{, ahol } h_i \hbox{ azon termek száma, ahová az } i \hbox{-edik osztály befér.}
 $$
-
 Összes lehetséges megoldások száma:
 
 $$
-P=\sum_{i=1}^n h_i-(i-1) \qquad \hbox{, ahol} h_i \hbox{azon termek száma, ahová az} i \hbox{-edik osztály befér}
+P=\prod_{i=1}^n h_i-(i-1) \qquad \hbox{, ahol } h_i \hbox{ azon termek száma, ahová az } i \hbox{-edik osztály befér.}
 $$  
-
 A kapott optimumok:
 \begin{itemize}
     \item 12 alapesetben
@@ -186,13 +181,18 @@ Nézzük az összes lehetséges esetek és lehetséges megoldások számát az a
 illetve évfolyamonként 6, 7, 8 osztályra kibővített esetben (ahol a termek számát plusz egy évfolyamonkénti osztály
 esetén 5-tel növeltem): 
 
-\begin{tabular}{l|c|c|c|c|}
+$$
+\begin{tabular}{|l|c|c|c|c|}
+\hline
 & 5 & 6 & 7 & 8 \\
 \hline
 Összes esetek & $1,1 \cdot 10^{23}$ & $1,4 \cdot 10^{31}$ & $1,7 \cdot 10^{38}$ & $2 \cdot 10^{46}$ \\ 
+\hline
 Összes megoldások & $5,3 \cdot 10^{16}$ & $3,5 \cdot 10^{22}$ & $1,5 \cdot 10^{26}$ & $3,3 \cdot 10^{31}$ \\
 \hline
 \end{tabular}
+$$
+A növekedési rend a következő: $\Theta (2nm).$
 
 \section{Háromtényezős változat}
 
@@ -214,7 +214,25 @@ egyenlőtlen terhelését, megkaptuk a lehető legoptimálisabb osztály-tanár-
 hozzárendelés-mátrixot, amely meghatározza, hogy egy adott osztálynak egy adott tantárgyat
 melyik tanár tartsa.
 
-A feladat formalizálása:
+\subsection{A feladat formalizálása}
+
+Jelölések:
+\begin{itemize}
+    \item $n$: osztály-tantárgy kettősök száma
+    \item $m$: tanárok száma
+    \item $t \in \Bbb{N}^m$: tanárok heti óraszámai
+    \item $o \in \Bbb{N}^n$: osztály-tantárgy kettősökhöz tartozó heti óraszámok
+    \item $A \in \{0;1\}^{n \times m}$: párosításmátrix
+    \item $X \in \{0;1\}^{n \times m}$: hozzárendelés-mátrix
+\end{itemize}
+
+\[
+t_{j} =
+\begin{cases}
+t_j+o_i,& \hbox{ha } X_{ij}=1, \\
+t_j, & \hbox{egyébként}.
+\end{cases}
+\]
 
 \[
 A_{ij} =
@@ -232,55 +250,37 @@ X_{ij} =
 \end{cases}
 \]
 
-% TODO: A szöveges nevek helyett inkább változók kellenének. (Programozás esetében jobb a név, viszont ott angol változat kellene.)
+$$\sum_{j=1}^m \vert o_jX_j-\overline{o}\vert \rightarrow \hbox{min}$$
 
-\[
-C_{ij} =
-\begin{cases}
-heti óraszám_j+heti óraszám_i,& \hbox{ha } X_{ij}=1, \\
-heti óraszám_j, & \hbox{egyébként}.
-\end{cases}
-\]
+$$\sum_{j=1}^m A_{ij} X_j=1$$
 
-$$\sum_{j=1}^m \vert t_jX_j-\overline{t}\vert \rightarrow \hbox{min}$$
+$$i=1, 2, \ldots, n$$
 
-$$
-\sum_{j=1}^m A_{ij} X_j=1\qquad i=1, 2, \ldots, n \qquad j=1, 2, \ldots, m
-$$
-
-Jelölések:
-\begin{itemize}
-    \item $A \in \{0;1\}^2: párosításmátrix$
-    \item $X \in \{0;1\}^2: hozzárendelés-mátrix$
-    \item $t \in \Bbb{N}: tanárok heti óraszámai$
-    \item $o \in \Bbb{N}: osztályok heti óraszámai$
-    \item $n: osztály-tantárgy kettősök száma$
-    \item $m: tanárok száma$
-\end{itemize}
-
+$$j=1, 2, \ldots, m$$
 Összes lehetséges esetek száma:
 
 $$P=m^n$$
-
 Összes lehetséges megoldások száma:
 
-$$
-P=\sum_{k=1}^p v_k^{u_k} \qquad \hbox{, ahol} p \hbox{a különböző tantárgyak száma, } v_k \hbox{ megmutatja,
-hogy a } k\hbox{-adik tárgyat hány különböző tanár tudja oktatni, az } u_k \hbox{ pedig hogy hány osztálynak és/vagy
-csoportnak kell tanulnia ezt a tárgyat}
-$$
 
+$$P=\prod_{k=1}^p v_k^{u_k} \qquad \hbox{, ahol } p \hbox{ a különböző tantárgyak száma, } v_k \hbox{ megmutatja,
+hogy a } k\hbox{-adik tárgyat hány különböző tanár tudja oktatni, az } u_k \hbox{ pedig hogy hány osztálynak és/vagy csoportnak kell tanulnia ezt a tárgyat}$$
 A kapott optimum: 110.
 
-Végül a lehetséges esetek és megoldások száma (a tanárok számát plusz egy évfolyamonkénti osztály esetén 3-mal növeltem):
+A lehetséges esetek és megoldások száma (a tanárok számát plusz egy évfolyamonkénti osztály esetén 3-mal növeltem):
 
-\begin{tabular}{l|c|c|c|c|}
+$$
+\begin{tabular}{|l|c|c|c|c|}
+\hline
 & 5 & 6 & 7 & 8 \\
 \hline
-Összes esetek & $9,3*10^{325}$ & $6,5*10^{395}$ & $7,8*10^{467}$ & $9,2*10^{541}$ \\ 
-Összes megoldások & $1,1*10^{132}$ & $2*10^{168}$ & $4,2*10^{208}$ & $1,2*10^{249}$ \\
+Összes esetek & $9,3 \cdot 10^{325}$ & $6,5 \cdot 10^{395}$ & $7,8 \cdot 10^{467}$ & $9,2 \cdot 10^{541}$ \\
+\hline 
+Összes megoldások & $1,1 \cdot 10^{132}$ & $2 \cdot 10^{168}$ & $4,2 \cdot 10^{208}$ & $1,2 \cdot 10^{249}$ \\
 \hline
 \end{tabular}
+$$
+Növekedési rend: $\Theta (nm+nm^2).$
 
 \bibliographystyle{acm}
 \bibliography{references}
