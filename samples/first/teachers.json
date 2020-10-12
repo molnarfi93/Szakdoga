@@ -1,0 +1,12 @@
+{
+    "Tanár Neve": {
+        "subjects": [
+            "matek", "egyéb", "bármi"
+        ]
+    },
+    "Másik Neve": {
+        "subjects": [
+            "angol", "német"
+        ]
+    }
+}

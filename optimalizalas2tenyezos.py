@@ -1,20 +1,21 @@
-from osztalyok import Room, Class
 import csv
 import math
-global NUM_ROOMS
+
+from osztalyok import Room, Class
+
+
 NUM_ROOMS = 30
-global NUM_CLASSES
 NUM_CLASSES = 220
-global rooms
 rooms = []
-global classes
 classes = []
 simple_classes = []
+
 with open(r'C:\Users\Brendi\Documents\Szakdoga\tantermek.csv')as csv_rooms:
     reader = csv.reader(csv_rooms, delimiter=';')
     for row in reader:
         row[1] = int(row[1])
         rooms.append(row)
+
 with open(r'C:\Users\Brendi\Documents\Szakdoga\osztalyok.csv') as csv_classes:
     reader = csv.reader(csv_classes, delimiter=';')
     for row in reader:
@@ -22,6 +23,7 @@ with open(r'C:\Users\Brendi\Documents\Szakdoga\osztalyok.csv') as csv_classes:
         row[4] = int(row[4])
         row[5] = int(row[5])
         classes.append(row)
+
 for i in range (NUM_ROOMS):
     rooms[i] = Room(rooms[i][0], rooms[i][1])
 for i in range (NUM_CLASSES):
