@@ -1,18 +1,12 @@
 from optimalizalas3tenyezos import classes, NUM_CLASSES, NUM_TEACHERS
-from optimalizalas2tenyezos import NUM_ROOMS
 
 NUM_TIME_WINDOWS = 45
-if NUM_TEACHERS < NUM_ROOMS:
-    MAX_PERIODS = NUM_TEACHERS
-else:
-    MAX_PERIODS = NUM_ROOMS
+MAX_PERIODS = NUM_TEACHERS
 
 
 def getTimetable():
     timetable = []
     seated_classes = []
-    seated_rooms = []
-    seated_teachers = []
     for i in range(MAX_PERIODS):
         for j in range(NUM_CLASSES):
             if classes[j].sum_periods < classes[j].weekly_periods:
@@ -21,18 +15,14 @@ def getTimetable():
                     if (classes[j].name == seated_classes[k].name) or (classes[j].grade == seated_classes[k].grade and classes[j].type != seated_classes[k].type):
                         boole = False
                         break
-                for k in range(len(seated_rooms)):
-                    if classes[j].room == seated_rooms[k]:
+                    elif classes[j].room == seated_classes[k].room:
                         boole = False
                         break
-                for k in range(len(seated_teachers)):
-                    if classes[j].teacher == seated_teachers[k]:
+                    elif classes[j].teacher == seated_classes[k].teacher:
                         boole = False
                         break
                 if boole:
                     seated_classes.append(classes[j])
-                    seated_rooms.append(classes[j].room)
-                    seated_teachers.append(classes[j].teacher)
                     classes[j].sum_periods += 1
                     timetable.append(classes[j])
                     break
