@@ -1,72 +1,62 @@
 import data_loader
+from optimalizalas3tenyezos import classes
 import random
 
-NUM_TIME_WINDOWS = 30
+NUM_TIME_WINDOWS = 45
 SIZE_POPULATION = 100
 NUM_GENERATIONS = 100
 MUTATION_RATE = 5
 
-classes = data_loader.load_classes(r'C:\Users\Brendi\Documents\Szakdoga\osztalyok.csv')
 rooms = data_loader.load_rooms(r'C:\Users\Brendi\Documents\Szakdoga\tantermek.csv')
 teachers = data_loader.load_teachers(r'C:\Users\Brendi\Documents\Szakdoga\tanarok.csv')
 NUM_CLASSES = len(classes)
 NUM_ROOMS = len(rooms)
 NUM_TEACHERS = len(teachers)
-if NUM_TEACHERS < NUM_ROOMS:
-    MAX_PERIODS = NUM_TEACHERS
-else:
-    MAX_PERIODS = NUM_ROOMS
+MAX_PERIODS = NUM_TEACHERS
+
 
 def getRandomGen():
     gen = []
-    seated_rooms = []
-    seated_teachers = []
     seated_classes = []
+    viewed_classes = []
     for i in range(MAX_PERIODS):
-        for j in range(NUM_CLASSES):
-            if classes[j].sum_periods == 0:
-                while True:
-                    room = rooms[random.randint(0, NUM_ROOMS - 1)]
-                    teacher = teachers[random.randint(0, NUM_TEACHERS - 1)]
-                    if classes[j].headcount <= room.capacity:
-                        if (classes[j].subject == teacher.either_subject or classes[j].subject == teacher.other_subject) and (teacher.sum_periods < teacher.weekly_periods):
-                            break
-                boole = True
-                for k in range(len(seated_classes)):
-                    if (classes[j].type != seated_classes[k].type) and (classes[j].grade == seated_classes[k].grade):
-                        boole = False
-                        break
-                for k in range(len(seated_rooms)):
-                    if room == seated_rooms[k]:
-                        boole = False
-                        break
-                for k in range(len(seated_teachers)):
-                    if teacher == seated_teachers[k]:
-                        boole = False
-                        break
-                if boole:
-                    seated_classes.append(classes[j])
-                    seated_rooms.append(room)
-                    seated_teachers.append(teacher)
-                    classes[j].room = room.name
-                    classes[j].teacher = teacher.name
-                    classes[j].sum_periods += 1
-                    teacher.sum_periods += 1
-                    gen.append(classes[j])
+        while True:
+            if len(viewed_classes) == NUM_CLASSES:
+                return gen
+            rand = classes[random.randint(0, NUM_CLASSES - 1)]
+            boole = False
+            for k in range(len(viewed_classes)):
+                if rand.no == viewed_classes[k]:
+                    boole = True
                     break
-    return gen
+            if not boole:
+                viewed_classes.append(rand.no)
+                if rand.sum_periods < rand.weekly_periods:
+                    found = True
+                    for k in range(len(seated_classes)):
+                        if (rand.name == seated_classes[k].name) or (rand.grade == seated_classes[k].grade and rand.type != seated_classes[k].type):
+                            found = False
+                            break
+                        elif rand.room == seated_classes[k].room:
+                            found = False
+                            break
+                        elif rand.teacher == seated_classes[k].teacher:
+                            found = False
+                            break
+                    if found:
+                        seated_classes.append(rand)
+                        classes[rand.no].sum_periods += 1
+                        gen.append(rand)
+                        break
 
 
 def calcError(entity):
     error = 0
-    itemized = 0
     for i in range(NUM_TIME_WINDOWS):
         for j in range(len(entity['gens'][i])):
-            if classes[entity['gens'][i][j].no].sum_periods == 0:
-                itemized += 1
             classes[entity['gens'][i][j].no].sum_periods += 1
-            error += classes[entity['gens'][i][j].no].sum_periods - 1
-    error += NUM_CLASSES - itemized
+    for i in range(NUM_CLASSES):
+        error += abs(classes[i].sum_periods - classes[i].weekly_periods)
     return error
 
 
@@ -78,8 +68,6 @@ for i in range(SIZE_POPULATION):
         gens.append(getRandomGen())
     for j in range(NUM_CLASSES):
         classes[j].sum_periods = 0
-    for j in range(NUM_TEACHERS):
-        teachers[j].sum_periods = 0
     entities.append({'gens': gens, 'error': 0, 'id': i})
 
 
@@ -148,6 +136,8 @@ for i in range(NUM_GENERATIONS):
         new_entities.append(createChildren(j))
     entities = new_entities
     sortEntities()
+for i in range (len(entities)):
+    print(entities[i]['error'])
 
 best_entity = entities[SIZE_POPULATION - 1]
 for i in range(NUM_TIME_WINDOWS):
