@@ -1,0 +1,19 @@
+{
+    "classes": {
+        "9.A": {
+            "grade": 9,
+            "headcount": 31,
+            "subject": {
+                "math": {
+                    "type": "base",
+                    "weekly_periods": 4
+                },
+                "informatics": {
+                    "type": "base",
+                    "weekly_periods": 3
+                }
+            }
+        }
+    }
+}
+

@@ -1,30 +1,33 @@
-"I.";41
-"II.";31
-"III.";43
-"IV.";44
-"V.";45
-"VI.";43
-"VII.";42
-"VIII.";38
-"IX.";32
-"X.";36
-"XI.";32
-"XII.";30
-"XIII.";45
-"XIV.";34
-"XV.";34
-"XVI.";35
-"XVII.";37
-"XVIII.";40
-"XIX.";30
-"XX.";43
-"XXI.";38
-"XXII.";43
-"XXIII.";35
-"XXIV.";37
-"XXV.";30
-"XXVI.";32
-"XXVII.";40
-"XXVIII.";35
-"XXIX.";44
-"XXX.";31
+{
+"I.": {"capacity": 41},
+"II.": {"capacity": 31},
+"III.": {"capacity": 43},
+"IV.": {"capacity": 44},
+"V.": {"capacity": 45},
+"VI.": {"capacity": 43},
+"VII.": {"capacity": 42},
+"VIII.": {"capacity": 38},
+"IX.": {"capacity": 32},
+"X.": {"capacity": 36},
+"XI.": {"capacity": 32},
+"XII.": {"capacity": 30},
+"XIII.": {"capacity": 45},
+"XIV.": {"capacity": 34},
+"XV.": {"capacity": 34},
+"XVI.": {"capacity": 35},
+"XVII.": {"capacity": 37},
+"XVIII.": {"capacity": 40},
+"XIX.": {"capacity": 30},
+"XX.": {"capacity": 43},
+"XXI.": {"capacity": 38},
+"XXII.": {"capacity": 43},
+"XXIII.": {"capacity": 35},
+"XXIV.": {"capacity": 37},
+"XXV.": {"capacity": 30},
+"XXVI.": {"capacity": 32},
+"XXVII.": {"capacity": 40},
+"XXVIII.": {"capacity": 35},
+"XXIX.": {"capacity": 44},
+"XXX.": {"capacity": 31}
+}
+

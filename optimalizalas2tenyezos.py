@@ -1,8 +1,8 @@
 import data_loader
 import math
 
-classes = data_loader.load_classes(r'C:\Users\Brendi\Documents\Szakdoga\osztalyok.csv')
-rooms = data_loader.load_rooms(r'C:\Users\Brendi\Documents\Szakdoga\tantermek.csv')
+classes = data_loader.load_classes(r'osztalyok.csv')
+rooms = data_loader.load_rooms(r'tantermek.csv')
 NUM_CLASSES = len(classes)
 NUM_ROOMS = len(rooms)
 

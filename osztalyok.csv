@@ -8,6 +8,24 @@
 "9.A";9;"biology";"base";2;31
 "9.A";9;"music";"base";1;31
 "9.A";9;"P.E.";"base";3;31
+
+{
+    "classes": {
+        "9.A": {
+            "grade": 9,
+            "headcount": 31,
+            "subject": {
+                "math": {
+                    "type": "base"
+                },
+                "informatics": {
+                    "type": "base"
+                }
+            }
+        }
+    }
+}
+
 "9.B";9;"math";"base";4;37
 "9.B";9;"informathics";"base";3;37
 "9.B";9;"physics";"base";2;37

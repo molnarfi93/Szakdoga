@@ -7,8 +7,8 @@ SIZE_POPULATION = 100
 NUM_GENERATIONS = 100
 MUTATION_RATE = 5
 
-rooms = data_loader.load_rooms(r'C:\Users\Brendi\Documents\Szakdoga\tantermek.csv')
-teachers = data_loader.load_teachers(r'C:\Users\Brendi\Documents\Szakdoga\tanarok.csv')
+rooms = data_loader.load_rooms(r'tantermek.csv')
+teachers = data_loader.load_teachers(r'tanarok.csv')
 NUM_CLASSES = len(classes)
 NUM_ROOMS = len(rooms)
 NUM_TEACHERS = len(teachers)

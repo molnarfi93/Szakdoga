@@ -1,7 +1,7 @@
 from optimalizalas2tenyezos import classes, NUM_CLASSES
 import data_loader
 
-teachers = data_loader.load_teachers(r'C:\Users\Brendi\Documents\Szakdoga\tanarok.csv')
+teachers = data_loader.load_teachers(r'tanarok.csv')
 NUM_TEACHERS = len(teachers)
 
 pairings = [[] for _ in range(len(classes))]
