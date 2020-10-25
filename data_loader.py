@@ -1,41 +1,40 @@
-import csv
 from klass import Class
 from room import Room
 from teacher import Teacher
+import json
 
 
-def load_classes(csv_path):
+@staticmethod
+def load_classes(json_path):
     classes = []
-    with open(csv_path) as csv_classes:
-        reader = csv.reader(csv_classes, delimiter=';')
-        for row in reader:
-            row[1] = int(row[1])
-            row[4] = int(row[4])
-            row[5] = int(row[5])
-            classes.append(row)
-    for i in range(len(classes)):
-        classes[i] = Class(classes[i][0], classes[i][1], classes[i][2], classes[i][3], classes[i][4], classes[i][5], i)
+    with open(json_path) as json_file:
+        classes_data = json.load(json_file)['classes']
+    for no, datas in classes_data.items():
+        klass = Class(no, datas['name'], datas['grade'], datas['subject'], datas['weekly_periods'], datas['headcount'])
+        classes.append(klass)
     return classes
 
 
-def load_rooms(csv_path):
+@staticmethod
+def load_rooms(json_path):
     rooms = []
-    with open(csv_path) as csv_rooms:
-        reader = csv.reader(csv_rooms, delimiter=';')
-        for row in reader:
-            row[1] = int(row[1])
-            rooms.append(row)
-    for i in range(len(rooms)):
-        rooms[i] = Room(rooms[i][0], rooms[i][1])
+    with open(json_path) as json_file:
+        classes_data = json.load(json_file)['rooms']
+    for name, datas in classes_data.items():
+        room = Room(name, datas['capacity'])
+        rooms.append(room)
     return rooms
 
 
-def load_teachers(csv_path):
+@staticmethod
+def load_teachers(json_path):
     teachers = []
-    with open(csv_path) as csv_teachers:
-        reader = csv.reader(csv_teachers, delimiter=';')
-        for row in reader:
-            teachers.append(row)
-    for i in range(len(teachers)):
-        teachers[i] = Teacher(teachers[i][0], teachers[i][1], teachers[i][2])
-    return teachers
+    with open(json_path) as json_file:
+        classes_data = json.load(json_file)['teachers']
+    for name in classes_data.items():
+        teacher = Teacher(name)
+        for subject_name in classes_data['subjects'].items():
+            subject = subject_name
+            teacher.subjects.append(subject)
+        teachers.append(teacher)
+    return teacher
