@@ -1,74 +1,71 @@
-import data_loader
-from optimalizalas3tenyezos import classes
+from optimalizalas3tenyezos import groups, teachers
+from optimalizalas2tenyezos import rooms
 import random
 
 NUM_TIME_WINDOWS = 45
 SIZE_POPULATION = 100
 NUM_GENERATIONS = 100
 MUTATION_RATE = 5
-
-rooms = data_loader.load_rooms(r'tantermek.csv')
-teachers = data_loader.load_teachers(r'tanarok.csv')
-NUM_CLASSES = len(classes)
+NUM_GROUPS = len(groups)
 NUM_ROOMS = len(rooms)
 NUM_TEACHERS = len(teachers)
 MAX_PERIODS = NUM_TEACHERS
 
 
-def getRandomGen():
+def getRandomGen(sum_periods):
     gen = []
-    seated_classes = []
-    viewed_classes = []
-    for i in range(MAX_PERIODS):
+    seated_groups = []
+    viewed_groups = []
+    for _ in range(MAX_PERIODS):
         while True:
-            if len(viewed_classes) == NUM_CLASSES:
+            if len(viewed_groups) == NUM_GROUPS:
                 return gen
-            rand = classes[random.randint(0, NUM_CLASSES - 1)]
-            boole = False
-            for k in range(len(viewed_classes)):
-                if rand.no == viewed_classes[k]:
-                    boole = True
+            rand = groups[random.randint(0, NUM_GROUPS - 1)]
+            ok = False
+            for viewed_group in range(len(viewed_groups)):
+                if rand.no == viewed_groups[viewed_group]:
+                    ok = True
                     break
-            if not boole:
-                viewed_classes.append(rand.no)
-                if rand.sum_periods < rand.weekly_periods:
-                    found = True
-                    for k in range(len(seated_classes)):
-                        if (rand.name == seated_classes[k].name) or (rand.grade == seated_classes[k].grade and rand.type != seated_classes[k].type):
-                            found = False
+            if not ok:
+                viewed_groups.append(rand.no)
+                if sum_periods[rand.no] < rand.weekly_periods:
+                    ok = True
+                    for seated_group in range(len(seated_groups)):
+                        if (rand.name == seated_groups[seated_group].name) or (rand.grade == seated_groups[seated_group].grade and rand.type != seated_groups[seated_group].type):
+                            ok = False
                             break
-                        elif rand.room == seated_classes[k].room:
-                            found = False
+                        elif rand.room == seated_groups[seated_group].room:
+                            ok = False
                             break
-                        elif rand.teacher == seated_classes[k].teacher:
-                            found = False
+                        elif rand.teacher == seated_groups[seated_group].teacher:
+                            ok = False
                             break
-                    if found:
-                        seated_classes.append(rand)
-                        classes[rand.no].sum_periods += 1
+                    if ok:
+                        seated_groups.append(rand)
+                        sum_periods[rand.no] += 1
                         gen.append(rand)
                         break
 
 
 def calcError(entity):
     error = 0
-    for i in range(NUM_TIME_WINDOWS):
-        for j in range(len(entity['gens'][i])):
-            classes[entity['gens'][i][j].no].sum_periods += 1
-    for i in range(NUM_CLASSES):
-        error += abs(classes[i].sum_periods - classes[i].weekly_periods)
+    sum_periods = [0] * len(groups)
+    for period in range(NUM_TIME_WINDOWS):
+        for assignment in range(len(entity['gens'][period])):
+            sum_periods[entity['gens'][period][assignment].no] += 1
+    for group in range(NUM_GROUPS):
+        error += abs(sum_periods[group] - groups[group].weekly_periods)
     return error
 
 
 entities = []
-for i in range(SIZE_POPULATION):
-    print(i)
+for entity in range(SIZE_POPULATION):
+    print(entity)
     gens = []
-    for j in range(NUM_TIME_WINDOWS):
-        gens.append(getRandomGen())
-    for j in range(NUM_CLASSES):
-        classes[j].sum_periods = 0
-    entities.append({'gens': gens, 'error': 0, 'id': i})
+    sum_periods = [0] * len(groups)
+    for _ in range(NUM_TIME_WINDOWS):
+        gens.append(getRandomGen(sum_periods))
+    entities.append({'gens': gens, 'error': 0, 'id': entity})
 
 
 def sortEntities():
@@ -91,58 +88,56 @@ def sortEntities():
 total = 0
 counter = 0
 weights = [[] for _ in range(SIZE_POPULATION)]
-for i in range(SIZE_POPULATION):
-    total += i
-    for j in range(counter, total):
-        weights[i].append(j)
+for entity in range(SIZE_POPULATION):
+    total += entity
+    for weight in range(counter, total):
+        weights[entity].append(weight)
     counter = total
 
 
 def selectParent(either_parent):
     while True:
         rand = random.randint(0, total - 1)
-        for i in range(SIZE_POPULATION):
-            for j in range(len(weights[i])):
-                if rand == weights[i][j]:
-                    if entities[i]['id'] != either_parent['id']:
-                        return entities[i]
+        for entity in range(SIZE_POPULATION):
+            for weight in range(len(weights[entity])):
+                if rand == weights[entity][weight]:
+                    if entities[entity]['id'] != either_parent['id']:
+                        return entities[entity]
 
 
-def createChildren(j):
-    either_parent = selectParent({'gens': [], 'error': 0, 'id': j})
+def createChildren(entity):
+    either_parent = selectParent({'gens': [], 'error': 0, 'id': entity})
     other_parent = selectParent(either_parent)
-    child = {'gens': [], 'error': 0, 'id': j}
+    child = {'gens': [], 'error': 0, 'id': entity}
     crossover_point = random.randint(0, NUM_TIME_WINDOWS)
-    for i in range(crossover_point):
-        child['gens'].append(either_parent['gens'][i])
-    for i in range(crossover_point, NUM_TIME_WINDOWS):
-        child['gens'].append(other_parent['gens'][i])
+    for gen in range(crossover_point):
+        child['gens'].append(either_parent['gens'][gen])
+    for gen in range(crossover_point, NUM_TIME_WINDOWS):
+        child['gens'].append(other_parent['gens'][gen])
     mutation = random.randint(1, 100)
     if mutation > 100 - MUTATION_RATE:
-        randomentity = random.randint(0, SIZE_POPULATION - 1)
+        randentity = random.randint(0, SIZE_POPULATION - 1)
         muted_gen = random.randint(0, NUM_TIME_WINDOWS - 1)
-        tmp = entities[randomentity]['gens'][NUM_TIME_WINDOWS - 1]
-        entities[randomentity]['gens'][NUM_TIME_WINDOWS - 1] = child['gens'][muted_gen]
+        tmp = entities[randentity]['gens'][NUM_TIME_WINDOWS - 1]
+        entities[randentity]['gens'][NUM_TIME_WINDOWS - 1] = child['gens'][muted_gen]
         child['gens'][muted_gen] = tmp
     child['error'] = calcError(child)
-    for i in range(NUM_CLASSES):
-        classes[i].sum_periods = 0
     return child
 
 
-for i in range(NUM_GENERATIONS):
+for _ in range(NUM_GENERATIONS):
     new_entities = []
-    for j in range(SIZE_POPULATION):
-        new_entities.append(createChildren(j))
+    for entity in range(SIZE_POPULATION):
+        new_entities.append(createChildren(entity))
     entities = new_entities
     sortEntities()
-for i in range (len(entities)):
-    print(entities[i]['error'])
+for entity in range (len(entities)):
+    print(entities[entity]['error'])
 
 best_entity = entities[SIZE_POPULATION - 1]
-for i in range(NUM_TIME_WINDOWS):
-    for j in range(len(best_entity['gens'][i])):
-        print(best_entity['gens'][i][j].name, best_entity['gens'][i][j].subject, best_entity['gens'][i][j].room, best_entity['gens'][i][j].teacher)
+for period in range(NUM_TIME_WINDOWS):
+    for assignment in range(len(best_entity['gens'][period])):
+        print(best_entity['gens'][period][assignment].name, best_entity['gens'][period][assignment].subject, best_entity['gens'][period][assignment].room, best_entity['gens'][period][assignment].teacher)
     print("*****************************************")
 
 
