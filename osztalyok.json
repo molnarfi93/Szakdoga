@@ -1,19 +1,1245 @@
 {
-    "classes": {
-        "9.A": {
-            "grade": 9,
-            "headcount": 31,
-            "subject": {
-                "math": {
-                    "type": "base",
-                    "weekly_periods": 4
-                },
-                "informatics": {
-                    "type": "base",
-                    "weekly_periods": 3
-                }
-            }
-        }
-    }
+	"classes": {
+		"9.A": {
+			"grade": 9,
+			"headcount": 31,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"physics": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"chemistry": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"music": {
+					"type": "base",
+					"weekly_periods": 1
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"9.B": {
+			"grade": 9,
+			"headcount": 37,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"physics": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"chemistry": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"music": {
+					"type": "base",
+					"weekly_periods": 1
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"9.C": {
+			"grade": 9,
+			"headcount": 43,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"physics": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"chemistry": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"music": {
+					"type": "base",
+					"weekly_periods": 1
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"9.D": {
+			"grade": 9,
+			"headcount": 43,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"physics": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"chemistry": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"music": {
+					"type": "base",
+					"weekly_periods": 1
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"9.E": {
+			"grade": 9,
+			"headcount": 34,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"physics": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"chemistry": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"music": {
+					"type": "base",
+					"weekly_periods": 1
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"10.A": {
+			"grade": 10,
+			"headcount": 33,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"physics": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"chemistry": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"music": {
+					"type": "base",
+					"weekly_periods": 1
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"10.B": {
+			"grade": 10,
+			"headcount": 39,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"physics": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"chemistry": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"music": {
+					"type": "base",
+					"weekly_periods": 1
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"10.C": {
+			"grade": 10,
+			"headcount": 40,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"physics": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"chemistry": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"music": {
+					"type": "base",
+					"weekly_periods": 1
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"10.D": {
+			"grade": 10,
+			"headcount": 36,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"physics": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"chemistry": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"music": {
+					"type": "base",
+					"weekly_periods": 1
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"10.E": {
+			"grade": 10,
+			"headcount": 33,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"physics": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"chemistry": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"music": {
+					"type": "base",
+					"weekly_periods": 1
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"11.A": {
+			"grade": 11,
+			"headcount": 45,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"drawing": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"11.B": {
+			"grade": 11,
+			"headcount": 31,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"drawing": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"11.C": {
+			"grade": 11,
+			"headcount": 31,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"drawing": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"11.D": {
+			"grade": 11,
+			"headcount": 32,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"drawing": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"11.E": {
+			"grade": 11,
+			"headcount": 32,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"drawing": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"12.A": {
+			"grade": 12,
+			"headcount": 39,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"drawing": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"12.B": {
+			"grade": 12,
+			"headcount": 39,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"drawing": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"12.C": {
+			"grade": 12,
+			"headcount": 30,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"drawing": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"12.D": {
+			"grade": 12,
+			"headcount": 44,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"drawing": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"12.E": {
+			"grade": 12,
+			"headcount": 41,
+			"subjects": {
+				"math": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"informathics": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"hungarian": {
+					"type": "base",
+					"weekly_periods": 4
+				},
+				"history": {
+					"type": "base",
+					"weekly_periods": 3
+				},
+				"geography": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"biology": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"drawing": {
+					"type": "base",
+					"weekly_periods": 2
+				},
+				"P.E.": {
+					"type": "base",
+					"weekly_periods": 3
+				}
+			}
+		},
+		"english9base": {
+			"grade": 9,
+			"headcount": 38,
+			"subjects": {
+				"english": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"english9med": {
+			"grade": 9,
+			"headcount": 38,
+			"subjects": {
+				"english": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"english9high": {
+			"grade": 9,
+			"headcount": 38,
+			"subjects": {
+				"english": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"german9": {
+			"grade": 9,
+			"headcount": 37,
+			"subjects": {
+				"german": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"spanish9": {
+			"grade": 9,
+			"headcount": 37,
+			"subjects": {
+				"spanish": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"english10base": {
+			"grade": 10,
+			"headcount": 37,
+			"subjects": {
+				"english": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"english10med": {
+			"grade": 10,
+			"headcount": 36,
+			"subjects": {
+				"english": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"english10high": {
+			"grade": 10,
+			"headcount": 36,
+			"subjects": {
+				"english": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"german10": {
+			"grade": 10,
+			"headcount": 36,
+			"subjects": {
+				"german": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"spanish10": {
+			"grade": 10,
+			"headcount": 36,
+			"subjects": {
+				"spanish": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"english11base": {
+			"grade": 11,
+			"headcount": 35,
+			"subjects": {
+				"english": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"english11med": {
+			"grade": 11,
+			"headcount": 34,
+			"subjects": {
+				"english": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"english11high": {
+			"grade": 11,
+			"headcount": 34,
+			"subjects": {
+				"english": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"german11": {
+			"grade": 11,
+			"headcount": 34,
+			"subjects": {
+				"german": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"spanish11": {
+			"grade": 11,
+			"headcount": 34,
+			"subjects": {
+				"spanish": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"english12base": {
+			"grade": 12,
+			"headcount": 39,
+			"subjects": {
+				"english": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"english12med": {
+			"grade": 12,
+			"headcount": 39,
+			"subjects": {
+				"english": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"english12high": {
+			"grade": 12,
+			"headcount": 39,
+			"subjects": {
+				"english": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"german12": {
+			"grade": 12,
+			"headcount": 38,
+			"subjects": {
+				"german": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"spanish12": {
+			"grade": 12,
+			"headcount": 38,
+			"subjects": {
+				"spanish": {
+					"type": "lang",
+					"weekly_periods": 4
+				}
+			}
+		},
+		"mathfact11": {
+			"grade": 11,
+			"headcount": 18,
+			"subjects": {
+				"math": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"infofact11": {
+			"grade": 11,
+			"headcount": 17,
+			"subjects": {
+				"informathics": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"physicsfact11": {
+			"grade": 11,
+			"headcount": 17,
+			"subjects": {
+				"physics": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"chemfact11": {
+			"grade": 11,
+			"headcount": 17,
+			"subjects": {
+				"chemistry": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"hunfact11": {
+			"grade": 11,
+			"headcount": 17,
+			"subjects": {
+				"hungarian": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"historyfact11": {
+			"grade": 11,
+			"headcount": 17,
+			"subjects": {
+				"history": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"geofact11": {
+			"grade": 11,
+			"headcount": 17,
+			"subjects": {
+				"geography": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"biofact11": {
+			"grade": 11,
+			"headcount": 17,
+			"subjects": {
+				"biology": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"musicfact11": {
+			"grade": 11,
+			"headcount": 17,
+			"subjects": {
+				"music": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"p.e.fact11": {
+			"grade": 11,
+			"headcount": 17,
+			"subjects": {
+				"P.E.": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"mathfact12": {
+			"grade": 12,
+			"headcount": 20,
+			"subjects": {
+				"math": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"infofact12": {
+			"grade": 12,
+			"headcount": 20,
+			"subjects": {
+				"informathics": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"physicsfact12": {
+			"grade": 12,
+			"headcount": 20,
+			"subjects": {
+				"physics": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"chemfact12": {
+			"grade": 12,
+			"headcount": 19,
+			"subjects": {
+				"chemistry": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"hunfact12": {
+			"grade": 12,
+			"headcount": 19,
+			"subjects": {
+				"hungarian": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"historyfact12": {
+			"grade": 12,
+			"headcount": 19,
+			"subjects": {
+				"history": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"geofact12": {
+			"grade": 12,
+			"headcount": 19,
+			"subjects": {
+				"geography": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"biofact12": {
+			"grade": 12,
+			"headcount": 19,
+			"subjects": {
+				"biology": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"musicfact12": {
+			"grade": 12,
+			"headcount": 19,
+			"subjects": {
+				"music": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		},
+		"p.e.fact12": {
+			"grade": 12,
+			"headcount": 19,
+			"subjects": {
+				"P.E.": {
+					"type": "fact",
+					"weekly_periods": 2
+				}
+			}
+		}
+	}
 }
 
