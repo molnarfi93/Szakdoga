@@ -1,36 +1,30 @@
-from optimalizalas2tenyezos import classes, NUM_CLASSES
+from optimalizalas2tenyezos import groups, NUM_GROUPS
 import data_loader
 
 teachers = data_loader.load_teachers(r'C:\Users\Brendi\Documents\Szakdoga\tanarok.json')
 NUM_TEACHERS = len(teachers)
 
-pairings = [[] for _ in range(len(classes))]
-for i in range(NUM_CLASSES):
-    for j in range(NUM_TEACHERS):
-        for k in range(len(teachers[j].subjects)):
-            if classes[i].subject == teachers[j].subjects[k]:
-                pairings[i].append(1)
+pairings = [[] for _ in range(len(groups))]
+for group in range(NUM_GROUPS):
+    for teacher in range(NUM_TEACHERS):
+        for subject in range(len(teachers[teacher].subjects)):
+            if groups[group].subject == teachers[teacher].subjects[subject]:
+                pairings[group].append(1)
             else:
-                pairings[i].append(0)
+                pairings[group].append(0)
 
-sum_periods = []
-for i in range(NUM_TEACHERS):
-    sum_periods.append(0)
-
-for i in range(NUM_CLASSES):
-    for j in range(NUM_TEACHERS):
-        boole = False
-        if pairings[i][j] == 1:
-            for k in range(j, NUM_TEACHERS):
-                if (sum_periods[k] < sum_periods[j]) & (pairings[i][k] == 1):
-                    boole = True
-            if not boole:
-                classes[i].teacher = teachers[j].name
-                sum_periods[j] += classes[i].weekly_periods
+sum_periods = [0] * len(teachers)
+for group in range(NUM_GROUPS):
+    for teacher in range(NUM_TEACHERS):
+        paired = False
+        if pairings[group][teacher] == 1:
+            for other_teacher in range(teacher, NUM_TEACHERS):
+                if (sum_periods[other_teacher] < sum_periods[teacher]) & (pairings[group][other_teacher] == 1):
+                    paired = True
+            if not paired:
+                groups[group].teacher = teachers[teacher].name
+                sum_periods[teacher] += groups[group].weekly_periods
                 break
 
-for i in range(NUM_CLASSES):
-    print(classes[i].name, classes[i].subject, classes[i].teacher)
-
-
-
+for group in range(NUM_GROUPS):
+    print(groups[group].name, groups[group].subject, groups[group].teacher)
