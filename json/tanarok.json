@@ -1,0 +1,240 @@
+{
+	"teachers": {
+		"Molnárfi": {
+			"subjects": [
+				"math",
+				"informathics"
+			],
+		        "balance": 3,
+			"extremisms": 3
+		},
+		"Molnár": {
+			"subjects": [
+				"math",
+				"informathics"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Balogh": {
+			"subjects": [
+				"math",
+				"informathics"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Szabó": {
+			"subjects": [
+				"math",
+				"physics"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Kovács": {
+			"subjects": [
+				"math",
+				"physics"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Varga": {
+			"subjects": [
+				"math",
+				"physics"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Kiss": {
+			"subjects": [
+				"math",
+				"chemistry"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Nagy": {
+			"subjects": [
+				"math",
+				"chemistry"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Horváth": {
+			"subjects": [
+				"hungarian",
+				"history"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Németh": {
+			"subjects": [
+				"hungarian",
+				"history"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Magyar": {
+			"subjects": [
+				"hungarian",
+				"history"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Fehér": {
+			"subjects": [
+				"hungarian",
+				"english"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Fekete": {
+			"subjects": [
+				"hungarian",
+				"english"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Nehéz": {
+			"subjects": [
+				"hungarian",
+				"english"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Könnyű": {
+			"subjects": [
+				"hungarian",
+				"german"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Kemény": {
+			"subjects": [
+				"hungarian",
+				"german"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Szilárd": {
+			"subjects": [
+				"history",
+				"geography"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Széles": {
+			"subjects": [
+				"history",
+				"geography"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Vékony": {
+			"subjects": [
+				"history",
+				"geography"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Lisztes": {
+			"subjects": [
+				"history",
+				"english"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Vajas": {
+			"subjects": [
+				"history",
+				"english"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Búzás": {
+			"subjects": [
+				"biology",
+				"english"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Sós": {
+			"subjects": [
+				"biology",
+				"drawing"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Keserű": {
+			"subjects": [
+				"biology",
+				"drawing"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Borsos": {
+			"subjects": [
+				"music",
+				"spanish"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Paprikás": {
+			"subjects": [
+				"music",
+				"spanish"
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Káposztás": {
+			"subjects": [
+				"P.E."
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Burgonyás": {
+			"subjects": [
+				"P.E."
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Tésztás": {
+			"subjects": [
+				"P.E."
+			],
+			"balance": 3,
+			"extremisms": 3
+		},
+		"Kenyeres": {
+			"subjects": [
+				"P.E."
+			],
+			"balance": 3,
+			"extremisms": 3
+		}
+	}
+}
