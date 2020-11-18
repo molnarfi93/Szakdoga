@@ -1,0 +1,44 @@
+A probléma leképezése a genetikus algoritmus összetevőire:
+-egyed: időablak (pl. kedd 10-11 óra), melyben tanórák kerülnek megtartásra, különböző
+        termekben, különböző tanárokkal, különböző osztályoknak. Az időintervallum nem kerül
+        rögzítésre az egyes egyedeknél, mert ez esetben nem lehetne genetikus algoritmussal
+        dolgozni egyrészt, másrészt szükség sincs rá, mert sorrendileg bármelyik időablak
+        felcserélhető lesz bármelyik időablakkal, miután elértük a célt: az
+        ütközésmentességet. Python nyelvet használok, ahol az implementáció szótár típus lesz,
+        3 adattaggal: kulcs szerepű azonosító (egész szám), az egyedhez aktuálisan tartozó
+        gének, vagyis az időablakban levő tanórákra való referenciák (tömb), az optimumtól
+        való eltérés, vagyis a büntetőfüggvények értékei (tömb). Az egyedek összességét,
+        vagyis a populációt listában tároljuk.
+-gén: tanóra, ami egy osztály-tanár-tanterem-tantárgy négyes, plusz egy azonosító, melynek
+      segítségével lehet hivatkozni a tanórára. Implementációja szótár. A gének összességét
+      pedig listában tároljuk. Egy adott tantárgy egy időablakban többször is előfordulhat,
+      viszont egy osztály, tanár, tanterem csak egyszer, ezért ezeknek a kapcsán
+      büntetőfüggvényt tartunk számon. Ha többször is előfordul az adott időablakban mondjuk
+      egy osztály, akkor az osztály-büntetőfüggvény értékét növeljük az előfordulások 
+      száma-1 értékkel, miután az összes osztályt végigvettük, kialakul a büntetőfüggvény
+      végső értéke. Ugyanígy járunk el a tanárok és tantermek esetében is. Ezekhez az
+      értékekhez a tanórák kulcs adattagján keresztül fér hozzá az időablak egyed.
+-célfüggvény: a 3-féle büntetőfüggvény összesítésével kapott függvény, melynek optimális
+              értéke 0. Csak ebben az esetben nincs ütközés. A büntetőfüggvények értékeit
+              súlyozva vesszük számításba annak megfelelően, hogy az adathalmazban mik
+              a darabszámok egymáshoz viszonyított arányai. Az én adathalmazomban 50 tanterem,
+              30 tanár és 60 osztály lesz, de utóbbira még külön ki kell térni. A 60 osztály
+              között lesz 20 "alaposztály", 20 nyelvi és 20 fakultációs csoport, amiből később
+              ki fog derülni, hogy az következik: egyidőben legfeljebb 30 osztálynak lehet
+              tanórája. Ezáltal a tanterem-büntetőfüggvény értéke 1.67-es súllyal fog
+              szorzódni a tanár-büntetőfüggvényhez és az osztály-büntetőfüggvényhez képest.
+              Miután összeadjuk őket, megkapjuk a célfüggvény értékét.
+-öröklődés: egypontos keresztezéssel. A kromoszómák hossza, vagyis az egyedek génjeinek
+            száma eltérő lehet, ezért maximálnunk kell, hogy az 1. és hanyadik gén között
+            lehessen keresztezési pont, vagyis mi legyen a véletlenszám-generálás felső
+            határa. Ezt a maximális értéket az adathalmaz méretének ismeretében határozzuk
+            meg, és ez így egyben a keresztezés valószínűségi értékének meghatározására is
+            alkalmas lehet.
+-mutáció: ha egy új egyed valamely génjét mutálnunk kell, úgy oldjuk meg, hogy egy
+          véletlenszerűen választott idegen egyed (vagyis nem szülő) sorrendileg utolsó
+          génjét töröljük az idegen egyedből és ugyanakkor az egyedünk mutált génjévé
+          tesszük.
+-szelekció: később kerül meghatározásra.
+
+
+
