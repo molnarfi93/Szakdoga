@@ -1,0 +1,16 @@
+.fejlec{
+           font-size: large;
+           font-style: bold;
+           text-align: left;
+}
+
+.panel{
+           background-color: green;
+           font-size: small;
+           font-style: bold;
+           text-align: left;
+           margin-left: 100px;
+	   margin-top: 100px;
+           box-shadow: 3px 3px 5px 5px black;
+           border-radius: 10px;
+}
