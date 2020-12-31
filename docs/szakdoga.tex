@@ -80,9 +80,15 @@
 
 \begin{document}
 
-\begin{center}
-    \huge \textbf{Órarendgenerálási probléma megoldási lehetőségei} 
-\end{center}
+\tableofcontents
+
+\noindent \textbf{Summary} \hfill{\textbf{50}}
+
+\noindent \textbf{Irodalomjegyzék} \hfill{\textbf{50}}
+
+\noindent \textbf{Adathordozó használati útmutató} \hfill{\textbf{50}}
+
+\section{Bevezetés}
 
 Az iskolák és egyetemek a különböző osztályok, tanárok és tantermek órarendjének 
 elkészítéséhez ma már számítógépes segítséget használnak, hagyományos algoritmusokat és a
@@ -97,67 +103,11 @@ adathalmaz (osztályok, tanárok, tantermek, tantárgyak) megadása után ütkö
 feltételnek eleget tevő órarendeket tudunk generálni, majd grafikus felhasználói felületet 
 hozok létre fölötte, mégpedig webeset.
 
-Számos erre a célre létrehozott szoftver készült már, ingyenes/fizetős, platformfüggetlen/
-valamely platformra létrehozott, interaktív/automatikus. Az interaktív használat itt azt
-jelenti, hogy mi adunk meg órarendet, melynek ütközésmentességét leteszteljük a programmal,
-ami jelzésünkre adja, mi mivel ütközik és milyen lehetőségeink vannak a kiküszöbölésre. 
-A legnépszerűbb applikációkat hasonlítom össze:
--TimeTabler: A legrégebbi, mai napig nagyon népszerű órarendütemező, olyan extra funkciókkal,
-             mint a részmunkaidős tanárok felvétele a rendszerbe és a választható
-             tanóra-időtartamok (szimpla vagy dupla órák). Interaktív módon is használható. 
-             Ingyenesen letölthető egy demo verzió nem megváltoztatható, demo adatokkal és 
-             tutorial videóval. Előfizetés nincs, csak megvásárlás lehetséges. 
-             Platformfüggetlen, telefonos verzióval viszont nem rendelkezik.
--Schedule Builder: Ingyenes, webes alkalmazás. Csak az alapfunkciókkal rendelkezik,
-                   nincsenek extrák, illetve nem elérhető az automatikus használat sem.
-                   Platformfüggetlen.
--Prime TimeTable: Macintosh, Linux, Android és IOS rendszereken egyaránt elérhető, viszont
-                  Windowson nem. Rendelkezik ugyanazokkal a funkciókkal, mint a TimeTabler,
-                  beleértve az interaktív használatot is. 30 napos próbaverzióval vagy éves
-                  előfizetéssel lehet használni.
--aSc TimeTables: A legjobbnak választott órarendgeneráló applikáció. Interaktív és
-                 automatikus használat, extra funkciók, próbaverzió. Előfizetés nincs, csak
-                 megvásárlás lehetséges, használata Windowsra és Macintoshra korlátozódik.
-Mint látható, mindegyik fizetős applikáció rendelkezik automatikus és interaktív használati
-lehetőséggel, valamint az extra funkciókkal. A nyomtatási és exportálási lehetőségekkel
-pedig az ingyenes Schedule Builder is. 
+\section{Előzetes tudnivalók}
 
-Nagyrészt a Guido van Rossum, holland programozó által alkotott Python multiparadigmás 
-(vagyis a procedurális, objektumorientált, funkcionális programozást egyaránt támogató)
-programnyelvet, annak 3.8.2-es verzióját használtam. Jellemzői még az interpreteres 
-feldolgozás (a futtatás közvetlenül a forráskódból történik) és a platformfüggetlenség 
-(mindegyik széles körben elterjedt operációs rendszeren használható). Pythonra épülő
-ismertebb alkalmazások a Plone tartalomkezelő rendszer, a Blender animációs modellező
-és a Torrent fájlmegosztó. Python nyelvben a tömbök alapértelmezetten dinamikusak, vagyis
-listák, valamint a szótár típusú változó is rendelkezésre áll ebben a nyelvben, így 
-kényelmes volt az adatkezelés. Utóbbi adattípus abban különbözik a listától, hogy az 
-elemei rendelkeznek azonosító névvel vagy kóddal, ennek megadásával lehet rájuk hivatkozni, 
-nem tömbindexszel, ami különböző típusú elemek esetén hasznos. A szemétgyűjtés 
-automatikusan történik, nincsen szükség memóriafelszabadításra és memóriafoglalásra az 
-algoritmus során kiszelektálódó, illetve létrejövő egyedek kapcsán, bár mint kiderült,
-erre nem volt szükségem.
+\subsection{A genetikus algoritmus}
 
-A Brendon Eich által kifejlesztett JavaScript (JS) a webprogramozásban nagyon elterjedt
-kliensoldali szkriptnyelv, nehéz megkerülni, mert a HTML csak egy jelölőnyelv. A JavaScript 
-biztosítja a weboldalak interaktivitását is, mert alkalmas az eseményvezérelt programozásra. 
-Multiparadigmás, just-in-time (JIT) compileres. Olyan kiegészítő technológiák, mint a JSON, 
-a Jquery vagy az AJAX, mind elérhetőek beépítetten, továbbá olyan keretrendszereket is 
-használhatunk, mint a Bootstrap vagy a Vue. Ez utóbbi nagyon hasznos volt a számomra, a 
-felhasználói interfészek létrehozásával kapcsolatban, a Vue jobb altenatívát adott az 
-űrlapokkal történő megoldás helyett. Az egyszerűség kedvéért nem is HTML, hanem Vue fájlokat
-készítettem, bennük HMTL kódrésszel. Önmagában a JavaScript-et pedig a router 
-(útvonalválasztó) fájl létrehozásához használtam.
-
-Donald D. Chamberlin SQL nevű adatbáziskezelő nyelve, illetve Richard Hipp SQLite 
-adatbáziskezelő rendszere az, amelyet az adatok letárolására és kezelésére (lekérdezésére, 
-módosítására), a háttérben használtam, a webfejlesztésben érdekelt komolyabb vállalatok 
-többségéhez hasonlóan. Az SQL parancsnyelv relációs adatbázisok kezelésére lett létrehozva, 
-az objektum-relációs leképezéshez pedig Python esetén SQLAlchemy-t használunk, így én is ezt 
-tettem. Erre azért van szükség, mert ha objektum-orientált paradigmát követünk, az adatbázis 
-relációs struktúrája ugyan képes minden szükséges információt megfelelő formában rögzíteni, 
-ezenfelül a viszonyok objektum-orientált feldolgozása szükséges. Az SQLAlchemy automatikus 
-sessionkezelést biztosít, ami jelentősen megkönnyíti a munkát, főleg a felhasználókezeléssel 
-kapcsolatban.
+\subsubsection{Biológiai háttér}
 
 Charles Darwin, angol biológus evolúcióelmélete paradigmaváltást hozott magával a biológiában. 
 Lényege a fajok fennmaradásának, túlélésének genetikai háttére a Föld ökoszisztémáiban 
@@ -180,6 +130,8 @@ jó a populáció számára, mert csökkenti a belterjesség mértékét, a kora
 bekövetkező mutációk segíthetnek az adott ökoszisztémában hasznos, korábban nem jellemző
 tulajdonságok térnyerésében, a későbbi mutációk már hamar elhalnak, nem játszanak szerepet.
 
+\subsubsection{Általánosságban a genetikus algoritmusról}
+
 A genetikus algoritmusokat olyan diszkrét optimalizálási problémák megoldására alkalmazzuk,
 amelyekre nem létezik általános eljárás, a probléma specifikussága, egyedisége következtében.
 Túl sok az ismeretlen és a közöttük levő összefüggések is ismeretlenek, így a rendszernek 
@@ -199,11 +151,15 @@ egy adathalmaz optimális értékekkel rendelkező tagjait az evolúció mozzana
 öröklődés, mutáció) a maga módján leutánzó genetikus algoritmussal, az adott probléma 
 megoldása érdekében. Ahogyan más területeken, úgy itt is leképezzük a valós világot a
 programozás nyelvére, nézzük az analógiákat általánosságban:
--populáció->adathalmaz
--egyed->adathalmaz egy tagja
--gén->adathalmaz egy tagjának egy attribútuma
--túléléshez szükséges tulajdonságok->adathalmaz tagjainak attribútumai
--ezen tulajdonságok kedvező mivolta->az attribútumok optimális értéke
+
+\begin{itemize}
+    \item populáció $\rightarrow$ adathalmaz
+    \item egyed $\rightarrow$ adathalmaz egy tagja
+    \item gén $\rightarrow$ adathalmaz egy tagjának egy attribútuma
+    \item túléléshez szükséges tulajdonságok $\rightarrow$ adathalmaz tagjainak attribútumai
+    \item ezen tulajdonságok kedvező mivolta $\rightarrow$ az attribútumok optimális értéke
+\end{itemize}
+
 A szelekció, öröklődés és mutáció függvények segítségével valósul meg, de ezekkel
 kapcsolatban többféle lehetőség létezik és az adott problémánk ismeretében választjuk ki,
 hogy milyen fajta szelekciós, öröklődési, illetve mutációs eljárást alkalmazunk. Ezekre nem
@@ -218,23 +174,107 @@ ekkor távolodunk az optimális megoldástól. Csakhogy ez az optimális megold�
 hogy csak lokális optimum, ami nekünk nem elég. Ahhoz, hogy a globális optimumot megtaláljuk,
 átmenetileg el kell távolodnunk a már viszonylag jó megoldástól. Nézzük, miként tudjuk
 módosítani a paramétereket a lokális minimumon való megrekedés elkerülése érdekében:
--nagyobb populációval
--a keresztezések és mutációk valószínűségének növelésével
--generációnként kevesebb egyed kiszelektálásával
--de az is előfordulhat, hogy hibát követtünk el a probléma lemodellezése során.
-Ezenkívül egyes, rendkívüli összetettségű problémák esetén lehetséges és érdemes több, 
-egymással kapcsolatban álló populációt létrehozni.
+
+\begin{itemize}
+    \item nagyobb populációval
+    \item a keresztezések és mutációk valószínűségének növelésével
+    \item generációnként kevesebb egyed kiszelektálásával
+    \item de az is előfordulhat, hogy hibát követtünk el a probléma lemodellezése során
+    \item ezenkívül egyes, rendkívüli összetettségű problémák esetén lehetséges és érdemes                 több, egymással kapcsolatban álló populációt létrehozni
+\end{itemize}
+
+\subsection{Kitekintés}
+
+Számos erre a célre létrehozott szoftver készült már, ingyenes/fizetős, platformfüggetlen/
+valamely platformra létrehozott, interaktív/automatikus. Az interaktív használat itt azt
+jelenti, hogy mi adunk meg órarendet, melynek ütközésmentességét leteszteljük a programmal,
+ami jelzésünkre adja, mi mivel ütközik és milyen lehetőségeink vannak a kiküszöbölésre. 
+A legnépszerűbb applikációkat hasonlítom össze:
+
+\begin{itemize}
+    \item \textbf{TimeTabler:} A legrégebbi, mai napig nagyon népszerű órarendütemező, olyan extra funkciókkal,
+             mint a részmunkaidős tanárok felvétele a rendszerbe és a választható
+             tanóra-időtartamok (szimpla vagy dupla órák). Interaktív módon is használható. 
+             Ingyenesen letölthető egy demo verzió nem megváltoztatható, demo adatokkal és 
+             tutorial videóval. Előfizetés nincs, csak megvásárlás lehetséges. 
+             Platformfüggetlen, telefonos verzióval viszont nem rendelkezik.
+    \item \textbf{Schedule Builder:} Ingyenes, webes alkalmazás. Csak az alapfunkciókkal rendelkezik,
+                   nincsenek extrák, illetve nem elérhető az automatikus használat sem.
+                   Platformfüggetlen.
+    \item \textbf{Prime TimeTable:} Macintosh, Linux, Android és IOS rendszereken egyaránt elérhető, viszont
+                  Windowson nem. Rendelkezik ugyanazokkal a funkciókkal, mint a TimeTabler,
+                  beleértve az interaktív használatot is. 30 napos próbaverzióval vagy éves
+                  előfizetéssel lehet használni.
+    \item \textbf{aSc TimeTables:} A legjobbnak választott órarendgeneráló applikáció. Interaktív és
+                 automatikus használat, extra funkciók, próbaverzió. Előfizetés nincs, csak
+                 megvásárlás lehetséges, használata Windowsra és Macintoshra korlátozódik.
+\end{itemize}
+
+Mint látható, mindegyik fizetős applikáció rendelkezik automatikus és interaktív használati
+lehetőséggel, valamint az extra funkciókkal. A nyomtatási és exportálási lehetőségekkel
+pedig az ingyenes Schedule Builder is. 
+
+\subsection{Felhasznált technológiák}
+
+\subsubsection{Python}
+
+Nagyrészt a Guido van Rossum, holland programozó által alkotott Python multiparadigmás 
+(vagyis a procedurális, objektumorientált, funkcionális programozást egyaránt támogató)
+programnyelvet, annak 3.8.2-es verzióját használtam. Jellemzői még az interpreteres 
+feldolgozás (a futtatás közvetlenül a forráskódból történik) és a platformfüggetlenség 
+(mindegyik széles körben elterjedt operációs rendszeren használható). Pythonra épülő
+ismertebb alkalmazások a Plone tartalomkezelő rendszer, a Blender animációs modellező
+és a Torrent fájlmegosztó. Python nyelvben a tömbök alapértelmezetten dinamikusak, vagyis
+listák, valamint a szótár típusú változó is rendelkezésre áll ebben a nyelvben, így 
+kényelmes volt az adatkezelés. Utóbbi adattípus abban különbözik a listától, hogy az 
+elemei rendelkeznek azonosító névvel vagy kóddal, ennek megadásával lehet rájuk hivatkozni, 
+nem tömbindexszel, ami különböző típusú elemek esetén hasznos. A szemétgyűjtés 
+automatikusan történik, nincsen szükség memóriafelszabadításra és memóriafoglalásra az 
+algoritmus során kiszelektálódó, illetve létrejövő egyedek kapcsán, bár mint kiderült,
+erre nem volt szükségem.
+
+\subsubsection{JavaScript és Vue}
+
+A Brendon Eich által kifejlesztett JavaScript (JS) a webprogramozásban nagyon elterjedt
+kliensoldali szkriptnyelv, nehéz megkerülni, mert a HTML csak egy jelölőnyelv. A JavaScript 
+biztosítja a weboldalak interaktivitását is, mert alkalmas az eseményvezérelt programozásra. 
+Multiparadigmás, just-in-time (JIT) compileres. Olyan kiegészítő technológiák, mint a JSON, 
+a Jquery vagy az AJAX, mind elérhetőek beépítetten, továbbá olyan keretrendszereket is 
+használhatunk, mint a Bootstrap vagy a Vue. Ez utóbbi nagyon hasznos volt a számomra, a 
+felhasználói interfészek létrehozásával kapcsolatban, a Vue jobb altenatívát adott az 
+űrlapokkal történő megoldás helyett. Az egyszerűség kedvéért nem is HTML, hanem Vue fájlokat
+készítettem, bennük HMTL kódrésszel. Önmagában a JavaScript-et pedig a router 
+(útvonalválasztó) fájl létrehozásához használtam.
+
+\subsubsection{SQL és SQLAlchemy}
+
+Donald D. Chamberlin SQL nevű adatbáziskezelő nyelve, illetve Richard Hipp SQLite 
+adatbáziskezelő rendszere az, amelyet az adatok letárolására és kezelésére (lekérdezésére, 
+módosítására), a háttérben használtam, a webfejlesztésben érdekelt komolyabb vállalatok 
+többségéhez hasonlóan. Az SQL parancsnyelv relációs adatbázisok kezelésére lett létrehozva, 
+az objektum-relációs leképezéshez pedig Python esetén SQLAlchemy-t használunk, így én is ezt 
+tettem. Erre azért van szükség, mert ha objektum-orientált paradigmát követünk, az adatbázis 
+relációs struktúrája ugyan képes minden szükséges információt megfelelő formában rögzíteni, 
+ezenfelül a viszonyok objektum-orientált feldolgozása szükséges. Az SQLAlchemy automatikus 
+sessionkezelést biztosít, ami jelentősen megkönnyíti a munkát, főleg a felhasználókezeléssel 
+kapcsolatban.
+
+\subsection{Felhasznált szoftverek}
+
+\section{Elméleti kifejtés}
 
 Van egy eredeti problémánk, melyben tényezőink a tantárgyak, tantermek, tanárok és 
 osztályok. Mindenképpen szükség van ennek a felbontására, hogy egyszerűbb részproblámákat kapjunk, melyek megoldhatóak hagyományos algoritmusokkal, illetve hagyományos optimalizálási módszerekkel és együttesen alkotják az órarendgenerálási probléma megoldását. A genetikus algoritmust a plusz feltételeknek lehető legjobban megfelelő órarendek megkapásához fogjuk használni, merthogy ez hagyományos módszerekkel nem megoldható. Ezt onnan lehet tudni, hogy nem tudjuk matematikailag leírni a szükséges algoritmust. A plusz feltételek azok a feltételek, melyek nélkül is érvényes és elfogadható, de nem feltétlenül kielégítő órarendeket kapunk. Esetünkben a kora reggeli/késő délutáni órák számának minimalizálása és a heti óraszámok arányos eloszlása/pénteki órák számának minimalizálása lesznek a plusz feltételek, de lehetne mondjuk a lyukas órák számának minimalizálása is.
 
-\section{Teremhozzárendelési feladat}
+\subsection{Teremhozzárendelési feladat}
+
+\subsubsection{Specifikáció}
 
 Az első részfeladat a teremhozzárendelési, amely kétfázisú lesz. Az első fázisban osztályokat kell hozzárendelni optimálisan a tantermekhez. Ez egy halmazfelbontási feladat, ahogyan az optimalizálásban nevezzük, ami arról szól, hogy az egyik halmaz (osztályok) és másik halmaz (tantermek) elemeihez 1:1 hozzárendelést kell elvégezni, vagyis minden osztályhoz pontosan
 1 tanteremnek kell tartoznia és minden tanteremhez pontosan 1 osztálynak. Mindezt úgy, hogy a legoptimálisabb megoldást kapjuk a kihasználatlanság minimalizálásának szempontjából, mert így elkerülhetjük azt, hogy egy osztály terem nélkül maradjon, miközben létezik olyan hozzárendelés, hogy minden osztálynak jusson terem. A kihasználatlanság az adott terem kapacitásának és az adott osztály létszámának a különbsége. Természetesen amennyiben van olyan osztály, amelynek létszáma nagyobb, mint bármely terem befogadóképessége, vagy több olyan, adott létszámot elérő osztály van, mint ahány terem, amelyik rendelkezik az adott befogadóképességgel, akkor a feladat nem megoldható, így legelőször ezzel kapcsolatban kell ellenőrzést végezni. Feltétel nyilván, hogy egy osztálynak nem lehet órája olyan teremben, amelynek a kapacitása kisebb az osztály létszámánál, ezenkívül egy évfolyam osztályai és az évfolyamon képzett nyelvi, fakultációs vagy egyéb csoportok esetében megengedett ugyanannak a teremnek a hozzárendelése. A második
 fázis azért szükséges, mert egyes termek lehetnek elsősorban adott tantárgy(ak) számára fenntartottak). Itt már nem osztályokat, hanem osztály-tantárgy kettősöket veszünk ("táblázatos" forma), vagyis minden osztályt annyiszor kell számba venni, ahány tantárgy tartozik hozzá. 
 
-\noindent \textbf{A feladat formalizálása}
+\subsubsection{Formalizálás}
 
 \begin{itemize}
     \item $n \in \Bbb{N}$: osztályok száma
@@ -282,6 +322,9 @@ $$i=1, 2, \ldots, n$$
 $$j=1, 2, \ldots, m$$
 
 $$k=1, 2, \ldots, p$$
+
+\subsubsection{Időbonyolultság}
+
 Összes lehetséges esetek száma:
 
 $$P=\prod_{i=1}^n h_i$$
@@ -306,14 +349,15 @@ $$
 
 A növekedési rend a következő: $T(n,m,p)=\sim \Theta (2nm + n^2p^2).$
 
+\subsection{Tanárhozzárendelési feladat}
 
-\section{Tanárhozzárendelési feladat}
+\subsubsection{Specifikáció}
 
 Az osztály-tantárgy kettősökhöz immáron a tanárokat rendeljük hozzá. Ez egy halmazlefedési feladat, ami abban különbözik a halmazfelbontásitól, hogy 1:N hozzárendelés van, ugyanis egy tanárhoz több osztály-tantárgy kettőst is rendelhetünk, sőt ugye kell is többet hozzárendelni. A párosításmátrixban két feltételtől is függ, hogy 0 vagy 1 kerül a rublikába. Egyrészt, hogy az adott tanár tudja-e tanítani az adott tantárgyat, másrészt hogy az adott osztálynak van-e ilyen tárgya.
 A minimalizálás pedig itt arra vonatkozik, hogy minél kisebb legyen a tanárok heti óraszámai közötti eltérés, ne fordulhasson elő, hogy mondjuk míg valaki 30 órát tart egy héten, addig más 5-öt.
 A futtatás után kapott eredményt látva megállapítható, hogy amennyire lehetett, sikerült kiküszöbölni a tanárok egyenlőtlen terhelését, megkaptuk a lehető legoptimálisabb, olyan hozzárendelés-mátrixot, amely meghatározza, hogy egy adott osztálynak egy adott tantárgyat, melyik tanár tartsa.
 
-\noindent \textbf{A feladat formalizálása}
+\subsubsection{Formalizálás}
 
 \begin{itemize}
     \item $n$: osztály-tantárgy kettősök száma
@@ -355,6 +399,8 @@ $$\sum_{j=1}^m \vert o_jX_j-\overline{o}\vert \rightarrow \hbox{min}$$
 
 $$\sum_{j=1}^m A_{ij} X_j=1$$
 
+\subsubsection{Időbonyolultság}
+
 Összes lehetséges esetek száma:
 
 $$P=m^n$$
@@ -386,13 +432,14 @@ $19800$ & $25740$ & $32400$ & $39780$ \\
 \end{tabular}
 $$
 
+\subsection{Időablakok beosztása}
 
-\section{Időablakok beosztása}
+\subsubsection{Specifikáció}
 
 Ennek lényege, hogy a korábbiak alapján kapott osztály-tantárgy-terem-tanár
 hozzárendeléseket ütközésmentesen beosszuk időablakokba. Merthogy egy időablakban nyilván nem szerepelhet többször ugyanaz az osztály, ugyanaz a terem és ugyanaz a tanár sem. Egy időablak legfeljebb annyi hozzárendelést tartalmazhat, amennyi a tanárok száma. Amire még oda kell figyelni, hogy egy osztály-tantárgy kettős annyiszor forduljon elő, amennyi a heti óraszáma az adott osztálynak az adott tárgyból.
 
-\noindent \textbf{A feladat formalizálása}
+\subsubsection{Formalizálás}
 
 \begin{itemize}
     \item $n \in \Bbb{N}$: osztály-tantárgy kettősök száma
@@ -414,6 +461,8 @@ $$\sum_{k=1}^p h_k \in (0,1), \quad \hbox{minden }l\hbox{ időablak esetén.}$$
 $$\sum_{i=1}^n \vert o_i - c_i \vert = 0$$
 
 $$l=1, 2, \ldots, r$$
+
+\subsubsection{Időbonyolultság}
 
 Összes lehetséges esetek száma:
 
@@ -446,24 +495,26 @@ $24400$ & $28960$ & $33520$ & $38080$ \\
 \end{tabular}
 $$
 
-
-\section{Időintervallumok hozzárendelése}
+\subsection{Időintervallumok hozzárendelése}
 
 A megkapott időablakok még nincsenek időintervallumhoz kötve, bármelyik felcserélhető bármelyikkel. Azt a feladatot, hogy a megadott plusz feltételek alapján lehető legoptimálisabban állapítsuk meg, mely időablak mely időintervallumba kerüljön (vagyis a legoptimálisabb legyen az időablakok sorrendje), a genetikus algoritmus végzi el nekünk.
 
+\subsubsection{Probléma modellezése}
+
 \noindent A probléma leképezése a genetikus algoritmus összetevőire:
+
 \begin{itemize}
-    \item \textbf{gén:} egy konkrét, általános- és középiskolák esetén egy óra hosszúságú, 	          főiskolák/egyetemek esetén két óra hosszúságú időintervallum. Implementációja szótár, két elemmel: nap (enum) és a napon belüli időablak (string).
-    \item \textbf{egyed:} az összes időablak sorrendje, az egyedek mibenlétét a gének sorrendje határozza meg. Implementációja szintén szótár, elemei a gének listája, a célfüggvény-érték és az
+    \item \textbf{gén:} Egy konkrét, általános- és középiskolák esetén egy óra hosszúságú, 	          főiskolák/egyetemek esetén két óra hosszúságú időintervallum. Implementációja szótár, két elemmel: nap (enum) és a napon belüli időablak (string).
+    \item \textbf{egyed:} Az összes időablak sorrendje, az egyedek mibenlétét a gének sorrendje határozza meg. Implementációja szintén szótár, elemei a gének listája, a célfüggvény-érték és az
 egyedi azonosító.
-    \item \textbf{populáció:} az egyedek összességét tárolja, melyeknek számát a programozó állapítja meg, a hatékonysági tesztek által. Implementációja lista.
-    \item \textbf{célfüggvény:} esetemben a kora reggeli/késői délutáni órák számát akarom minimalizálni, illetve a napi óraszámok arányos eloszlása/pénteki órák számának minimalizálása is szempont. Minden tanárhoz tartozik egy \textsl{balance} és egy \textsl{extremisms} érték,
+    \item \textbf{populáció:} Az egyedek összességét tárolja, melyeknek számát a programozó állapítja meg, a hatékonysági tesztek által. Implementációja lista.
+    \item \textbf{célfüggvény:} Esetemben a kora reggeli/késői délutáni órák számát akarom minimalizálni, illetve a napi óraszámok arányos eloszlása/pénteki órák számának minimalizálása is szempont. Minden tanárhoz tartozik egy \textsl{balance} és egy \textsl{extremisms} érték,
 melyet a felhasználó ad meg és ezzel skálán rögzíti mennyire fontosak/kevésbé fontosak ezek a különböző szempontok az adott tanároknak. Ezek az értékek adják a célfüggvény súlyozását, melynek értéke ennek megfelelően minden problémás időintervallum esetén növekszik. Minél kisebb a célfüggvény értéke, az egyed annál megfelelőbb.
-    \item \textbf{szelekció:} rátermettség-arányos választással, súlyozott random generátornak köszönhetően. Miután a populáció egyedeit a célfüggvény-értékek alapján sorrendbe rakta a rendező metódusunk, a súlyozott random generátor annak megfelelő valószínűséggel szelektálja ki szülőnek az egyedeket, amilyen helyezést foglalnak el a listán. Ahány egyedből áll a populáció, a legmegfelelőbb egyednek annyiszor nagyobb esélye lesz, mint a leggyengébb egyednek. Amire még oda kell figyelni, hogy ugyanaz az egyed ne kerülhessen kétszer is kiválasztásra a szülők meghatározásakor, mivel az azt jelentené hogy a gyerek anyja egyben az apja is (igaz, a South Park rajzfilmsorozatban találkozhatunk ilyennel)...
-    \item \textbf{keresztezés:} egypontos keresztezéssel. Véletlenszám-generálással döntjük el, hol legyen a keresztezési pont. A nehézséget annak megoldása jelenti, hogy ugyanaz az időablak (vagyis ugyanaz a gén) ne fordulhasson elő többször a gyermek egyedben.
+    \item \textbf{szelekció:} Rátermettség-arányos választással, súlyozott random generátornak köszönhetően. Miután a populáció egyedeit a célfüggvény-értékek alapján sorrendbe rakta a rendező metódusunk, a súlyozott random generátor annak megfelelő valószínűséggel szelektálja ki szülőnek az egyedeket, amilyen helyezést foglalnak el a listán. Ahány egyedből áll a populáció, a legmegfelelőbb egyednek annyiszor nagyobb esélye lesz, mint a leggyengébb egyednek. Amire még oda kell figyelni, hogy ugyanaz az egyed ne kerülhessen kétszer is kiválasztásra a szülők meghatározásakor, mivel az azt jelentené hogy a gyerek anyja egyben az apja is (igaz, a South Park rajzfilmsorozatban találkozhatunk ilyennel)...
+    \item \textbf{keresztezés:} Egypontos keresztezéssel. Véletlenszám-generálással döntjük el, hol legyen a keresztezési pont. A nehézséget annak megoldása jelenti, hogy ugyanaz az időablak (vagyis ugyanaz a gén) ne fordulhasson elő többször a gyermek egyedben.
 \end{itemize}
 
-\noindent \textbf{A feladat formalizálása}
+\subsubsection{Formalizálás}
 
 \begin{itemize}
     \item P: populáció mérete
@@ -486,6 +537,8 @@ b_j+e_j, & \hbox{ha a \textsl{balance}-szal és az \textsl{extremisms}-zel kapcs
 \end{cases} 
 \rightarrow min$$
 
+\subsubsection{Időbonyolultság}
+
 Összes lehetséges esetek száma:
 
 $$P=r^r$$
@@ -493,7 +546,7 @@ $$P=r^r$$
 
 $$P=r!$$
 
-Célfüggvény növekedési rendje: $T(m,n,o)=\Theta(mno)$.
+Célfüggvény növekedési rendje: $T(n,m,o)=\Theta(nmo)$.
 
 Keresztezés növekedési rendje: $T(I)=\sim \Theta(I^2)$.
 
@@ -501,23 +554,11 @@ Mutáció növekedési rendje: $T(I)=\sim \Theta(I)$.
 
 Növekedési rend: $T(P,G,I,n,m,o)=\sim \Theta(G \cdot P \cdot \Theta(nmo) \cdot \Theta(I^2) \cdot \Theta(I))$.
 
-$$
-\begin{tabular}{|l|c|c|}
-\hline
-\multicolumn{3}{|c|}{Gyerek egyed}\\
-\hline
-& \bf{Nap} & \bf{Periódus}\\
-\hline
-Időablak\_1 & hétfő & 17-18\\
-\hline
-Időablak\_2 & csütörtök & 18-19\\
-\hline
-Időablak\_3 & hétfő & 17-18\\
-\hline
-Időablak\_4 & hétfő & 18-19\\
-\hline
-\end{tabular}
-$$
+\section{Fejlesztői dokumentáció}
+
+\subsection{Algoritmizálás}
+
+\subsubsection{Osztálydefiníciók}
 
 \begin{python}
 class Room:
@@ -567,6 +608,8 @@ class Group:
 \end{python}
 
 Legelőször az osztálydefiníciókat láthatjuk. Mint már tudjuk, 4 tényezőnk van az órarendgenerálással kapcsolatban, viszont az osztályok kezelése kétféleképpen történik. A teremhozzárendelési feladat első fázisában még az eredeti formában (\textsl{simple_group}) kezeljük őket, utána viszont már "táblázatos" formában (\textsl{group}). Hogy utóbbi mit jelent, azt korábban már kifejtettem.
+
+\subsubsection{Teremhozzárendelési feladat}
 
 \begin{python}
 pairings = [[] for _ in range(len(simple_groups))]
@@ -649,6 +692,8 @@ for simple_group in range(len(simple_groups)):
 
 A teremhozzárendelési feladat második fázisában a \textsl{createTable} metódus segítségével a \textsl{simple_group} típusú osztály objektumainkat \textsl{group} típusúakká alakítjuk, majd minden osztály esetében végignézzük az összes hozzá tartozó tantárgyat. Ha találunk olyan tárgya(ka)t, mely(ek)hez van "speciális" terem/termek, de az első fázis során hozzárendelt terem nem ilyen, akkor az osztály úgymond költözni fog az adott tantárgy kapcsán (vagyis az adott osztály-tantárgy kettőshöz másik terem rendelődik hozzá). Kivéve ha nagyobb a létszámuk minden ilyen terem befogadóképességénél, ez esetben maradnak az eredetileg hozzárendelt teremben (vagyis az adott osztály-tantárgy kettőshöz ugyanazt a termet rendeljük hozzá).
 
+\subsubsection{Tanárhozzárendelési feladat}
+
 \begin{python}
 pairings = [[] for _ in range(len(groups))]
 for group in range(len(groups)):
@@ -680,6 +725,8 @@ for group in range(len(groups)):
 
 Következő a tanárhozzárendelési feladat. Először itt is egy párosításmátrixot készítünk el, ami ezúttal tanárokat és osztály-tantárgy kettősöket vizsgál. Végigmegyünk a tanárok \textsl{subjects} nevű, tömb típusú attribútumának elemein és ha találunk köztük olyat, ami megegyezik az adott osztály-tantárgy kettős tantárgy attribútumának értékével, akkor 1 kerül a "rublikába", ellenkező esetben 0.
 A második algoritmus elvégzi a hozzárendeléseket, két dolgot vizsgálva. Az egyik a párosításmátrix értéke az adott tanár és osztály-tantárgy kettős viszonylatában, ami mindenféleképpen 1 kell, hogy legyen, a másik pedig, hogy van-e olyan másik tanár, aki szintén tudja tanítani az adott tárgyat és a heti óraszámának aktuális értéke kisebb. Ha nincs ilyen, akkor megtaláltuk azt a tanárt, akinek hozzárendelése optimális eredményre vezet az egyes tanárok terhelése közti különbségek minimalizálása kapcsán. Ez esetben hozzárendeljük őt az osztály-tantárgy kettőshöz.
+
+\subsubsection{Időablakok beosztása}
 
 \begin{python}
 DAILY_PERIODS = end_time - begin_time
@@ -734,6 +781,8 @@ for period in range(NUM_TIME_WINDOWS):
 \end{python}
 
 Következő az időablakok beosztása. Itt már előre definiált konstansok is vannak. A felhasználó adja meg, hogy mettől meddig terjedjenek a napi időintervallumok, amely értékek a \textsl{begin_time} és \textsl{end_time} változókban adódnak át. Pl. ha reggel 7 és délután 4 óra között van tanítás az egyes napokon, akkor a \textsl{begin_time} 7, az \textsl{end_time} pedig 16 lesz, a \textsl{DAILY_PERIODS} konstans pedig a kettő különbségeként 9, ennyi időablak lesz egy napon. A \textsl{NUM_TIME_WINDOWS} a heti összes időablak száma, ami így ennek ötszöröse, a \textsl{MAX_ASSIGNMENTS} által pedig azt rögzítjük, legfeljebb hány osztály-tantárgy-terem-tanár hozzárendelés lehet egy időablakban, ami a tanárok számával lesz megegyező. A lényegi részt a \textsl{getPeriod()} metódus adja, ami két feltételnek eleget tevő megoldást szolgáltat. Az egyik az ütközésmentesség, vagyis hogy egy időablakban ugyanaz az osztály, ugyanaz a terem és ugyanaz a tanár sem fordulhat elő többször, sőt egy alaposztály és annak évfolyamán képzett nyelvi, fakultációs vagy egyéb osztály, illetve utóbbiak közül egyszerre több sem kerülhet ugyanabba az időablakba. A másik, hogy egy osztály-tantárgy kettősnek annyiszor kell összesen előfordulnia, amennyi a rögzített heti óraszáma az adott osztálynak az adott tárgyból. Ezt a \textsl{getPeriod()} metódust aztán annyiszor hívjuk meg, amennyi a heti összes időablak száma. Az, hogy ez elegendő legyen, vagyis minden tanórának jusson időablak, a felhasználó felelőssége.
+
+\subsubsection{Időintervallumok hozzárendelése genetikus algoritmussal}
 
 \begin{python}
 SIZE_POPULATION = 100
@@ -843,6 +892,32 @@ def createChildren(entity):
 
 Miután megvan, kik lesznek a szülők, annak eldöntésére, hogy tiszta örökés legyen (az egyik szülő teljes génkészletének öröklése), keresztezés és/vagy mutáció, újabb véletlenszám generálásokra van szükség. A keresztezési ráta (\textsl{CROSSOVER_RATE}) és a mutációs ráta (\textsl{MUTATION_RATE}) értéke határozza meg a különböző esetek bekövetkezésének valószínűségét, melyek mind külön metóduson keresztül kerülnek megvalósításra.
 
+\begin{figure}
+\includegraphics[width=\linewidth]{C:/Users/Brendi/Documents/Szakdoga/pictures/pelda.png}
+\caption{A keresztezés problematikája}
+\end{figure}
+
+\begin{table}
+\caption{Gyerek egyed}
+$$
+\begin{tabular}{|l|c|c|}
+\hline
+\multicolumn{3}{|c|}{Gyerek egyed}\\
+\hline
+& \bf{Nap} & \bf{Periódus}\\
+\hline
+Időablak\_1 & hétfő & 17-18\\
+\hline
+Időablak\_2 & csütörtök & 18-19\\
+\hline
+Időablak\_3 & hétfő & 17-18\\
+\hline
+Időablak\_4 & hétfő & 18-19\\
+\hline
+\end{tabular}
+$$
+\end{table}
+
 \begin{python}
 def crossover(either_parent, other_parent):
     child = {'gens': {'days': [], 'periods': []}, 'diff': 0, 'id': entity}
@@ -922,6 +997,52 @@ for day in range(len(time_windows)):
 
 A generációk száma előre nem meghatározott, mert a tesztelés során kiderült, hogy az egyedek célfüggvény értékei konvergálnak az optimumhoz (a minimális értékhez) és nem csak a legjobb egyed éri el, hanem mind. Ebből kifolyólag olyan feltételhez kötöttem a leállást, hogy a legjobb egyed célfüggvény értékének meg kell egyeznie a legrosszabb egyed célfüggvény értékével. Vagyis az összes egyed célfüggvény értékének megegyezőnek kell lenni.
 
+\subsection{Adatbázis}
+
+\begin{figure}
+\includegraphics[width=\linewidth]{C:/Users/Brendi/Documents/Szakdoga/pictures/ermodell.png}
+\caption{Az ER modell}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=\linewidth]{C:/Users/Brendi/Documents/Szakdoga/pictures/relmodell.png}
+\caption{A relációs modell}
+\end{figure}
+
+Adatbázist kellett használni a felhasználók által létrehozott órarendek adatainak letárolásához és felhozásához. Ahogyan az ER modellben látható, 4 entitás van (osztály, tantárgy, terem, tanár), de a több-több kapcsolatok miatt további táblákat is létre kellett hozni, a relációs modell már tartalmazza ezeket. 1:N kapcsolat van az osztály-tantárgy kapcsolótábla és a tanár tábla között, a többi kapcsolat N:M (osztály-tantárgy, terem-tantárgy, tanár-tantárgy). A terem-tantárgy kapcsolatok opcionálisak, mert nem muszáj tantárgynak tartoznia egy adott teremhez, ahogyan egy adott tantárgyhoz sem muszáj, hogy tartozzon terem, a többi kapcsolat kötelező. A lenti példákban látható, hogyan néz ki Python-ban az adatbázis tábláinak definiálása osztályként, az egyik példa egyszerű táblát, a másik kapcsolótáblát mutat be. Az osztály-tantárgy kapcsolótábla tanár idegen kulcsának értéke alapértelmezetten üres string. Ennek oka, hogy a felhasználó új órarend létrehozásakor eldöntheti, maunálisan akarja-e majd hozzárendelni az osztály-tantárgy kettősökhöz a tanárokat, amennyiben nem, akkor is léteznie kell ennek az attribútumnak, de addig üres string marad az értéke, amíg a tanárhozzárendelési algoritmus során kapott eredmények nem tárolódnak az adatbázisban, és a felhasználó által közvetlenül nem megváltoztatható.
+
+\begin{python}
+class Teacher(Base):
+    __tablename__ = "rooms"
+
+    name = Column(String, primary_key=True)
+    balance = Column(Integer, default=3)
+    extremisms = Column(Integer, default=3)
+\end{python}
+
+\begin{python}
+class Contact_group_subject(Base):
+    __tablename__ = "group-subject"
+
+    group = Column(String, ForeignKey(group.name))
+    subject = Column(String, ForeignKey(subject.name))
+    type = Column(String)
+    weekly_periods = Column(Integer)
+    teacher = Column(String, ForeignKey(teacher.name), default="")
+\end{python}
+
+\subsection{Webalkalmazás}
+
+\subsection{Felhasználói dokumentáció}
+
+\subsection{Tesztelés}
+
+\section{Összefoglalás}
+
+\textbf{Summary}
+
+\textbf{Irodalomjegyzék}
+
 \bibliographystyle{acm}
 \bibliography{references}
 \noindent [1]\quad $https://www.uni-miskolc.hu/~matka/Dokumentumok/EP\_feladatok.pdf$
@@ -932,5 +1053,6 @@ Commonwealth Scientific and Industrial Scientific Organisation (CSIRO), Australi
 \noindent [3]\quad F. G. Lobo, D. E. Goldberg, M. Pelikan: Time complexity of genetic algorithms on exponentially scaled problems.
 University of Illinois, USA, 2000. 
 
+\textbf{Adathordozó használati utasítás}
 
 \end{document}
