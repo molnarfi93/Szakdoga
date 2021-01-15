@@ -185,7 +185,7 @@ módosítani a paramétereket a lokális minimumon való megrekedés elkerülés
 
 \subsection{Kitekintés}
 
-Számos erre a célre létrehozott szoftver készült már, ingyenes/fizetős, platformfüggetlen/
+Több, erre a célre létrehozott szoftver készült már, ingyenes/fizetős, platformfüggetlen/
 valamely platformra létrehozott, interaktív/automatikus. Az interaktív használat itt azt
 jelenti, hogy mi adunk meg órarendet, melynek ütközésmentességét leteszteljük a programmal,
 ami jelzésünkre adja, mi mivel ütközik és milyen lehetőségeink vannak a kiküszöbölésre. 
@@ -193,25 +193,24 @@ A legnépszerűbb applikációkat hasonlítom össze:
 
 \begin{itemize}
     \item \textbf{TimeTabler:} A legrégebbi, mai napig nagyon népszerű órarendütemező, olyan extra funkciókkal,
-             mint a részmunkaidős tanárok felvétele a rendszerbe és a választható
-             tanóra-időtartamok (szimpla vagy dupla órák). Interaktív módon is használható. 
+             mint a részmunkaidős tanárok felvétele a rendszerbe, a lyukas órák számának minimalizálása és a választható
+             tanóra-időtartamok (szimpla vagy dupla órák). Interaktív módon is használható. Többféle exportálási lehetőséget biztosít.
              Ingyenesen letölthető egy demo verzió nem megváltoztatható, demo adatokkal és 
              tutorial videóval. Előfizetés nincs, csak megvásárlás lehetséges. 
              Platformfüggetlen, telefonos verzióval viszont nem rendelkezik.
     \item \textbf{Schedule Builder:} Ingyenes, webes alkalmazás. Csak az alapfunkciókkal rendelkezik,
                    nincsenek extrák, illetve nem elérhető az automatikus használat sem.
-                   Platformfüggetlen.
+                   Platformfüggetlen, többféle exportálási lehetőséggel.
     \item \textbf{Prime TimeTable:} Macintosh, Linux, Android és IOS rendszereken egyaránt elérhető, viszont
-                  Windowson nem. Rendelkezik ugyanazokkal a funkciókkal, mint a TimeTabler,
-                  beleértve az interaktív használatot is. 30 napos próbaverzióval vagy éves
+                  Windowson nem. Rendelkezik minden olyan funkcióval, amivel a TimeTabler. 30 napos próbaverzióval vagy éves
                   előfizetéssel lehet használni.
-    \item \textbf{aSc TimeTables:} A legjobbnak választott órarendgeneráló applikáció. Interaktív és
-                 automatikus használat, extra funkciók, próbaverzió. Előfizetés nincs, csak
+    \item \textbf{aSc TimeTables:} A közelmúltban legjobbnak választott órarendgeneráló applikáció. Itt is elérhető interaktív és
+                 automatikus használat, az extra funkciók, többféle exportálási lehetőség, próbaverzió. Előfizetés nincs, csak
                  megvásárlás lehetséges, használata Windowsra és Macintoshra korlátozódik.
 \end{itemize}
 
 Mint látható, mindegyik fizetős applikáció rendelkezik automatikus és interaktív használati
-lehetőséggel, valamint az extra funkciókkal. A nyomtatási és exportálási lehetőségekkel
+lehetőséggel, valamint ugyanazokkal az extra funkciókkal. A nyomtatási és exportálási lehetőségekkel
 pedig az ingyenes Schedule Builder is. 
 
 \subsection{Felhasznált technológiák}
@@ -233,6 +232,23 @@ automatikusan történik, nincsen szükség memóriafelszabadításra és memór
 algoritmus során kiszelektálódó, illetve létrejövő egyedek kapcsán, bár mint kiderült,
 erre nem volt szükségem.
 
+\subsubsection{Python kiegészítők}
+
+Több kiegészítőt is telepítenem és használnom kellett a szerver létrehozásával kapcsolatban Python-ban, ezek a Falcon, a Waitress, a JWT és az SQLAlchemy. A Falcon egy olyan webes keretrendszer, amely a HTTP kérések (get, post, put, delete) és a REST (internetes szoftverarchitektúra) közötti  kapcsolatért felel. Vagyis egy interfész, amire azért van szükség, mert a REST nem korlátozódik a HTTP protokollra. Azért esett rá a választás, mert kifejezetten REST-hez készült és gyors. A Waitress többféle felhasználásra alkalmas, interfészt biztosít webszerver és alkalmazásszerver között. Arra használtam, hogy az adatbázissal kapcsolatos betöltési kérelmek kapcsán biztosítsa az elérést, host és port, valamint egy olyan objektum segítségével, amivel hozzáférünk a HTTP kérések eredményeihez. Azért ezt használtam, mert közvetlenül elindítható a Python kódból. A JWT a JSON Web Token rövidítése. Kizárólagos vezérlést biztosít a token, melyet a jelszóból és a programozó által megadott kulcsból generál a szerver, hash algoritmussal. Ezzel a titkosítással érjük el a jelszavak védelmét. Elterjedt, jól támogatott megoldás, úgy tárolja a token által az adatokat, hogy a kliens ne tudjon hozzáférni.
+
+\subsubsection{SQL és SQLAlchemy}
+
+Donald D. Chamberlin SQL nevű adatbáziskezelő nyelve, illetve az Oracle MySQL 
+adatbáziskezelő szervere az, amelyet az adatok letárolására és kezelésére (lekérdezésére, 
+módosítására) a háttérben használtam, a webfejlesztésben érdekelt komolyabb vállalatok 
+többségéhez hasonlóan. Az SQL parancsnyelv relációs adatbázisok kezelésére lett létrehozva, 
+az objektum-relációs leképezéshez pedig Python esetén SQLAlchemy-t használunk, így én is ezt 
+tettem. Erre azért van szükség, mert ha objektum-orientált paradigmát követünk, az adatbázis 
+relációs struktúrája ugyan képes minden szükséges információt megfelelő formában rögzíteni, 
+ezenfelül a viszonyok objektum-orientált feldolgozása szükséges. Az SQLAlchemy automatikus 
+sessionkezelést biztosít, ami jelentősen megkönnyíti a munkát, főleg a felhasználókezeléssel 
+kapcsolatban.
+
 \subsubsection{JavaScript és Vue}
 
 A Brendon Eich által kifejlesztett JavaScript (JS) a webprogramozásban nagyon elterjedt
@@ -246,20 +262,9 @@ felhasználói interfészek létrehozásával kapcsolatban, a Vue jobb altenatí
 készítettem, bennük HMTL kódrésszel. Önmagában a JavaScript-et pedig a router 
 (útvonalválasztó) fájl létrehozásához használtam.
 
-\subsubsection{SQL és SQLAlchemy}
-
-Donald D. Chamberlin SQL nevű adatbáziskezelő nyelve, illetve Richard Hipp SQLite 
-adatbáziskezelő rendszere az, amelyet az adatok letárolására és kezelésére (lekérdezésére, 
-módosítására), a háttérben használtam, a webfejlesztésben érdekelt komolyabb vállalatok 
-többségéhez hasonlóan. Az SQL parancsnyelv relációs adatbázisok kezelésére lett létrehozva, 
-az objektum-relációs leképezéshez pedig Python esetén SQLAlchemy-t használunk, így én is ezt 
-tettem. Erre azért van szükség, mert ha objektum-orientált paradigmát követünk, az adatbázis 
-relációs struktúrája ugyan képes minden szükséges információt megfelelő formában rögzíteni, 
-ezenfelül a viszonyok objektum-orientált feldolgozása szükséges. Az SQLAlchemy automatikus 
-sessionkezelést biztosít, ami jelentősen megkönnyíti a munkát, főleg a felhasználókezeléssel 
-kapcsolatban.
-
 \subsection{Felhasznált szoftverek}
+
+A Python nyelven való munkához a JetBrains PyCharm fejlesztői alkalmazását használtam, mert kényelmetlen volt számomra a leginkább elterjedt Jupyter böngészőablakos használata. Az Oracle MySQL-jét használtam, mint adatbázis-kezelő szervert, mert az órarendgeneráló alkalmazás piacra kerülése esetén feltételezhetnénk, hogy az érdeklődés mértéke (felhasználók száma) szükségessé tenné szerver használatát. A webfejlesztéssel kapcsolatban egyrészt szintén a PyCharm-ra volt szükség, szerver létrehozásához és az adatbázis-kezeléshez (sessionkezeléshez), másrészt a vue fájlokhoz egy szövegszerkesztőre. Telepíteni kellett továbbá az npm-et, ami egy package manager. Feladata a függőségek (ilyen a webpack, az axios, sőt a vue is) és azok elfogadott verziószám tartományának számon tartása, melynek köszönhetően egyben tudunk telepíteni minden szükséges függőséget és később az upgradelés sem okoz problémát. Nem kell mindig egyenként vizsgálni, hogy milyen új verzió érhető el hozzájuk és egyenként upgradelni őket. Korábban a WebStorm-ot használtam, előfizetve rá egy hónap erejéig, de a konzulensem javasolt ingyenes szövegszerkesztőket, melyek megfelelőek lehetnek. Ezek közül a Notepad++ volt ismerős, logójában egy aranyos kaméleonnal, így ezt választottam.
 
 \section{Elméleti kifejtés}
 
@@ -279,7 +284,7 @@ fázis azért szükséges, mert egyes termek lehetnek elsősorban adott tantárg
 \begin{itemize}
     \item $n \in \Bbb{N}$: osztályok száma
     \item $m \in \Bbb{N}$: tantermek száma
-    \item $p \in \Bbb{N}$: tantárgyak száma
+    \item $p \in \Bbb{N}$: osztály-tantárgy kettősök száma
     \item $l \in \Bbb{N}^n$: osztályok létszáma
     \item $k \in \Bbb{N}^m$: tantermek kapacitása
     \item $h \in \Bbb{N}^n$: termek száma, ahová az egyes osztályok beférnek
@@ -321,8 +326,6 @@ $$i=1, 2, \ldots, n$$
 
 $$j=1, 2, \ldots, m$$
 
-$$k=1, 2, \ldots, p$$
-
 \subsubsection{Időbonyolultság}
 
 Összes lehetséges esetek száma:
@@ -347,7 +350,18 @@ $$
 \end{tabular}
 $$
 
-A növekedési rend a következő: $T(n,m,p)=\sim \Theta (2nm + n^2p^2).$
+\begin{figure}
+\includegraphics[width=\linewidth]{C:/Users/Brendi/Documents/Szakdoga/pictures/teremhozzarendeles.png}
+\caption{Teremhozzárendelés állapottere}
+\end{figure}
+
+Az első fázis növekedési rendje a következő: $T(n,m)=\sim \Theta (2nm).$
+
+A második fázis növekedési rendje: $T(n,m,p)=\sim \Theta (np+mp).$
+
+Növekedési rend: $T(n,m,p)=\sim \Theta (2nm+np+mp).$
+
+A növekedési rend értelmében $2min 23sec$ az átlagosan várható futási idő, a Miskolci Egyetem esetében, IntelCore i7 875K processzorral. 
 
 \subsection{Tanárhozzárendelési feladat}
 
@@ -399,12 +413,14 @@ $$\sum_{j=1}^m \vert o_jX_j-\overline{o}\vert \rightarrow \hbox{min}$$
 
 $$\sum_{j=1}^m A_{ij} X_j=1$$
 
+$$k=1, 2, \ldots, p$$
+
 \subsubsection{Időbonyolultság}
 
-Összes lehetséges esetek száma:
+Összes esetek száma:
 
 $$P=m^n$$
-Összes lehetséges megoldások száma:
+Összes megoldások száma:
 
 $$P=\prod_{k=1}^p v_k^{u_k}$$
 A lehetséges esetek és megoldások száma (a tanárok számát plusz egy évfolyamonkénti osztály esetén 3-mal növeltem):
@@ -420,17 +436,15 @@ $$
 \hline
 \end{tabular}
 $$
+
+\begin{figure}
+\includegraphics[width=\linewidth]{C:/Users/Brendi/Documents/Szakdoga/pictures/tanarhozzarendeles.png}
+\caption{Tanárhozzárendelés állapottere}
+\end{figure}
+
 Növekedési rend: $T(n,m)=\Theta (nm+nm^2).$
 
-$$
-\begin{tabular}{|c|c|c|c|}
-\hline
-5 & 6 & 7 & 8 \\
-\hline
-$19800$ & $25740$ & $32400$ & $39780$ \\
-\hline
-\end{tabular}
-$$
+A növekedési rend értelmében $4min 29sec$ az átlagosan várható futási idő, a Miskolci Egyetem esetében, IntelCore i7 875K processzorral. 
 
 \subsection{Időablakok beosztása}
 
@@ -464,10 +478,10 @@ $$l=1, 2, \ldots, r$$
 
 \subsubsection{Időbonyolultság}
 
-Összes lehetséges esetek száma:
+Összes esetek száma:
 
 $$P=\binom{n+m-1}{m}$$
-Összes lehetséges megoldások száma:
+Összes megoldások száma:
 
 $$P=\binom{n}{m}$$
 A lehetséges esetek és megoldások száma (a tanárok számát plusz egy évfolyamonkénti osztály esetén 3-mal növeltem):
@@ -483,17 +497,15 @@ $$
 \hline
 \end{tabular}
 $$
-Növekedési rend: $T(n,r,o)=\sim \Theta(nro)$.
 
-$$
-\begin{tabular}{|c|c|c|c|}
-\hline
-5 & 6 & 7 & 8 \\
-\hline
-$24400$ & $28960$ & $33520$ & $38080$ \\
-\hline
-\end{tabular}
-$$
+\begin{figure}
+\includegraphics[width=\linewidth]{C:/Users/Brendi/Documents/Szakdoga/pictures/idoablak.png}
+\caption{Időablakbeosztás állapottere}
+\end{figure}
+
+Növekedési rend: $T(n,m,r)=\sim \Theta(nmr)$.
+
+A növekedési rend értelmében $6min 15sec$ az átlagosan várható futási idő, a Miskolci Egyetem esetében, IntelCore i7 875K processzorral. 
 
 \subsection{Időintervallumok hozzárendelése}
 
@@ -519,16 +531,16 @@ melyet a felhasználó ad meg és ezzel skálán rögzíti mennyire fontosak/kev
 \begin{itemize}
     \item P: populáció mérete
     \item G: generációk száma
+    \item I: időablakok száma
     \item $n \in \Bbb{N}$: osztály-tantárgy kettősök száma
-    \item $o \in \Bbb{N}^n$: osztály-tantárgy kettősök heti óraszámai
     \item $m \in \Bbb{N}$: tanárok száma
-    \item $r \in \Bbb{N}$: időablakok száma
+    \item $o \in \Bbb{N}$: osztály-tantárgy kettősök heti óraszámai
     \item $b \in \{1;5\}$: tanárok \textsl{balance} értékei
     \item $e \in \{1;5\}$: tanárok \textsl{extremisms} értékei
     \item $c: \Bbb{N} \rightarrow \Bbb{N}$: célfüggvény
 \end{itemize}
 
-$$ c=\sum_{j=1}^m \sum_{l=1}^r \quad
+$$ c=\sum_{j=1}^m \sum_{l=1}^I \quad
 \begin{cases}
 b_j, & \hbox{ha a \textsl{balance}-szal kapcsolatos feltétel teljesül }l\hbox{ időablakban,}\\
 e_j, & \hbox{ha a \textsl{extremisms}-zel kapcsolatos feltétel teljesül }l\hbox{ időablakban,}\\
@@ -539,20 +551,40 @@ b_j+e_j, & \hbox{ha a \textsl{balance}-szal és az \textsl{extremisms}-zel kapcs
 
 \subsubsection{Időbonyolultság}
 
-Összes lehetséges esetek száma:
+Összes esetek száma:
 
-$$P=r^r$$
-Összes lehetséges megoldások száma:
+$$P=I^I$$
+Összes megoldások száma:
 
-$$P=r!$$
+$$P=I!$$
+A számszerűsített példában itt nem évfolyamonkénti osztályok száma lesz, hanem napi időablakok száma. Az egyetemek/főiskolák kapcsán 6 (egy dupla óra egy időablak), az általános iskolák kapcsán 7, a középiskolák kapcsán pedig 8 időablakkal számolunk. Hangsúlyozom, hogy ez csak példa, a felhasználó mást is megadhat.
+
+$$
+\begin{tabular}{|l|c|c|c|}
+\hline
+6 & 7 & 8 \\
+\hline
+Összes esetek & $46656$ & $823543$ & $16777216$ \\
+\hline 
+Összes megoldások & $720$ & $5040$ & $40320$ \\
+\hline
+\end{tabular}
+$$
+
+\begin{figure}
+\includegraphics[width=\linewidth]{C:/Users/Brendi/Documents/Szakdoga/pictures/idointervallum.png}
+\caption{Időintervallum-hozzárendelés állapottere}
+\end{figure}
 
 Célfüggvény növekedési rendje: $T(n,m,o)=\Theta(nmo)$.
 
 Keresztezés növekedési rendje: $T(I)=\sim \Theta(I^2)$.
 
-Mutáció növekedési rendje: $T(I)=\sim \Theta(I)$.
+Növekedési rend: $T(P,G,I,n,m,o)=\sim \Theta(G \cdot P \cdot (nmo+I^2))$.
 
-Növekedési rend: $T(P,G,I,n,m,o)=\sim \Theta(G \cdot P \cdot \Theta(nmo) \cdot \Theta(I^2) \cdot \Theta(I))$.
+A tesztelési adatok alapján az derült ki, hogy átlagosan 48 generációra van szükség, így a növekedési rend értelmében $48min 25sec$ az átlagosan várható futási idő, a Miskolci Egyetem esetében, IntelCore i7 875K processzorral. Ha vannak részmunkaidős tanárok és ezért vizsgáljuk, illetve büntetjük az ezzel kapcsolatos értékeket is a célfüggvényben, akkor néhány másodperccel több.
+
+Könnyen belátható, hogy a célfüggvény és azon belül a tanárokon végigiteráló ciklus "dobja meg" a futási időt. Amennyiben nem adunk rá lehetőséget minden tanárnak, hogy a saját \textsl{balance} és \textsl{extremisms} értékeivel rendelkezzen, hanem egységesen állítjuk be ezeket az értékeket/alapértelmezett értékkel számolunk, akkor kevesebb mint $5 sec$ lesz a futási idő. Amennyiben adunk, az sem jelent nagy problémát, főleg ha szervergéphez méltó, az enyémtől 2x, 3x nagyobb teljesítményű processzorral rendelkezünk. Az én processzorommal az egész órarendgenerálási folyamat átlagosan várható futási ideje, összesen $61min 32sec$ tanáronkénti \textsl{balance} és \textsl{extremisms} értékek esetén, egységes értékek esetén pedig $13min 12sec$. Végül kijelenthetjük, hogy nem létezik olyan méretű oktatási intézmény, melynek esetében ne tudnának belátható időn belül eredményt szolgáltatni az algoritmusaim.
 
 \section{Fejlesztői dokumentáció}
 
@@ -718,9 +750,6 @@ for group in range(len(groups)):
                 groups[group].teacher = teachers[teacher].name
                 sum_periods[teacher] += groups[group].weekly_periods
                 break
-
-for group in range(len(groups)):
-    print(groups[group].name, groups[group].subject, groups[group].teacher)
 \end{python}
 
 Következő a tanárhozzárendelési feladat. Először itt is egy párosításmátrixot készítünk el, ami ezúttal tanárokat és osztály-tantárgy kettősöket vizsgál. Végigmegyünk a tanárok \textsl{subjects} nevű, tömb típusú attribútumának elemein és ha találunk köztük olyat, ami megegyezik az adott osztály-tantárgy kettős tantárgy attribútumának értékével, akkor 1 kerül a "rublikába", ellenkező esetben 0.
@@ -770,14 +799,6 @@ def getPeriod():
                         period.append(rand_group)
                         break
     return period
-
-
-periods = []
-for period in range(NUM_TIME_WINDOWS):
-    periods.append(getPeriod())
-    for assignment in range(len(periods[period])):
-        print(periods[period][assignment].name, periods[period][assignment].subject, periods[period][assignment].teacher, periods[period][assignment].room)
-    print("************************************************")
 \end{python}
 
 Következő az időablakok beosztása. Itt már előre definiált konstansok is vannak. A felhasználó adja meg, hogy mettől meddig terjedjenek a napi időintervallumok, amely értékek a \textsl{begin_time} és \textsl{end_time} változókban adódnak át. Pl. ha reggel 7 és délután 4 óra között van tanítás az egyes napokon, akkor a \textsl{begin_time} 7, az \textsl{end_time} pedig 16 lesz, a \textsl{DAILY_PERIODS} konstans pedig a kettő különbségeként 9, ennyi időablak lesz egy napon. A \textsl{NUM_TIME_WINDOWS} a heti összes időablak száma, ami így ennek ötszöröse, a \textsl{MAX_ASSIGNMENTS} által pedig azt rögzítjük, legfeljebb hány osztály-tantárgy-terem-tanár hozzárendelés lehet egy időablakban, ami a tanárok számával lesz megegyező. A lényegi részt a \textsl{getPeriod()} metódus adja, ami két feltételnek eleget tevő megoldást szolgáltat. Az egyik az ütközésmentesség, vagyis hogy egy időablakban ugyanaz az osztály, ugyanaz a terem és ugyanaz a tanár sem fordulhat elő többször, sőt egy alaposztály és annak évfolyamán képzett nyelvi, fakultációs vagy egyéb osztály, illetve utóbbiak közül egyszerre több sem kerülhet ugyanabba az időablakba. A másik, hogy egy osztály-tantárgy kettősnek annyiszor kell összesen előfordulnia, amennyi a rögzített heti óraszáma az adott osztálynak az adott tárgyból. Ezt a \textsl{getPeriod()} metódust aztán annyiszor hívjuk meg, amennyi a heti összes időablak száma. Az, hogy ez elegendő legyen, vagyis minden tanórának jusson időablak, a felhasználó felelőssége.
@@ -807,7 +828,7 @@ for day in range(5):
     day = Day(day)
     counter = 0
     for period in range(DAILY_PERIODS):
-        time_windows[day.name].append(str(begin_time + counter) + "-" + str(begin_time + counter + 1))
+        time_windows[day.name].append(begin_time + counter)
         counter += 1
 \end{python}
 
@@ -842,20 +863,57 @@ A \textsl{getRandomGens()} metódus annyiszor megy végig ciklusban, amennyi az 
 \begin{python}
 def targetFunction(entity):
     diff = 0
+    for period in range(NUM_GENS):
+        if entity['gens']['days'][period] == "f":
+            diff += balance * len(periods[period]) * 2
+        if entity['gens']['periods'][period] == time_windows['f'][0]:
+            diff += (SCALE_MAX - extremisms + 1) * len(periods[period]) * 2
+        elif entity['gens']['periods'][period] == time_windows['f'][1]:
+            diff += (SCALE_MAX - extremisms + 1) * len(periods[period])
+        elif entity['gens']['periods'][period] == time_windows['f'][DAILY_PERIODS - 1]:
+            diff += extremisms * len(periods[period]) * 2
+        elif entity['gens']['periods'][period] == time_windows['f'][DAILY_PERIODS - 2]:
+            diff += extremisms * len(periods[period])
+    return diff
+
+
+def targetFunction(entity):
+    diff = 0
     for teacher in range(len(teachers)):
-        for gen in range(NUM_GENS):
-            if entity['gens']['days'][gen] == "f":
-                diff += teachers[teacher].balance * len(periods[gen])
-            else:
-                diff += (SCALE_MAX - teachers[teacher].balance + 1) * len(periods[gen])
-            if entity['gens']['periods'][gen] == time_windows['f'][0]:
-                diff += (SCALE_MAX - teachers[teacher].extremisms + 1) * len(periods[gen]) * 2
-            elif entity['gens']['periods'][gen] == time_windows['f'][1]:
-                diff += (SCALE_MAX - teachers[teacher].extremisms + 1) * len(periods[gen])
-            elif entity['gens']['periods'][gen] == time_windows['f'][DAILY_PERIODS - 1]:
-                diff += teachers[teacher].extremisms * len(periods[gen]) * 2
-            elif entity['gens']['periods'][gen] == time_windows['f'][DAILY_PERIODS - 2]:
-                diff += teachers[teacher].extremisms * len(periods[gen])
+        for period in range(NUM_GENS):
+            for assignment in range(len(periods[period])):
+                if periods[period][assignment].teacher == teachers[teacher].name:
+                    if entity['gens']['days'][period] == "f":
+                        diff += teachers[teacher].balance * len(periods[period]) * 2
+                    if entity['gens']['periods'][period] == time_windows['f'][0]:
+                        diff += (SCALE_MAX - teachers[teacher].extremisms + 1) * len(periods[period]) * 2
+                    elif entity['gens']['periods'][period] == time_windows['f'][1]:
+                        diff += (SCALE_MAX - teachers[teacher].extremisms + 1) * len(periods[period])
+                    elif entity['gens']['periods'][period] == time_windows['f'][DAILY_PERIODS - 1]:
+                        diff += teachers[teacher].extremisms * len(periods[period]) * 2
+                    elif entity['gens']['periods'][period] == time_windows['f'][DAILY_PERIODS - 2]:
+                        diff += teachers[teacher].extremisms * len(periods[period])
+    return diff
+
+
+def targetFunction(entity):
+    diff = 0
+    for teacher in range(len(teachers)):
+        for period in range(NUM_GENS):
+            for assignment in range(len(periods[period])):
+                if periods[period][assignment].teacher == teachers[teacher].name:
+                    if (entity['gens']['periods'][period] < teachers[teacher].begin_time) or (entity['gens']['periods'][period] > teachers[teacher].end_time):
+                        diff += SCALE_MAX * 2
+                    if entity['gens']['days'][period] == "f":
+                        diff += teachers[teacher].balance * len(periods[period]) * 2
+                    if entity['gens']['periods'][period] == time_windows['f'][0]:
+                        diff += (SCALE_MAX - teachers[teacher].extremisms + 1) * len(periods[period]) * 2
+                    elif entity['gens']['periods'][period] == time_windows['f'][1]:
+                        diff += (SCALE_MAX - teachers[teacher].extremisms + 1) * len(periods[period])
+                    elif entity['gens']['periods'][period] == time_windows['f'][DAILY_PERIODS - 1]:
+                        diff += teachers[teacher].extremisms * len(periods[period]) * 2
+                    elif entity['gens']['periods'][period] == time_windows['f'][DAILY_PERIODS - 2]:
+                        diff += teachers[teacher].extremisms * len(periods[period])
     return diff
 \end{python}
 
@@ -946,9 +1004,11 @@ def crossover(either_parent, other_parent):
                     child['gens']['periods'].append(other_parent['gens']['periods'][parent_gen])
                     break
     return child
+\end{python}
 
 A keresztező metódus (operátor) még egy utolsó véletlenszám generálást végez, ami a keresztezési pont meghatározásához szükséges. A keresztezési pont előtt levő géneket az egyik szülő génkészletéből veszi át a gyermek, az utána levőket pedig a másik szülő génkészletéből, a normál egypontos keresztezési eljárásban. Itt a képeken látható problematika miatt egy speciálisabb, bonyolultabb eljárást kellett alkotni. A probléma arról szól, hogy ha egyszerűen csak átvesszük a szülő egyedek génjeit, jó eséllyel lesz olyan időintervallum (gén), ami kétszer is elő fog fordulni a gyerek génjei között, illetve ezzel együtt olyan, amelyik egyszer sem. A keresztezési pont után jelentkezik ez a probléma és úgy küszöböljük ki, hogy amennyiben már megtalálható a gyerek génjei között a szülő adott génje, akkor a szülő keresztezési pont előtti génjei között megkeressük az első olyat, amely még nem.
 
+\begin{python}
 def clear_inheritance(either_parent):
     child = {'gens': {'days': [], 'periods': []}, 'diff': 0, 'id': entity}
     for gen in range(0, NUM_GENS):
@@ -982,17 +1042,6 @@ while True:
     sortEntities()
     if entities[0]['diff'] - entities[SIZE_POPULATION - 1]['diff'] == 0:
         break
-
-for day in range(len(time_windows)):
-    day = Day(day)
-    for period in range(len(time_windows['f'])):
-        for gen in range(NUM_GENS):
-            if (entities[0]['gens']['days'][gen] == day.name) and (entities[0]['gens']['periods'][gen] == time_windows[day.name][period]):
-                print(entities[0]['gens']['days'][gen]+" "+entities[0]['gens']['periods'][gen])
-                for assignment in range(len(periods[gen])):
-                    print(periods[gen][assignment].name, periods[gen][assignment].subject, periods[gen][assignment].room, periods[gen][assignment].teacher)
-                print("*****************************************")
-                break
 \end{python}
 
 A generációk száma előre nem meghatározott, mert a tesztelés során kiderült, hogy az egyedek célfüggvény értékei konvergálnak az optimumhoz (a minimális értékhez) és nem csak a legjobb egyed éri el, hanem mind. Ebből kifolyólag olyan feltételhez kötöttem a leállást, hogy a legjobb egyed célfüggvény értékének meg kell egyeznie a legrosszabb egyed célfüggvény értékével. Vagyis az összes egyed célfüggvény értékének megegyezőnek kell lenni.
@@ -1009,7 +1058,7 @@ A generációk száma előre nem meghatározott, mert a tesztelés során kider�
 \caption{A relációs modell}
 \end{figure}
 
-Adatbázist kellett használni a felhasználók által létrehozott órarendek adatainak letárolásához és felhozásához. Ahogyan az ER modellben látható, 4 entitás van (osztály, tantárgy, terem, tanár), de a több-több kapcsolatok miatt további táblákat is létre kellett hozni, a relációs modell már tartalmazza ezeket. 1:N kapcsolat van az osztály-tantárgy kapcsolótábla és a tanár tábla között, a többi kapcsolat N:M (osztály-tantárgy, terem-tantárgy, tanár-tantárgy). A terem-tantárgy kapcsolatok opcionálisak, mert nem muszáj tantárgynak tartoznia egy adott teremhez, ahogyan egy adott tantárgyhoz sem muszáj, hogy tartozzon terem, a többi kapcsolat kötelező. A lenti példákban látható, hogyan néz ki Python-ban az adatbázis tábláinak definiálása osztályként, az egyik példa egyszerű táblát, a másik kapcsolótáblát mutat be. Az osztály-tantárgy kapcsolótábla tanár idegen kulcsának értéke alapértelmezetten üres string. Ennek oka, hogy a felhasználó új órarend létrehozásakor eldöntheti, maunálisan akarja-e majd hozzárendelni az osztály-tantárgy kettősökhöz a tanárokat, amennyiben nem, akkor is léteznie kell ennek az attribútumnak, de addig üres string marad az értéke, amíg a tanárhozzárendelési algoritmus során kapott eredmények nem tárolódnak az adatbázisban, és a felhasználó által közvetlenül nem megváltoztatható.
+Adatbázist kellett használni a felhasználók által létrehozott órarendek adatainak letárolásához és felhozásához. Ahogyan az ER modellben látható, 4 entitás van (osztály, tantárgy, terem, tanár), de a több-több kapcsolatok miatt további táblákat is létre kellett hozni, a relációs modell már tartalmazza ezeket. 1:N kapcsolat van az osztály-tantárgy kapcsolótábla és a tanár tábla között, a többi kapcsolat N:M (osztály-tantárgy, terem-tantárgy, tanár-tantárgy). A terem-tantárgy kapcsolatok opcionálisak, mert nem muszáj tantárgynak tartoznia egy adott teremhez, ahogyan egy adott tantárgyhoz sem muszáj, hogy tartozzon terem, a többi kapcsolat kötelező. Minden entitás esetén a név szolgál egyedi azonosítóként, ami egyedül a tanárok esetén okozhatna problémát, de felhívjuk rá a felhasználó figyelmét, hogy azonos nevű tanárok esetén római számokkal való megkülönböztetést használjon, ezt elkerülendő. A lenti példákban látható, hogyan néz ki Python-ban az adatbázis tábláinak definiálása osztályként, az egyik példa egyszerű táblát, a másik kapcsolótáblát mutat be. Az osztály-tantárgy kapcsolótábla tanár idegen kulcsának értéke alapértelmezetten üres string. Ennek oka, hogy a felhasználó új órarend létrehozásakor eldöntheti, maunálisan akarja-e majd hozzárendelni az osztály-tantárgy kettősökhöz a tanárokat, amennyiben nem, akkor is léteznie kell ennek az attribútumnak, de addig üres string marad az értéke, amíg a tanárhozzárendelési algoritmus során kapott eredmények nem tárolódnak az adatbázisban, és a felhasználó által közvetlenül nem megváltoztatható.
 
 \begin{python}
 class Teacher(Base):
