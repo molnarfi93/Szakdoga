@@ -3,6 +3,7 @@ import waitress
 import jwt
 import json
 import hashlib
+from timetable import Timetable
 from sqlalchemy import create_engine
 
 SECRET_KEY = 'treFDS123!)(/'
@@ -39,10 +40,10 @@ class LoginResource:
                 'user_id': user_id
             }
             encoded_token = encodeToken(token)
-            resp_body = {
+            response = {
                 'token': 'Bearer ' + str(encoded_token)[2:-1]
             }
-            resp.body = json.dumps(resp_body)
+            resp.body = json.dumps(response)
             resp.status = falcon.HTTP_200
         except ValueError as error:
             resp.body = str(error)
@@ -55,17 +56,10 @@ class SignupResource:
         self._timetable = timetable
 
     def on_post(self, req, resp):
-        user_datas = json.loads(req.stream.read().decode('utf-8'))
         try:
+            user_datas = json.loads(req.stream.read().decode('utf-8'))
             user_id = self._timetable.addUser(user_datas)
-            token = {
-                'user_id': user_id
-            }
-            encoded_token = encodeToken(token)
-            resp_body = {
-                'token': 'Bearer ' + str(encoded_token)[2:-1]
-            }
-            resp.body = json.dumps(resp_body)
+            resp.body = ""
             resp.status = falcon.HTTP_200
         except ValueError as error:
             resp.body = str(error)
@@ -126,6 +120,7 @@ class TimetableResource:
         if 'AUTHORIZATION' not in req.headers:
             resp.status = falcon.HTTP_401
             return
+        print("itt")
         encoded_token = req.headers['AUTHORIZATION'][7:]
         if isValidToken(encoded_token) is False:
             resp.status = falcon.HTTP_401
@@ -206,6 +201,7 @@ class RoomResource:
             resp.status = falcon.HTTP_401
             return
         room_datas = self._timetable.getRoom(room_name)
+        room_datas['subjects'] = self._timetable.getRoomContacts(room_name)
         resp.body = json.dumps(room_datas)
         resp.content_type = 'application/json'
         resp.status = falcon.HTTP_200
@@ -219,11 +215,15 @@ class RoomResource:
             resp.status = falcon.HTTP_401
             return
         room_datas = json.loads(req.stream.read().decode('utf-8'))
+        for subject in range(len(room_datas['subjects'])):
+            contact_name = (room_datas['name'], room_datas['subjects'][subject])
+            self._timetable.addRoomContact(contact_name)
+        room_datas = (room_datas['name'], room_datas['capacity'], room_datas['timetable'])
         self._timetable.addRoom(room_datas)
         resp.content_type = 'application/json'
         resp.status = falcon.HTTP_200
 
-    def on_put(self, req, resp, room_name):
+    def on_delete(self, req, resp, room_name, room_datas):
         if 'AUTHORIZATION' not in req.headers:
             resp.status = falcon.HTTP_401
             return
@@ -231,19 +231,8 @@ class RoomResource:
         if isValidToken(encoded_token) is False:
             resp.status = falcon.HTTP_401
             return
-        room_datas = json.loads(req.stream.read().decode('utf-8'))
-        self._timetable.updateRoom(room_name, room_datas)
-        resp.content_type = 'application/json'
-        resp.status = falcon.HTTP_200
-
-    def on_delete(self, req, resp, room_name):
-        if 'AUTHORIZATION' not in req.headers:
-            resp.status = falcon.HTTP_401
-            return
-        encoded_token = req.headers['AUTHORIZATION'][7:]
-        if isValidToken(encoded_token) is False:
-            resp.status = falcon.HTTP_401
-            return
+        for subject in range(len(room_datas['subjects'])):
+            self._timetable.destroyRoomContact((room_name, room_datas['subjects'][subject]))
         self._timetable.destroyRoom(room_name)
         resp.content_type = 'application/json'
         resp.status = falcon.HTTP_200
@@ -263,6 +252,7 @@ class TeacherResource:
             resp.status = falcon.HTTP_401
             return
         teacher_datas = self._timetable.getTeacher(teacher_name)
+        teacher_datas['subjects'] = self._timetable.getTeacherContacts(teacher_name)
         resp.body = json.dumps(teacher_datas)
         resp.content_type = 'application/json'
         resp.status = falcon.HTTP_200
@@ -276,11 +266,15 @@ class TeacherResource:
             resp.status = falcon.HTTP_401
             return
         teacher_datas = json.loads(req.stream.read().decode('utf-8'))
+        for subject in range(len(teacher_datas['subjects'])):
+            contact_name = (teacher_datas['name'], teacher_datas['subjects'][subject])
+            self._timetable.addTeacherContact(contact_name)
+        teacher_datas = (teacher_datas['name'], teacher_datas['balance'], teacher_datas['extremisms'], teacher_datas['begin_time'], teacher_datas['end_time'], teacher_datas['timetable'])
         self._timetable.addTeacher(teacher_datas)
         resp.content_type = 'application/json'
         resp.status = falcon.HTTP_200
 
-    def on_put(self, req, resp, teacher_name):
+    def on_delete(self, req, resp, teacher_name, teacher_datas):
         if 'AUTHORIZATION' not in req.headers:
             resp.status = falcon.HTTP_401
             return
@@ -288,19 +282,8 @@ class TeacherResource:
         if isValidToken(encoded_token) is False:
             resp.status = falcon.HTTP_401
             return
-        teacher_datas = json.loads(req.stream.read().decode('utf-8'))
-        self._timetable.updateTeacher(teacher_name, teacher_datas)
-        resp.content_type = 'application/json'
-        resp.status = falcon.HTTP_200
-
-    def on_delete(self, req, resp, teacher_name):
-        if 'AUTHORIZATION' not in req.headers:
-            resp.status = falcon.HTTP_401
-            return
-        encoded_token = req.headers['AUTHORIZATION'][7:]
-        if isValidToken(encoded_token) is False:
-            resp.status = falcon.HTTP_401
-            return
+        for subject in range(len(teacher_datas['subjects'])):
+            self._timetable.destroyTeacherContact((teacher_name, teacher_datas['subjects'][subject]))
         self._timetable.destroyTeacher(teacher_name)
         resp.content_type = 'application/json'
         resp.status = falcon.HTTP_200
@@ -320,7 +303,7 @@ class GroupResource:
             resp.status = falcon.HTTP_401
             return
         group_datas = self._timetable.getGroup(group_name)
-        group_datas["subjects"] = self._timetable.getGroupContacts(group_name)
+        group_datas['subjects'] = self._timetable.getGroupContacts(group_name)
         resp.body = json.dumps(group_datas)
         resp.content_type = 'application/json'
         resp.status = falcon.HTTP_200
@@ -334,15 +317,16 @@ class GroupResource:
             resp.status = falcon.HTTP_401
             return
         group_datas = json.loads(req.stream.read().decode('utf-8'))
-        for subject in range(len(group_datas["subjects"])):
-            contact_datas = (group_datas["name"], group_datas["subjects"][subject]["name"], group_datas["subjects"][subject]["type"], group_datas["subjects"][subject]["weekly_periods"], group_datas["subjects"][subject]["teacher"])
-            self._timetable.addGroupContact(contact_datas)
-        group_datas = (group_datas["name"], group_datas["grade"], group_datas["headcount"], group_datas["timetable"])
+        for subject in range(len(group_datas['subjects'])):
+            contact_name = (group_datas['name'], group_datas['subjects'][subject]['name'])
+            contact_datas = (group_datas['subjects'][subject]['type'], group_datas['subjects'][subject]['weekly_periods'], group_datas['subjects'][subject]['teacher'])
+            self._timetable.addGroupContact(contact_name, contact_datas)
+        group_datas = (group_datas['name'], group_datas['grade'], group_datas['headcount'], group_datas['timetable'])
         self._timetable.addGroup(group_datas)
         resp.content_type = 'application/json'
         resp.status = falcon.HTTP_200
 
-    def on_put(self, req, resp, group_name):
+    def on_delete(self, req, resp, group_name, group_datas):
         if 'AUTHORIZATION' not in req.headers:
             resp.status = falcon.HTTP_401
             return
@@ -350,35 +334,25 @@ class GroupResource:
         if isValidToken(encoded_token) is False:
             resp.status = falcon.HTTP_401
             return
-        group_datas = json.loads(req.stream.read().decode('utf-8'))
-        self._timetable.updateGroup(group_name, group_datas)
-        resp.content_type = 'application/json'
-        resp.status = falcon.HTTP_200
-
-    def on_delete(self, req, resp, group_name):
-        if 'AUTHORIZATION' not in req.headers:
-            resp.status = falcon.HTTP_401
-            return
-        encoded_token = req.headers['AUTHORIZATION'][7:]
-        if isValidToken(encoded_token) is False:
-            resp.status = falcon.HTTP_401
-            return
+        for subject in range(len(group_datas['subjects'])):
+            self._timetable.destroyGroupContact((group_name, group_datas['subjects'][subject]['name']))
         self._timetable.destroyGroup(group_name)
         resp.content_type = 'application/json'
         resp.status = falcon.HTTP_200
 
 
-engine = create_engine(f'mysql+mysqlconnector://root:{SECRET_KEY}@localhost:3306/timetable?auth_plugin=mysql_native_password')
+engine = create_engine(f'mysql+mysqlconnector://root:{SECRET_KEY}@localhost:3306/timetable_database?auth_plugin=mysql_native_password')
 engine.connect()
+timetable = Timetable(engine)
 
-login_resource = LoginResource(engine)
-signup_resource = SignupResource(engine)
-password_resource = PasswordResource(engine)
-timetable_resource = TimetableResource(engine)
-subject_resource = SubjectResource(engine)
-room_resource = RoomResource(engine)
-teacher_resource = TeacherResource(engine)
-group_resource = GroupResource(engine)
+login_resource = LoginResource(timetable)
+signup_resource = SignupResource(timetable)
+password_resource = PasswordResource(timetable)
+timetable_resource = TimetableResource(timetable)
+subject_resource = SubjectResource(timetable)
+room_resource = RoomResource(timetable)
+teacher_resource = TeacherResource(timetable)
+group_resource = GroupResource(timetable)
 
 app = falcon.API()
 
