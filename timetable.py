@@ -1,7 +1,9 @@
 from sqlalchemy.orm.exc import NoResultFound
 from database_session import createSession
-from model import User, Timetable, Subject, Room, Teacher, Group, Contact_group_subject
+from model import User, Subject, Room, Teacher, Group, Contact_room_subject, Contact_teacher_subject, Contact_group_subject
+import model
 import re
+import hashlib
 
 types = [
     "middle school",
@@ -12,8 +14,8 @@ types = [
 
 class Timetable:
 
-    def __init__(self, connection_string):
-        self._session = createSession(connection_string)
+    def __init__(self, engine):
+        self._session = createSession(engine)
 
     def checkSignupDatas(self, user_datas):
         reg_ex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
@@ -30,11 +32,11 @@ class Timetable:
     def checkLoginDatas(self, email, password):
         try:
             user = self._session.query(User).filter_by(email=email).one()
-            if user.password == password:
+            if hashlib.sha512(user.password.encode('utf-8')).hexdigest() == password:
                 return user.id
             else:
                 raise ValueError('Password is wrong!')
-        except NoResultFound as error:
+        except NoResultFound:
             raise ValueError('It is not registered e-mail address!')
 
     def checkEmail(self, email):
@@ -56,7 +58,7 @@ class Timetable:
 
     def createTimetable(self, timetable_name, timetable_datas):
         self.checkTimetableDatas(timetable_datas)
-        timetable = Timetable(timetable_name, **timetable_datas)
+        timetable = model.Timetable(timetable_name, **timetable_datas)
         self._session.add(timetable)
         self._session.commit()
 
@@ -66,7 +68,10 @@ class Timetable:
             timetable_datas = {
                 'name': timetable.name,
                 'type': timetable.type,
-                'teachers': timetable.teachers
+                'add_manually': timetable.add_manually,
+                'begin_time': timetable.begin_time,
+                'end_time': timetable.end_time,
+                'user': timetable.user
             }
             return timetable_datas
         except NoResultFound as error:
@@ -105,22 +110,32 @@ class Timetable:
             room_datas = {
                 'name': room.name,
                 'capacity': room.capacity,
-                'subjects': room.subjects,
+                'subjects': [],
                 'timetable': room.timetable
             }
             return room_datas
         except NoResultFound as error:
             raise ValueError(f'There is no room with name {room_name}!')
 
-    def updateRoom(self, room_name, room_datas):
-        try:
-            room = self._session.query(Room).filter_by(name=room_name).one()
-            room.capacity = room_datas['capacity']
-            room.subjects = room_datas['subjects']
-        except NoResultFound as error:
-            raise ValueError(f'There is no room with name {room_name}!')
-
     def destroyRoom(self, room_name):
+        pass
+
+    def addRoomContact(self, contact_name):
+        contact = Contact_room_subject(contact_name)
+        self._session.add(contact)
+        self._session.commit()
+
+    def getRoomContacts(self, room_name):
+        try:
+            contacts = self._session.query(Contact_room_subject).filter_by(room=room_name).all()
+            contact_datas = []
+            for contact in range(len(contacts)):
+                contact_datas.append(contacts[contact].subject)
+            return contact_datas
+        except NoResultFound as error:
+            raise ValueError(f'There is no subjects about room {room_name}!')
+
+    def destroyRoomContact(self, contact_name):
         pass
 
     def addTeacher(self, teacher_name, teacher_datas):
@@ -133,7 +148,7 @@ class Timetable:
             teacher = self._session.query(Teacher).filter_by(name=teacher_name).one()
             teacher_datas = {
                 'name': teacher.name,
-                'subjects': teacher.subjects,
+                'subjects': [],
                 'balance': teacher.balance,
                 'extremisms': teacher.extremisms,
                 'begin_time': teacher.begin_time,
@@ -144,16 +159,25 @@ class Timetable:
         except NoResultFound as error:
             raise ValueError(f'There is no teacher with name {teacher_name}!')
 
-    def updateTeacher(self, teacher_name, teacher_datas):
-        try:
-            teacher = self._session.query(Teacher).filter_by(name=teacher_name).one()
-            teacher.subjects = teacher_datas['subjects']
-            teacher.balance = teacher_datas['balance']
-            teacher.extremisms = teacher_datas['extremisms']
-        except NoResultFound as error:
-            raise ValueError(f'There is no teacher with name {teacher_name}!')
-
     def destroyTeacher(self, teacher_name):
+        pass
+
+    def addTeacherContact(self, contact_name):
+        contact = Contact_teacher_subject(contact_name)
+        self._session.add(contact)
+        self._session.commit()
+
+    def getTeacherContacts(self, teacher_name):
+        try:
+            contacts = self._session.query(Contact_teacher_subject).filter_by(teacher=teacher_name).all()
+            contact_datas = []
+            for contact in range(len(contacts)):
+                contact_datas.append(contacts[contact].subject)
+            return contact_datas
+        except NoResultFound as error:
+            raise ValueError(f'There is no subjects about teacher {teacher_name}!')
+
+    def destroyTeacherContact(self, contact_name):
         pass
 
     def addGroup(self, group_name, group_datas):
@@ -175,20 +199,11 @@ class Timetable:
         except NoResultFound as error:
             raise ValueError(f'There is no group with name {group_name}!')
 
-    def updateGroup(self, group_name, group_datas):
-        try:
-            group = self._session.query(Group).filter_by(name=group_name).one()
-            group.grade = group_datas['grade']
-            group.subjects = group_datas['subjects']
-            group.headcount = group_datas['headcount']
-        except NoResultFound as error:
-            raise ValueError(f'There is no group with name {group_name}!')
-
     def destroyGroup(self, group_name):
         pass
 
-    def addGroupContact(self, contact_datas):
-        contact = Contact_group_subject(**contact_datas)
+    def addGroupContact(self, contact_name, contact_datas):
+        contact = Contact_group_subject(contact_name, **contact_datas)
         self._session.add(contact)
         self._session.commit()
 
@@ -206,3 +221,6 @@ class Timetable:
             return contact_datas
         except NoResultFound as error:
             raise ValueError(f'There is no subjects about group {group_name}!')
+
+    def destroyGroupContact(self, contact_name):
+        pass
