@@ -1,11 +1,11 @@
 \documentclass[12pt,a4paper]{report}
 
 \usepackage{styles/dolgozat}
-
 \usepackage{listings}
 \usepackage{styles/python}
-
 \usepackage{hyperref}
+
+\parskip=20pt
 
 \begin{document}
 
@@ -26,7 +26,7 @@
 % A szakdolgozat címe, akár több sorban is
 {\LARGE
 \begin{center}
-\textbf{Órarendgenerálási probléma megoldási lehetőségei}
+\textbf{Órarendgenerálási problémák megoldása hagyományos és genetikus algoritmusokkal}
 \end{center}}
 
 \vspace*{2.5truecm}
@@ -70,17 +70,21 @@ Molnárfi Brendon (GAX11M) programtervező informatikus jelölt részére.\newli
 
 \noindent\textbf{A szakdolgozat tárgyköre:} órarend, optimalizálás, genetikus algoritmus\newline
 
-\noindent\textbf{A szakdolgozat címe:} \newline
+\noindent\textbf{A szakdolgozat címe:} Órarendgenerálási problémák megoldása hagyományos és\newline genetikus algoritmusokkal\newline
 
 \noindent\textbf{A feladat részletezése:}
 
 \medskip
 
-\emph{Ide kell a feladatkiírásban szereplő szöveget betenni.}
+\emph{Órarendek tervezésére jellemzően az oktatásban szokott szükség lenni. A dolgozat azt vizsgálja, hogy különböző komplexitású problémákat milyen algoritmussal, és milyen hatékonysággal lehet megoldani.}
 
 \medskip
 
-\emph{(Kisebb tagolás lehet benne, hogy jól nézzen ki.)}
+\emph{A dolgozat legelőször sorra veszi a készen elérhető megoldási módszereket, a hozzájuk készített szoftvereket. Saját munka keretében bevezeti az órarendtervezési problémák absztrakt modelljeit, majd implementálja is a megoldásokat, sorrendben az egymásra épülő részfeladatok kapcsán, lépésről lépésre jutva el a minden tényezőt számontartó, és minden azokkal kapcsolatos feltételnek eleget tevő órarendig. A dolgozatban a genetikus algoritmus alkalmazása is fontos szerepet kap.}
+
+\medskip
+
+\emph{Az egyes részfeladatokat megoldó hagyományos algoritmusok, illetve genetikus algoritmus Python programozási nyelven készültek. A végén előállt órarendek táblázatos formában, grafikusan is megtekinthetők.}
 
 \vfill
 
@@ -106,8 +110,7 @@ Molnárfi Brendon (GAX11M) programtervező informatikus jelölt részére.\newli
 \end{center}
 \vspace*{2cm}  
 
-Alulírott \textbf{Molnárfi Brendon}; Neptun kód: \texttt{GAX11M} a Miskolci Egyetem Gépészmérnöki és Informatikai Karának végzős Programtervező informatikus szakos hallgatója ezennel büntetőjogi és fegyelmi felelősségem tudatában nyilatkozom és aláírásommal igazolom, hogy \textit{Szakdolgozat Címe}
-című szakdolgozatom saját, önálló munkám; az abban hivatkozott szakirodalom
+Alulírott \textbf{Molnárfi Brendon}; Neptun kód: \texttt{GAX11M} a Miskolci Egyetem Gépészmérnöki és Informatikai Karának végzős Programtervező informatikus szakos hallgatója ezennel büntetőjogi és fegyelmi felelősségem tudatában nyilatkozom és aláírásommal igazolom, hogy \textit{Órarendgenerálási problémák megoldása hagyományos és genetikus algoritmusokkal} című szakdolgozatom saját, önálló munkám; az abban hivatkozott szakirodalom
 felhasználása a forráskezelés szabályai szerint történt.\\
 
 Tudomásul veszem, hogy szakdolgozat esetén plágiumnak számít:
@@ -510,17 +513,17 @@ $$
 $$
 
 \begin{figure}
-\includegraphics[width=\linewidth]{C:/Users/Brendi/Documents/Szakdoga/pictures/teremhozzarendeles.png}
+\includegraphics[width=\linewidth]{images/teremhozzarendeles.png}
 \caption{Teremhozzárendelés állapottere}
 \end{figure}
 
-Az első fázis növekedési rendje a következő: $T(n,m)=\sim \Theta (2nm).$
+Az első fázis növekedési rendje a következő: $T(n,m)=\ \sim \ \Theta (2nm).$
 
-A második fázis növekedési rendje: $T(n,m,p)=\sim \Theta (np+mp).$
+A második fázis növekedési rendje: $T(n,m,p)=\ \sim \ \Theta (np+mp).$
 
-Növekedési rend: $T(n,m,p)=\sim \Theta (2nm+np+mp).$
+Növekedési rend: $T(n,m,p)=\ \sim \ \Theta (2nm+np+mp).$
 
-A saját példám futási idejének tudatában, a növekedési rendet felhasználva ki tudtam számolni, hogy milyen futási időre számíthatnánk a Miskolci Egyetem esetében. Az én példámban 30 terem, 30 tanár, 60 osztály, 220 osztály-tantárgy kettős és 40 időablak van, míg a Miskolci Egyetem esetében becsült adatokként 200 terem, 500 tanár, 1000 osztály, 2000 osztály-tantárgy kettős és 30 időablak. Azt kaptam, hogy $2min 23sec$ az átlagosan várható futási idő, a Miskolci Egyetem esetében, IntelCore i7 875K processzorral. Amely processzor 92100 műveletet végez másodpercenként.
+A saját példám futási idejének tudatában, a növekedési rendet felhasználva ki tudtam számolni, hogy milyen futási időre számíthatnánk a Miskolci Egyetem esetében. Az én példámban 30 terem, 30 tanár, 60 osztály, 220 osztály-tantárgy kettős és 40 időablak van, míg a Miskolci Egyetem esetében becsült adatokként 200 terem, 500 tanár, 1000 osztály, 2000 osztály-tantárgy kettős és 30 időablak. Azt kaptam, hogy $2min$ $23sec$ az átlagosan várható futási idő, a Miskolci Egyetem esetében, IntelCore i7 875K processzorral. Amely processzor 92100 műveletet végez másodpercenként.
 
 \section{Tanárhozzárendelési feladat}
 
@@ -596,13 +599,13 @@ $$
 $$
 
 \begin{figure}
-\includegraphics[width=\linewidth]{C:/Users/Brendi/Documents/Szakdoga/pictures/tanarhozzarendeles.png}
+\includegraphics[width=\linewidth]{images/tanarhozzarendeles.png}
 \caption{Tanárhozzárendelés állapottere}
 \end{figure}
 
 Növekedési rend: $T(n,m)=\Theta (nm+nm^2).$
 
-A növekedési rend értelmében $4min 29sec$ az átlagosan várható futási idő, a Miskolci Egyetem esetében, IntelCore i7 875K processzorral. 
+A növekedési rend értelmében $4min$ $29sec$ az átlagosan várható futási idő, a Miskolci Egyetem esetében, IntelCore i7 875K processzorral. 
 
 \section{Időablakok beosztása}
 
@@ -657,13 +660,13 @@ $$
 $$
 
 \begin{figure}
-\includegraphics[width=\linewidth]{C:/Users/Brendi/Documents/Szakdoga/pictures/idoablak.png}
+\includegraphics[width=\linewidth]{images/idoablak.png}
 \caption{Időablakbeosztás állapottere}
 \end{figure}
 
-Növekedési rend: $T(n,m,r)=\sim \Theta(nmr)$.
+Növekedési rend: $T(n,m,r)=\ \sim \ \Theta(nmr)$.
 
-A növekedési rend értelmében $6min 15sec$ az átlagosan várható futási idő, a Miskolci Egyetem esetében, IntelCore i7 875K processzorral. 
+A növekedési rend értelmében $6min$ $15sec$ az átlagosan várható futási idő, a Miskolci Egyetem esetében, IntelCore i7 875K processzorral. 
 
 \section{Időintervallumok hozzárendelése}
 
@@ -730,21 +733,21 @@ $$
 $$
 
 \begin{figure}
-\includegraphics[width=\linewidth]{C:/Users/Brendi/Documents/Szakdoga/pictures/idointervallum.png}
+\includegraphics[width=\linewidth]{images/idointervallum.png}
 \caption{Időintervallum-hozzárendelés állapottere}
 \end{figure}
 
 Célfüggvény növekedési rendje: $T(n,m,o)=\Theta(nmo)$.
 
-Keresztezés növekedési rendje: $T(I)=\sim \Theta(I^2)$.
+Keresztezés növekedési rendje: $T(I)=\ \sim \ \Theta(I^2)$.
 
 Hozzájön még ehhez a tiszta öröklődés, a mutáció és a rendező metódus növekedési rendje, de ezek elhanyagolhatóak. A tiszta öröklődés és a mutáció egyetlen rövid ciklusból áll, ami egy csupán 30-40 elemű listán iterál végig, a minimum rendezés növekedési rendje pedig ugyan négyzetes, de csak generációnként egyszer kerül meghívásra.
 
-Növekedési rend: $T(P,G,I,n,m,o)=\sim \Theta(G \cdot P \cdot (nmo+I^2))$.
+Növekedési rend: $T(P,G,I,n,m,o)=\ \sim \ \Theta(G \cdot P \cdot (nmo+I^2))$.
 
 A tesztelés során az derült ki, hogy átlagosan 48 generációra van szükség, így a növekedési rend értelmében $48min 25sec$ az átlagosan várható futási idő, a Miskolci Egyetem esetében, IntelCore i7 875K processzorral. Ha vannak részmunkaidős tanárok és ezért vizsgáljuk, illetve büntetjük az ezzel kapcsolatos értékeket is a célfüggvényben, akkor néhány másodperccel több.
 
-Könnyen belátható, hogy a célfüggvény és azon belül a tanárokon végigiteráló ciklus "dobja meg" a futási időt. Amennyiben nem adunk rá lehetőséget minden tanárnak, hogy a saját \textit{balance} és \textit{extremisms} értékeivel rendelkezzen, hanem egységesen állítjuk be ezeket az értékeket/alapértelmezett értékkel számolunk, akkor kevesebb mint $5 sec$ lesz a futási idő. Amennyiben adunk, az sem jelent nagy problémát, főleg ha szervergéphez méltó, az enyémtől 2x, 3x nagyobb teljesítményű processzorral rendelkezünk. Az én processzorommal az egész órarendgenerálási folyamat átlagosan várható futási ideje, összesen $61min 32sec$ tanáronkénti \textit{balance} és \textit{extremisms} értékek esetén, egységes értékek esetén pedig $13min 12sec$. Végül kijelenthetjük, hogy nem létezik olyan méretű oktatási intézmény, melynek esetében ne tudnának belátható időn belül eredményt szolgáltatni az algoritmusaim.
+Könnyen belátható, hogy a célfüggvény és azon belül a tanárokon végigiteráló ciklus "dobja meg" a futási időt. Amennyiben nem adunk rá lehetőséget minden tanárnak, hogy a saját \textit{balance} és \textit{extremisms} értékeivel rendelkezzen, hanem egységesen állítjuk be ezeket az értékeket/alapértelmezett értékkel számolunk, akkor kevesebb mint $5 sec$ lesz a futási idő. Amennyiben adunk, az sem jelent nagy problémát, főleg ha szervergéphez méltó, az enyémtől 2x, 3x nagyobb teljesítményű processzorral rendelkezünk. Az én processzorommal az egész órarendgenerálási folyamat átlagosan várható futási ideje, összesen $61min$ $32sec$ tanáronkénti \textit{balance} és \textit{extremisms} értékek esetén, egységes értékek esetén pedig $13min$ $12sec$. Végül kijelenthetjük, hogy nem létezik olyan méretű oktatási intézmény, melynek esetében ne tudnának belátható időn belül eredményt szolgáltatni az algoritmusaim.
 
 \newpage
 
@@ -1069,8 +1072,9 @@ def targetFunction(entity):
            time_windows['f'][DAILY_PERIODS - 2]:
             diff += extremisms * len(periods[period])
     return diff
+\end{python}
 
-
+\begin{python}
 def targetFunction(entity):
     diff = 0
     for teacher in range(len(teachers)):
@@ -1100,8 +1104,9 @@ def targetFunction(entity):
                         diff += teachers[teacher].extremisms *\
                             len(periods[period])
     return diff
+\end{python}
 
-
+\begin{python}
 def targetFunction(entity):
     diff = 0
     for teacher in range(len(teachers)):
@@ -1173,7 +1178,7 @@ def createChildren(entity):
 Miután megvan, kik lesznek a szülők, annak eldöntésére, hogy tiszta örökés legyen (az egyik szülő teljes génkészletének öröklése), keresztezés és/vagy mutáció, újabb véletlenszám generálásokra van szükség. A keresztezési ráta (\textit{CROSSOVER\_RATE}) és a mutációs ráta (\textit{MUTATION\_RATE}) értéke határozza meg a különböző esetek bekövetkezésének valószínűségét, melyek mind külön metóduson keresztül kerülnek megvalósításra.
 
 \begin{figure}
-\includegraphics[width=\linewidth]{C:/Users/Brendi/Documents/Szakdoga/pictures/pelda.png}
+\includegraphics[width=\linewidth]{images/pelda.png}
 \caption{A keresztezés problematikája}
 \end{figure}
 
@@ -1295,12 +1300,12 @@ A generációk száma előre nem meghatározott, mert a tesztelés során kider�
 \section{Adatbázis}
 
 \begin{figure}
-\includegraphics[width=\linewidth]{C:/Users/Brendi/Documents/Szakdoga/pictures/ermodell.png}
+\includegraphics[width=\linewidth]{images/ermodell.png}
 \caption{Az ER modell}
 \end{figure}
 
 \begin{figure}
-\includegraphics[width=\linewidth]{C:/Users/Brendi/Documents/Szakdoga/pictures/relmodell.png}
+\includegraphics[width=\linewidth]{images/relmodell.png}
 \caption{A relációs modell}
 \end{figure}
 
@@ -1310,25 +1315,54 @@ Adatbázist kellett használni a felhasználók által létrehozott órarendek a
 
 A webalkalmazás oldalait vue fájlok alkotják, bennük egy html kódrésszel és egy script kódrésszel, amihez a Vue axios csomagját importáltam. A szkriptekben definiáltam az objektumokat (osztályok, tantárgyak, tantermek, tanárok és még többet is) a megfelelő adattagokkal és azokkal a metódusokkal, amelyek HTTP kéréseket intéznek a szerverhez (így közvetetten interakciót folytatnak az adatbázissal), illetve kliensoldali ellenőrzést végeznek. Ez utóbbira és a felhasználó által aktuálisan hozzáadott objektum példányok letárolására általam definiált metódust használtam, korábban eltárolt adatok felhozásához (bármely, de nem befoglaló objektum kapcsán) a gyári \textit{created()} metódust definiáltam felül, befoglaló objektum azonosításához és adatainak felhozásához (mert egy felhasználónak több órarend projektje is lehet) pedig a gyári \textit{mounted()} metódust. A html kódrészben a Vue által biztosított módokon átadjuk az adatokat a megfelelő metódusnak (ezáltal "felvisszük" őket), vagy fogadjuk az adatokat a megfelelő metódustól és megjelenítjük.
 
-Az \textit{index.js} egy routing, vagyis útvonalválasztó fájl. Ismertté kell tenni számára, vagyis importálni kell a különböző komponensekben, vagyis vue fájlokban definiált objektumokat. Ezt követően a \textit{routes} tömbben fogunk megadni mindent, ami a routinghoz szükséges. Egy eleme egy komponensnek az eléréséhez szolgáló adatok együttese, de egy komponens akár többféleképpen is lehet elérhető. Nálam a bejelentkezéssel kapcsolatos komponens ilyen. Azért van hozzá kétféle elérés megadva, mert ez képezi a főoldalt. Az eléréshez szükséges adatok a \textit{path}, a \textit{name} és a \textit{component} attribútumok. A \textit{path} a vue fájl elérési útvonala, kiterjesztés nélkül...
-
-A \textit{database.py} fájlban (ez egy Python fájl) található az adatbázis tartalmának leképzése objektum-orientáltan, a \textit{timetable.py} HTTP kéréseket teljesítő metódusai ennek alapján tudnak az adatokra hivatkozni. Ezek a létrehozó, lekérdező, módosító, törlő metódusok mindig "ülést nyitnak", vagyis database session-t, az adatokhoz való hozzáféréshez és ellenőrzést végeznek az adott objektum azonosító attribútumán. Ezenkívül egyes metódusok az adatok szerveroldali ellenőrzésére megírt metódust is meghívnak, melyeket szintén ebben a modulban definiáltam.
+A \textit{model.py} fájlban (ez egy Python fájl) található az adatbázis tartalmának leképzése objektum-orientáltan, a \textit{timetable.py} HTTP kéréseket teljesítő metódusai ennek alapján tudnak az adatokra hivatkozni. Ezek a létrehozó, lekérdező, módosító, törlő metódusok mindig "ülést nyitnak", vagyis database session-t (a \textit{database_session.py} modul közbenjárásával), az adatokhoz való hozzáféréshez és ellenőrzést végeznek az adott objektum azonosító attribútumán. Ezenkívül egyes metódusok az adatok szerveroldali ellenőrzésére megírt metódust is meghívnak, melyeket szintén ebben a modulban definiáltam.
 
 A \textit{server.py} modulhoz futnak be a HTTP kérések a vue komponensekből, ugyanis ez a szerver. Ez a modul végzi el minden kérésnél az authentikációt, vagyis a felhasználói jogosultság ellenőrzését, majd hívja meg a \textit{timetable.py} megfelelő metódusát, és a kapott eredményt vagy hibaértesítést aztán a HTTP protokoll szabványos formájában továbbítja a vue komponensnek. Itt használjuk fel a Falcon, a Waitress és a JWT nyújtotta szolgáltatásokat, melyeket röviden kifejtettem korábban.
 
 \section{Felhasználói dokumentáció}
 
-A főoldal a \textit{login}, ahol bejelentkezésre van lehetőség, vagypedig ha még nem regisztráltunk vagy elfelejtettük a jelszavunkat, elérhetőek itt linkek, melyek az ezzel kapcsolatos oldalra irányítanak. Bejelentkezés után a menüben találjuk magunkat, ahol a fontos és egyben magyarázatra szoruló menüpontok, az Új órarend létrehozása és az Órarendjeim. Ha újat hozunk létre, meg kell adni a típust, hogy manuálisan akarjuk-e a tanárokat hozzárendelni az osztályokhoz, illetve hogy hány órától legyen a legkorábbi napi időablak és hány órakor érjen véget a legkésőbbi. Ezt a napi időintervallumot lesz lehetőség még szűkíteni a részmunkaidős tanárok esetében, az azonos nevű attribútumok állításával, tanár hozzáadásakor. A típus esetében általános iskola, középiskola és főiskola/egyetem közül választhatunk, ennek egyik jelentősége, hogy milyen típusú tantárgyakat lehet majd hozzáadni (pl. fakt típusú órák csak középiskolában vannak, elméletek és gyakorlatok pedig csak a főiskolán/egyetemen), a másik, hogy a főiskolán/egyetemen két óra hosszú egy időablak. Ha meglevő órarendet szeretnénk szerkeszteni, akkor kiválasztjuk melyiket szeretnénk és az abban a sorban található ceruza ikonra kattintunk (amennyiben törölni szeretnénk, akkor pedig nyilván a keresztre). Négy link fog megjelenni a számunkra, akkor is ha új órarendet hoztunk létre, akkor is ha meglevőt szerkesztünk. Egy a tantárgyak, egy a tantermek, egy a tanárok és egy az osztályok létrehozására. Új órarend esetén először mindenképpen tantárgyat/tantárgyakat kell hozzáadni, mert azzal kapcsolatban, hogy milyen tárgyai legyenek egy osztálynak, egy tanárnak, vagy hogy milyen tárgy(ak)ra legyen esetleg specializálódva egy terem, a korábban hozzáadottak közül választhatunk lenyíló listában. Ugyanígy, ha manuálisan rendeljük hozzá a tanárokat az osztályokhoz, csak a korábban hozzáadott tanárok közül választhatunk. Bármit is akarunk hozzáadni, egyszerre mindig egy példányt tudunk felvinni a megfelelő mezők kitöltésével (melyek elsősorban szövegmezők és lenyíló listák lesznek) és a hozzáadásra fenntartott nyomógomb lenyomásával. (Ez vonatkozik az osztály tantárgyainak hozzáadására is, osztály hozzáadásán belül.) Amint ez megtörtént, letárolódik az adatbázisban az adott objektum példány és a képernyő alján kiírásra is kerülnek a hozzáadott adatok, egyidejűleg alaphelyzetbe állnak a kitöltendő mezők és máris jöhet következő példány hozzáadása, ha szeretnénk. Mindez aszinkron, az oldal újratöltése nélkül történik. Ezenkívül itt is van lehetőség szerkesztésre és törlésre is, minden hozzáadott példánnyal kapcsolatban, az ikonokkal. Ha végeztünk a hozzáadásokkal és szeretnénk órarendet generáltatni, a Kérem az órarendet! gombra kell kattintani az \textit{edit\_timetable} oldalon.
+A főoldal a \textit{login}, ahol bejelentkezésre van lehetőség, vagypedig ha még nem regisztráltunk vagy elfelejtettük a jelszavunkat, elérhetőek itt linkek, melyek az ezzel kapcsolatos oldalra irányítanak. Bejelentkezés után a menüben találjuk magunkat, ahol a fontos és egyben magyarázatra szoruló menüpontok, az Új órarend létrehozása és az Órarendjeim. Ha újat hozunk létre, meg kell adni a típust, hogy manuálisan akarjuk-e a tanárokat hozzárendelni az osztályokhoz, illetve hogy hány órától legyen a legkorábbi napi időablak és hány órakor érjen véget a legkésőbbi. Ezt a napi időintervallumot lesz lehetőség még szűkíteni a részmunkaidős tanárok esetében, az azonos nevű attribútumok állításával, tanár hozzáadásakor. A típus esetében általános iskola, középiskola és főiskola/egyetem közül választhatunk, ennek egyik jelentősége, hogy milyen típusú tantárgyakat lehet majd hozzáadni (pl. fakt típusú órák csak középiskolában vannak, elméletek és gyakorlatok pedig csak a főiskolán/egyetemen), a másik, hogy a főiskolán/egyetemen két óra hosszú egy időablak. Ha meglevő órarendet szeretnénk szerkeszteni, akkor kiválasztjuk melyiket szeretnénk és az abban a sorban található ceruza ikonra kattintunk (amennyiben törölni szeretnénk, akkor pedig nyilván a keresztre). Négy link fog megjelenni a számunkra, akkor is ha új órarendet hoztunk létre, akkor is ha meglevőt szerkesztünk. Egy a tantárgyak, egy a tantermek, egy a tanárok és egy az osztályok létrehozására. Új órarend esetén először mindenképpen tantárgyat/tantárgyakat kell hozzáadni, mert azzal kapcsolatban, hogy milyen tárgyai legyenek egy osztálynak, egy tanárnak, vagy hogy milyen tárgy(ak)ra legyen esetleg specializálódva egy terem, a korábban hozzáadottak közül választhatunk lenyíló listában. Ugyanígy, ha manuálisan rendeljük hozzá a tanárokat az osztályokhoz, csak a korábban hozzáadott tanárok közül választhatunk. Bármit is akarunk hozzáadni, egyszerre mindig egy példányt tudunk felvinni a megfelelő mezők kitöltésével (melyek elsősorban szövegmezők és lenyíló listák lesznek) és a hozzáadásra fenntartott nyomógomb lenyomásával. (Ez vonatkozik az osztály tantárgyainak hozzáadására is, osztály hozzáadásán belül.) Amint ez megtörtént, letárolódik az adatbázisban az adott objektum példány és a képernyő alján kiírásra is kerülnek a hozzáadott adatok, egyidejűleg alaphelyzetbe állnak a kitöltendő mezők és máris jöhet következő példány hozzáadása, ha szeretnénk. Mindez aszinkron, az oldal újratöltése nélkül történik. Ezenkívül van lehetőség törlésre, minden hozzáadott példánnyal kapcsolatban, a törlés ikonnal. Ha végeztünk a hozzáadásokkal és szeretnénk órarendet generáltatni, a Get it! gombra kell kattintani az \textit{edit\_timetable} oldalon. A felvitt adathalmaz méretétől függően sok időt is igénybe vehet az órarendgenerálás, de amint elkészült, letölthetővé válik az összes órarendet tartalmazó tömörített mappa. Minden osztályé, minden tanáré és minden tanteremé külön pdf fájlban kap helyet, táblázatos formában. Bármikor van lehetőség újra generáltatni, akár ugyanazzal az adathalmazzal is. A véletlenszám-generálás miatt nem determinisztikus a folyamat, így változatlan adathalmaz esetén sem ugyanazokat a megoldásokat kapjuk újból, ha éppen nem elégedett az eredménnyel a felhasználó, próbálkozhat többször is. A \textit{my\_timetables} oldalról elérhetőek a meglevő adathalmazaink, a megfelelőt kiválasztva, a szerkesztés ikonra kattintva megintcsak az \textit{edit\_timetable} oldalon találhatjuk magunkat.
 
 \section{Tesztelés}
+
+A szakdolgozat készítése során folyamatosan tesztelni kellett, azt lehet mondani, hogy a tesztelések a korábbi szakaszban az órarendgeneráló algoritmusokkal kapcsolatos tesztek voltak, a későbbi szakaszban pedig a webes működésekkel kapcsolatos tesztek. Az alábbiakban konkrétan megnevezem, milyen kritikus tényezőkre kellett különösen odafigyelni, illetve hol követtem el hibát.
+
+Teremhozzárendelési feladat:
+\begin{itemize}
+\item minden osztályhoz sikerült-e termet hozzárendelni
+\item speciális termet igénylő tárgyak esetén, más terem van-e az osztály-tantárgy kettősökhöz hozzárendelve, mint az osztályokhoz "alapból"
+\item egyes esetekben nem fér be tantárgy-specifikus terembe az osztály-tantárgy kettős, ilyenkor maradnia kell az osztálynak az alapból hozzárendelt teremben, mert valahol lenniük kell
+\end{itemize}
+
+Az időablakbeosztási feladat kapcsán biztosítani kellett, hogy amennyiben még van hely egy adott időablakban, de nincs több olyan osztály-tantárgy-terem-tanár hozzárendelés, amelyet  beoszthatnánk, akkor annak ellenére, hogy nem teljesen kitöltött az időablak, átlépjünk a következőbe. Ilyenkor keletkezhetnek lyukas órák, de ez elkerülhetetlen.
+
+Genetikus algoritmus (időintervallum-hozzárendelési feladat):
+\begin{itemize}
+\item a célfüggvényben megvizsgáltuk-e a tanárok előfordulásait az egyes időablakokban, vagy elkövettük azt a hibát, hogy csak az időablakok hossza (az időablakokban levő hozzárendelések száma) alapján számoltunk
+\item sikerült-e kiküszöbölni a korábban bemutatott keresztezési problematikát
+\item nem adtuk-e hozzá az új egyedeket a populációs listához, mielőtt a generáció összes egyedét kitenyésztettük, ugyanis ideiglenesen egy másik listában kell letárolni őket, mert az adott generációban született egyed még nem lehet szülő
+\end{itemize}
+
+Webes működések:
+\begin{itemize}
+\item bejelentkezési ellenőrzésnél ne a jelszó eredeti formája és a hexadecimális kóddá konvertált kerüljön egymással összehasonlításra
+\item a hitelesítésekhez használt token benne maradt-e a HTTP kérelmekben
+\item lementődtek-e az adatbázisban a felvitt adatok, máskülönben esélytelen felhozni őket
+\item a több-több kapcsolatok megfelelően tárolódtak-e le, különös tekintettel az osztály-tantárgy kapcsolatokra, ahol a kapcsolótáblához kötődő attribútumok is vannak
+\item csak az adott órarenden belüli tantárgyak, tantermek, tanárok és osztályok kerülnek-e felhozásra, illetve csak az adott felhasználó órarendjei vannak-e meg
+\end{itemize}
 
 \newpage
 
 \chapter{Összefoglalás}
 
+Az eltervezetteknek megfelelően implementáltam azokat az algoritmusokat, amelyek végül minden feltételt kielégítő órarendeket eredményeztek. Az ezek során szerzett tapasztalatokat ugyanúgy kifejtettem a szakdolgozatban, mint ahogyan elméleti elemzést is lefolytattam, ezáltal kézzelfogható eredményeket szolgáltatva a témakörben, melyek a későbbiekben nagyban felhasználhatóak lehetnek. A vizsgálatok egyik célpontja a genetikus algoritmus volt, ennek kapcsán kijelenthetem, hogy a genetikus algoritmust az időintervallum-hozzárendelések kapcsán érdemes használni, a többi részfeladat hagyományos alogritmusokkal való megoldását követően. A szakdolgozat elején számba vett, ismert órarendgeneráló alkalmazásokhoz képest az általam készített alkalmazás többet ad, a kora reggeli/késő délutáni órák számának minimalizálásával és a napi óraszámok arányos eloszlása/pénteki órák számának minimalizálásával, miközben egyben jó hatékonyságot érhetünk el a lyukas órák számának minimalizálása kapcsán is.
+
 \newpage
 
 \huge{Summary}
+
+By right of the plan, I have implemented those algorithms, which resulted timetables finally, what satisfy every conditions. Experiences, what I gained during this, I have stated in the thesis, how I have conducted theoretical analysis too, so provided the profession with handable results, which can be usable in the future in large. Genetic algorithm was either target of investigations, about it I can assert, that usage of genetic algorithm is deserved at assignments of time intervals, after we solved the other subtasks by traditional algorithms. Compare to those famous timetable generator applications, which are presented in the beginning of thesis, the application is prepared by me add us more, with minimalization of number of early morning/late afternoon periods and with harmonic distribution of daily period numbers/minimalization of friday periods, while at the same time, we can reach good effectivity about minimalization of number of holes in periods, also.
 
 \newpage
 
@@ -1336,7 +1370,7 @@ A főoldal a \textit{login}, ahol bejelentkezésre van lehetőség, vagypedig ha
 
 \addcontentsline{toc}{chapter}{Irodalomjegyzék}
 \bibliographystyle{plain}
-\bibliography{dolgozat.bib}
+\bibliography{styles/dolgozat.bib}
 
 \huge{Irodalomjegyzék}
 
@@ -1362,16 +1396,34 @@ A főoldal a \textit{login}, ahol bejelentkezésre van lehetőség, vagypedig ha
 
 \pagestyle{empty}
 
-\noindent \textbf{\Large Adathordozó használati utasítás}
+\noindent \textbf{\Large Adathordozó használati útmutató}
 
 \vskip 1cm
 
-A CD lemezre mindenképpen rá kell tenni
-\begin{itemize}
-\item a dolgozatot egy \texttt{dolgozat.pdf} fájl formájában,
-\item a LaTeX forráskódját a dolgozatnak,
-\item az elkészített programot, fontosabb futási eredményeket (például ha kép a kimenet),
-\item egy útmutatót a CD használatához (ami lehet ez a fejezet külön PDF-be vagy MarkDown fájlként kimentve).
+Az adathordozón megtalálható először is maga a szakdolgozat, pdf és tex fájlban is. Ezenkívül van egy \textit{styles} mappa, ami a tex fájlhoz kapcsolódó csomagokat tartalmazza, egy \textit{images} mappa a szakdolgozat képeivel, és egy \textit{application} mappa. Ez utóbbiban van az alkalmazás és minden, ami a működtetéséhez szükséges. Két fő részből, ezáltal mappából áll, mivel van a kliens oldal és a szerver oldal.
+
+A kliensben a \textit{package.json} tartja számon a függőségeket, amiről a Felhasznált szoftverek alfejezetben beszéltem. Egyoldalas alkalmazásról beszélhetünk, melynek egységes header-jét az \textit{index.html} fájl tartalmazza, az üres body blokkba pedig az \textit{id} segítségével betöltődik az éppen aktuális vue fájl tartalma. Az \textit{src} mappában a következők találhatók:
+
+\begin{itemize} 
+\item \textit{app.vue}: ez a fájl gondoskodik róla, hogy a különböző vue fájlok (komponensek) felcímkéződjenek a html fájlba való betöltéshez szükséges \textit{id}-val
+\item \textit{main.js}: ez a JavaScript fájl egy Vue objektumot példányosít, ezáltal fogjuk össze a vue komponenseinket
+\item \textit{router} mappa: ebben található az \textit{index.js} router (útvonalválasztó) fájl, ami tartalmazza a különböző vue komponensek beazonosításához, eléréséhez szükséges információkat
+\item \textit{components} mappa: a vue komponenseket tartalmazza, melyek funkcionálisan egy-egy html oldalnak feleltethetők meg és betöltésre várnak a webalkalmazás használata során
 \end{itemize}
+
+A szerver oldal Python fájlokat, valamint Python fájlokat tartalmazó mappákat tartalmaz. A \textit{timetable} mappában a \textit{timetable.py}, \textit{model.py} és \textit{database_session.py} modulok vannak, az \textit{exercises} mappában pedig az órarendgeneráló algoritmusokat tartalmazó modulok, részfeladatonként egy, illetve külön mappában (\textit{classes}) az osztálydefiníciók.
+
+Mivel az alkalmazást kipróbálni szándékozó felhasználónak is a saját gépén szükséges szervert létrehoznia, telepíteni kellhet egy pár dolgot:
+\begin{itemize}
+\item \textit{npm}
+\item \textit{PyCharm}
+\item \textit{Waitress}
+\item \textit{Falcon}
+\item \textit{JWT}
+\item \textit{SQLAlchemy}
+\item \textit{MySQL}
+\end{itemize}
+
+Ha mindez megvan, regisztráció helyett javaslom a molnarfi93@gmail.com e-mail címmel és 666 jelszóval való belépést. Ebben az esetben ugyanis, a \textit{my_timetables} komponensből elérhető lesz az általam felvitt órarend-adathalmaz, rögtön lehet generáltatni.
 
 \end{document}
