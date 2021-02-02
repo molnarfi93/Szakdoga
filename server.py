@@ -21,7 +21,7 @@ def isValidToken(encoded_token):
             return True
         else:
             return False
-    except:
+    except Exception as error:
         return False
 
 
@@ -41,7 +41,7 @@ class LoginResource:
             }
             encoded_token = encodeToken(token)
             response = {
-                'token': 'Bearer ' + str(encoded_token)[2:-1]
+                'token': 'Bearer ' + str(encoded_token)
             }
             resp.body = json.dumps(response)
             resp.status = falcon.HTTP_200
@@ -103,7 +103,7 @@ class TimetableResource:
     def __init__(self, timetable):
         self._timetable = timetable
 
-    def on_get(self, req, resp, timetable_name):
+    def on_get(self, req, resp, **kwds):
         if 'AUTHORIZATION' not in req.headers:
             resp.status = falcon.HTTP_401
             return
@@ -111,7 +111,10 @@ class TimetableResource:
         if isValidToken(encoded_token) is False:
             resp.status = falcon.HTTP_401
             return
-        timetable_datas = self._timetable.getTimetable(timetable_name)
+        if len(kwds) == 0:
+            timetable_datas = self._timetable.getAllTimetables()
+        else:
+            timetable_datas = self._timetable.getTimetable(kwds)
         resp.body = json.dumps(timetable_datas)
         resp.content_type = 'application/json'
         resp.status = falcon.HTTP_200
@@ -120,7 +123,6 @@ class TimetableResource:
         if 'AUTHORIZATION' not in req.headers:
             resp.status = falcon.HTTP_401
             return
-        print("itt")
         encoded_token = req.headers['AUTHORIZATION'][7:]
         if isValidToken(encoded_token) is False:
             resp.status = falcon.HTTP_401
@@ -148,7 +150,7 @@ class SubjectResource:
     def __init__(self, timetable):
         self._timetable = timetable
 
-    def on_get(self, req, resp, subject_name):
+    def on_get(self, req, resp):
         if 'AUTHORIZATION' not in req.headers:
             resp.status = falcon.HTTP_401
             return
@@ -156,7 +158,7 @@ class SubjectResource:
         if isValidToken(encoded_token) is False:
             resp.status = falcon.HTTP_401
             return
-        subject_datas = self._timetable.getSubject(subject_name)
+        subject_datas = self._timetable.getAllSubjects()
         resp.body = json.dumps(subject_datas)
         resp.content_type = 'application/json'
         resp.status = falcon.HTTP_200
@@ -251,7 +253,7 @@ class TeacherResource:
         if isValidToken(encoded_token) is False:
             resp.status = falcon.HTTP_401
             return
-        teacher_datas = self._timetable.getTeacher(teacher_name)
+        teacher_datas = self._timetable.getAllTeachers()
         teacher_datas['subjects'] = self._timetable.getTeacherContacts(teacher_name)
         resp.body = json.dumps(teacher_datas)
         resp.content_type = 'application/json'
@@ -341,7 +343,7 @@ class GroupResource:
         resp.status = falcon.HTTP_200
 
 
-engine = create_engine(f'mysql+mysqlconnector://root:{SECRET_KEY}@localhost:3306/timetable_database?auth_plugin=mysql_native_password')
+engine = create_engine(f'mysql+mysqlconnector://root:{SECRET_KEY}@localhost:3306/timetable?auth_plugin=mysql_native_password')
 engine.connect()
 timetable = Timetable(engine)
 

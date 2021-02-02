@@ -56,9 +56,9 @@ class Timetable:
             invalid_type = timetable_datas['type']
             raise ValueError(f'The type "{invalid_type}" is invalid!')
 
-    def createTimetable(self, timetable_name, timetable_datas):
+    def createTimetable(self, timetable_datas):
         self.checkTimetableDatas(timetable_datas)
-        timetable = model.Timetable(timetable_name, **timetable_datas)
+        timetable = model.Timetable(**timetable_datas)
         self._session.add(timetable)
         self._session.commit()
 
@@ -77,11 +77,27 @@ class Timetable:
         except NoResultFound as error:
             raise ValueError(f'There is no timetable with name {timetable_name}!')
 
+    def getAllTimetables(self):
+        try:
+            timetables = self._session.query(model.Timetable).all()
+            for i in range(len(timetables)):
+                timetables[i] = {
+                    'name': timetables[i].name,
+                    'type': timetables[i].type,
+                    'add_manually': timetables[i].add_manually,
+                    'begin_time': timetables[i].begin_time,
+                    'end_time': timetables[i].end_time,
+                    'user': timetables[i].user
+                }
+            return timetables
+        except NoResultFound as error:
+            raise ValueError(f'There is no timetables!')
+
     def destroyTimetable(self, timetable_name):
         pass
 
-    def addSubject(self, subject_name):
-        subject = Subject(subject_name)
+    def addSubject(self, subject_datas):
+        subject = model.Subject(**subject_datas)
         self._session.add(subject)
         self._session.commit()
 
@@ -95,6 +111,18 @@ class Timetable:
             return subject_datas
         except NoResultFound as error:
             raise ValueError(f'There is no subject with name {subject_name}!')
+
+    def getAllSubjects(self):
+        try:
+            subjects = self._session.query(model.Subject).all()
+            for i in range(len(subjects)):
+                subjects[i] = {
+                    'name': subjects[i].name,
+                    'timetable': subjects[i].timetable
+                }
+            return subjects
+        except NoResultFound as error:
+            raise ValueError(f'There is no subjects!')
 
     def destroySubject(self, subject_name):
         pass
@@ -138,8 +166,8 @@ class Timetable:
     def destroyRoomContact(self, contact_name):
         pass
 
-    def addTeacher(self, teacher_name, teacher_datas):
-        teacher = Teacher(teacher_name, **teacher_datas)
+    def addTeacher(self, teacher_datas):
+        teacher = model.Teacher(**teacher_datas)
         self._session.add(teacher)
         self._session.commit()
 
@@ -158,6 +186,23 @@ class Timetable:
             return teacher_datas
         except NoResultFound as error:
             raise ValueError(f'There is no teacher with name {teacher_name}!')
+
+    def getAllTeachers(self):
+        try:
+            teachers = self._session.query(model.Teacher).all()
+            for i in range(len(teachers)):
+                teachers[i] = {
+                    'name': teachers[i].name,
+                    'subjects': [],
+                    'balance': teachers[i].balance,
+                    'extremisms': teachers[i].extremisms,
+                    'begin_time': teachers[i].begin_time,
+                    'end_time': teachers[i].end_time,
+                    'timetable': teachers[i].timetable
+                }
+            return teachers
+        except NoResultFound as error:
+            raise ValueError(f'There is no teachers!')
 
     def destroyTeacher(self, teacher_name):
         pass
