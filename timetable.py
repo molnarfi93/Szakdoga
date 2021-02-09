@@ -4,6 +4,7 @@ from model import User, Subject, Room, Teacher, Group, Contact_room_subject, Con
 import model
 import re
 import hashlib
+import random
 
 types = [
     "middle school",
@@ -18,21 +19,26 @@ class Timetable:
         self._session = createSession(engine)
 
     def checkSignupDatas(self, user_datas):
+        users = self._session.query(model.User).all()
+        for user in range(users):
+            if users[user].email == user_datas['email']:
+                raise ValueError('It is already registered e-mail address!')
         reg_ex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
         if not re.search(reg_ex, user_datas['email']):
             raise ValueError('E-mail address is invalid!')
+        if len(user_datas['password']) < 8:
+            raise ValueError('Password is weak, because too short!')
 
     def addUser(self, user_datas):
         self.checkSignupDatas(user_datas)
-        user = User(**user_datas)
+        user = model.User(**user_datas)
         self._session.add(user)
         self._session.commit()
-        return user.id
 
-    def checkLoginDatas(self, email, password):
+    def checkLoginDatas(self, user_datas):
         try:
-            user = self._session.query(User).filter_by(email=email).one()
-            if hashlib.sha512(user.password.encode('utf-8')).hexdigest() == password:
+            user = self._session.query(model.User).filter_by(email=user_datas['email']).one()
+            if hashlib.sha512(user.password.encode('utf-8')).hexdigest() == user_datas['password']:
                 return user.id
             else:
                 raise ValueError('Password is wrong!')
@@ -41,15 +47,20 @@ class Timetable:
 
     def checkEmail(self, email):
         try:
-            self._session.query(User).filter_by(email=email).one()
+            self._session.query(model.User).filter_by(email=email).one()
         except NoResultFound as error:
             raise ValueError('It is not registered e-mail address!')
 
-    def updatePassword(self, user_id, user_datas):
-        user = self._session.query(User).filter_by(id=user_id).one()
-        if user.password != user_datas['password']:
-            raise ValueError('Password is wrong!')
-        user.password = user_datas['new_password']
+    def updatePassword(self, user_email, user_datas):
+        user = self._session.query(model.User).filter_by(email=user_email).one()
+        if 'password' in user_datas:
+            if user.password != user_datas['password']:
+                raise ValueError('Password is wrong!')
+            else:
+                user.password = user_datas['new_password']
+        else:
+            rand = random.randint(10000, 100000)
+            user.password = rand
 
     def checkTimetableDatas(self, timetable_datas):
         if timetable_datas['type'] not in types:
@@ -64,7 +75,7 @@ class Timetable:
 
     def getTimetable(self, timetable_name):
         try:
-            timetable = self._session.query(Subject).filter_by(name=timetable_name).one()
+            timetable = self._session.query(model.Timetable).filter_by(name=timetable_name).one()
             timetable_datas = {
                 'name': timetable.name,
                 'type': timetable.type,
@@ -77,9 +88,9 @@ class Timetable:
         except NoResultFound as error:
             raise ValueError(f'There is no timetable with name {timetable_name}!')
 
-    def getAllTimetables(self):
+    def getAllTimetables(self, user_email):
         try:
-            timetables = self._session.query(model.Timetable).all()
+            timetables = self._session.query(model.Timetable).filter_by(user=user_email).all()
             for i in range(len(timetables)):
                 timetables[i] = {
                     'name': timetables[i].name,
@@ -101,20 +112,9 @@ class Timetable:
         self._session.add(subject)
         self._session.commit()
 
-    def getSubject(self, subject_name):
+    def getAllSubjects(self, timetable_name):
         try:
-            subject = self._session.query(Subject).filter_by(name=subject_name).one()
-            subject_datas = {
-                'name': subject.name,
-                'timetable': subject.timetable
-            }
-            return subject_datas
-        except NoResultFound as error:
-            raise ValueError(f'There is no subject with name {subject_name}!')
-
-    def getAllSubjects(self):
-        try:
-            subjects = self._session.query(model.Subject).all()
+            subjects = self._session.query(model.Subject).filter_by(timetable=timetable_name).all()
             for i in range(len(subjects)):
                 subjects[i] = {
                     'name': subjects[i].name,
@@ -127,35 +127,36 @@ class Timetable:
     def destroySubject(self, subject_name):
         pass
 
-    def addRoom(self, room_name, room_datas):
-        room = Room(room_name, **room_datas)
+    def addRoom(self, room_datas):
+        room = model.Room(**room_datas)
         self._session.add(room)
         self._session.commit()
 
-    def getRoom(self, room_name):
+    def getAllRooms(self, timetable_name):
         try:
-            room = self._session.query(Room).filter_by(name=room_name).one()
-            room_datas = {
-                'name': room.name,
-                'capacity': room.capacity,
-                'subjects': [],
-                'timetable': room.timetable
-            }
-            return room_datas
+            rooms = self._session.query(model.Room).filter_by(timetable=timetable_name).all()
+            for i in range(len(rooms)):
+                rooms[i] = {
+                    'name': rooms[i].name,
+                    'capacity': rooms[i].capacity,
+                    'subjects': [],
+                    'timetable': rooms[i].timetable
+                }
+            return rooms
         except NoResultFound as error:
-            raise ValueError(f'There is no room with name {room_name}!')
+            raise ValueError(f'There is no rooms!')
 
     def destroyRoom(self, room_name):
         pass
 
-    def addRoomContact(self, contact_name):
-        contact = Contact_room_subject(contact_name)
+    def addRoomContact(self, contact_datas):
+        contact = model.Contact_room_subject(**contact_datas)
         self._session.add(contact)
         self._session.commit()
 
     def getRoomContacts(self, room_name):
         try:
-            contacts = self._session.query(Contact_room_subject).filter_by(room=room_name).all()
+            contacts = self._session.query(model.Contact_room_subject).filter_by(room=room_name).all()
             contact_datas = []
             for contact in range(len(contacts)):
                 contact_datas.append(contacts[contact].subject)
@@ -171,25 +172,9 @@ class Timetable:
         self._session.add(teacher)
         self._session.commit()
 
-    def getTeacher(self, teacher_name):
+    def getAllTeachers(self, timetable_name):
         try:
-            teacher = self._session.query(Teacher).filter_by(name=teacher_name).one()
-            teacher_datas = {
-                'name': teacher.name,
-                'subjects': [],
-                'balance': teacher.balance,
-                'extremisms': teacher.extremisms,
-                'begin_time': teacher.begin_time,
-                'end_time': teacher.end_time,
-                'timetable': teacher.timetable
-            }
-            return teacher_datas
-        except NoResultFound as error:
-            raise ValueError(f'There is no teacher with name {teacher_name}!')
-
-    def getAllTeachers(self):
-        try:
-            teachers = self._session.query(model.Teacher).all()
+            teachers = self._session.query(model.Teacher).filter_by(timetable=timetable_name).all()
             for i in range(len(teachers)):
                 teachers[i] = {
                     'name': teachers[i].name,
@@ -207,14 +192,14 @@ class Timetable:
     def destroyTeacher(self, teacher_name):
         pass
 
-    def addTeacherContact(self, contact_name):
-        contact = Contact_teacher_subject(contact_name)
+    def addTeacherContact(self, contact_datas):
+        contact = model.Contact_teacher_subject(**contact_datas)
         self._session.add(contact)
         self._session.commit()
 
     def getTeacherContacts(self, teacher_name):
         try:
-            contacts = self._session.query(Contact_teacher_subject).filter_by(teacher=teacher_name).all()
+            contacts = self._session.query(model.Contact_teacher_subject).filter_by(teacher=teacher_name).all()
             contact_datas = []
             for contact in range(len(contacts)):
                 contact_datas.append(contacts[contact].subject)
@@ -225,36 +210,37 @@ class Timetable:
     def destroyTeacherContact(self, contact_name):
         pass
 
-    def addGroup(self, group_name, group_datas):
-        group = Group(group_name, **group_datas)
+    def addGroup(self, group_datas):
+        group = model.Group(**group_datas)
         self._session.add(group)
         self._session.commit()
 
-    def getGroup(self, group_name):
+    def getAllGroups(self, timetable_name):
         try:
-            group = self._session.query(Group).filter_by(name=group_name).one()
-            group_datas = {
-                'name': group.name,
-                'grade': group.grade,
-                'headcount': group.headcount,
-                'subjects': [],
-                'timetable': group.timetable
-            }
-            return group_datas
+            groups = self._session.query(model.Group).filter_by(timetable=timetable_name).all()
+            for i in range(len(groups)):
+                groups[i] = {
+                    'name': groups[i].name,
+                    'grade': groups[i].grade,
+                    'headcount': groups[i].headcount,
+                    'subjects': [],
+                    'timetable': groups[i].timetable
+                }
+            return groups
         except NoResultFound as error:
-            raise ValueError(f'There is no group with name {group_name}!')
+            raise ValueError(f'There is no groups!')
 
     def destroyGroup(self, group_name):
         pass
 
-    def addGroupContact(self, contact_name, contact_datas):
-        contact = Contact_group_subject(contact_name, **contact_datas)
+    def addGroupContact(self, contact_datas):
+        contact = model.Contact_group_subject(**contact_datas)
         self._session.add(contact)
         self._session.commit()
 
     def getGroupContacts(self, group_name):
         try:
-            contacts = self._session.query(Contact_group_subject).filter_by(group=group_name).all()
+            contacts = self._session.query(model.Contact_group_subject).filter_by(group=group_name).all()
             contact_datas = []
             for contact in range(len(contacts)):
                 contact_datas.append({
