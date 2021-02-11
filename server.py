@@ -91,7 +91,7 @@ class TimetableResource:
     def __init__(self, timetable):
         self._timetable = timetable
 
-    def on_get(self, req, resp):
+    def on_get(self, req, resp, user):
         if 'AUTHORIZATION' not in req.headers:
             resp.status = falcon.HTTP_401
             return
@@ -99,7 +99,6 @@ class TimetableResource:
         if isValidToken(encoded_token) is False:
             resp.status = falcon.HTTP_401
             return
-        user = json.loads(req.stream.read().decode('utf-8'))
         timetable_datas = self._timetable.getAllTimetables(user)
         resp.body = json.dumps(timetable_datas)
         resp.content_type = 'application/json'
@@ -118,7 +117,7 @@ class TimetableResource:
         resp.content_type = 'application/json'
         resp.status = falcon.HTTP_200
 
-    def on_delete(self, req, resp, **timetable_name):
+    def on_delete(self, req, resp):
         if 'AUTHORIZATION' not in req.headers:
             resp.status = falcon.HTTP_401
             return
@@ -136,7 +135,7 @@ class SubjectResource:
     def __init__(self, timetable):
         self._timetable = timetable
 
-    def on_get(self, req, resp):
+    def on_get(self, req, resp, **timetable_name):
         if 'AUTHORIZATION' not in req.headers:
             resp.status = falcon.HTTP_401
             return
@@ -144,8 +143,7 @@ class SubjectResource:
         if isValidToken(encoded_token) is False:
             resp.status = falcon.HTTP_401
             return
-        subject_datas = json.loads(req.stream.read().decode('utf-8'))
-        subject_datas = self._timetable.getAllSubjects(subject_datas['timetable'])
+        subject_datas = self._timetable.getAllSubjects(timetable_name)
         resp.body = json.dumps(subject_datas)
         resp.content_type = 'application/json'
         resp.status = falcon.HTTP_200
@@ -181,7 +179,7 @@ class RoomResource:
     def __init__(self, timetable):
         self._timetable = timetable
 
-    def on_get(self, req, resp):
+    def on_get(self, req, resp, **timetable_name):
         if 'AUTHORIZATION' not in req.headers:
             resp.status = falcon.HTTP_401
             return
@@ -189,8 +187,7 @@ class RoomResource:
         if isValidToken(encoded_token) is False:
             resp.status = falcon.HTTP_401
             return
-        room_datas = json.loads(req.stream.read().decode('utf-8'))
-        room_datas = self._timetable.getAllRooms(room_datas['timetable'])
+        room_datas = self._timetable.getAllRooms(timetable_name)
         for room in range(len(room_datas)):
             room_datas[room]['subjects'] = self._timetable.getRoomContacts(room_datas[room]['name'])
         resp.body = json.dumps(room_datas)
@@ -235,7 +232,7 @@ class TeacherResource:
     def __init__(self, timetable):
         self._timetable = timetable
 
-    def on_get(self, req, resp):
+    def on_get(self, req, resp, **timetable_name):
         if 'AUTHORIZATION' not in req.headers:
             resp.status = falcon.HTTP_401
             return
@@ -243,8 +240,7 @@ class TeacherResource:
         if isValidToken(encoded_token) is False:
             resp.status = falcon.HTTP_401
             return
-        teacher_datas = json.loads(req.stream.read().decode('utf-8'))
-        teacher_datas = self._timetable.getAllTeachers(teacher_datas['timetable'])
+        teacher_datas = self._timetable.getAllTeachers(timetable_name)
         for teacher in range(len(teacher_datas)):
             teacher_datas[teacher]['subjects'] = self._timetable.getTeacherContacts(teacher_datas[teacher]['name'])
         resp.body = json.dumps(teacher_datas)
@@ -289,7 +285,7 @@ class GroupResource:
     def __init__(self, timetable):
         self._timetable = timetable
 
-    def on_get(self, req, resp):
+    def on_get(self, req, resp, **timetable_name):
         if 'AUTHORIZATION' not in req.headers:
             resp.status = falcon.HTTP_401
             return
@@ -297,8 +293,7 @@ class GroupResource:
         if isValidToken(encoded_token) is False:
             resp.status = falcon.HTTP_401
             return
-        group_datas = json.loads(req.stream.read().decode('utf-8'))
-        group_datas = self._timetable.getAllGroups(group_datas['timetable'])
+        group_datas = self._timetable.getAllGroups(timetable_name)
         for group in range(len(group_datas)):
             group_datas[group]['subjects'] = self._timetable.getGroupContacts(group_datas[group]['name'])
         resp.body = json.dumps(group_datas)
@@ -384,7 +379,7 @@ app.add_route('/api/login', login_resource)
 app.add_route('/api/signup', signup_resource)
 app.add_route('/api/password', password_resource)
 app.add_route('/api/timetables', timetable_resource)
-app.add_route('/api/timetables/{timetable_name}', timetable_resource)
+app.add_route('/api/timetables/{user}', timetable_resource)
 app.add_route('/api/subjects', subject_resource)
 app.add_route('/api/rooms', room_resource)
 app.add_route('/api/teachers', teacher_resource)
