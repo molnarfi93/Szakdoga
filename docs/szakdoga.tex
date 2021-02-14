@@ -394,7 +394,7 @@ erre nem volt szükségem. [8]
 
 \subsection{Python kiegészítők}
 
-Több kiegészítőt is telepítenem és használnom kellett a szerver létrehozásával kapcsolatban Python-ban, ezek a Falcon, a Waitress, a JWT és az SQLAlchemy. A Falcon egy olyan webes keretrendszer, amely a HTTP kérések (get, post, put, delete) és a REST (internetes szoftverarchitektúra) közötti  kapcsolatért felel. Vagyis egy interfész, amire azért van szükség, mert a REST nem korlátozódik a HTTP protokollra. Azért esett rá a választás, mert kifejezetten REST-hez készült és gyors. A Waitress többféle felhasználásra alkalmas, interfészt biztosít webszerver és alkalmazásszerver között. Arra használtam, hogy az adatbázissal kapcsolatos betöltési kérelmek kapcsán biztosítsa az elérést, host és port, valamint egy olyan objektum segítségével, amivel hozzáférünk a HTTP kérések eredményeihez. Azért ezt használtam, mert közvetlenül elindítható a Python kódból. A JWT a JSON Web Token rövidítése. Kizárólagos vezérlést biztosít a token, melyet a felhasználó egyedi azonosítójából (user hozzáadáskor automatikusan hozárendelt sorszám) és a programozó által megadott kulcsból generál a szerver, hash algoritmussal. Ezzel a titkosítással érjük el a jelszavak védelmét. Elterjedt, jól támogatott megoldás, úgy tárolja a token által az adatokat, hogy a kliens ne tudjon hozzáférni. [8]
+Több kiegészítőt is telepítenem és használnom kellett a szerver létrehozásával kapcsolatban Python-ban, ezek a Falcon, a Waitress, a JWT és az SQLAlchemy. A Falcon egy olyan webes keretrendszer, amely a HTTP kérések (get, post, put, delete) és a REST (internetes szoftverarchitektúra) közötti  kapcsolatért felel. Vagyis egy interfész, amire azért van szükség, mert a REST nem korlátozódik a HTTP protokollra. Azért esett rá a választás, mert kifejezetten REST-hez készült és gyors. A Waitress többféle felhasználásra alkalmas, interfészt biztosít webszerver és alkalmazásszerver között. Arra használtam, hogy az adatbázissal kapcsolatos betöltési kérelmek kapcsán biztosítsa az elérést, host és port, valamint egy olyan objektum segítségével, amivel hozzáférünk a HTTP kérések eredményeihez. Azért ezt használtam, mert közvetlenül elindítható a Python kódból. A JWT a JSON Web Token rövidítése. Kizárólagos vezérlést biztosít a token, melyet a felhasználó egyedi azonosítójából (user hozzáadáskor automatikusan hozárendelt sorszám) és a programozó által megadott kulcsból generál a szerver, hash algoritmussal. Ezzel a titkosítással érjük el a jelszavak védelmét. Elterjedt, jól támogatott megoldás, úgy tárolja a token által az adatokat, hogy a kliens ne tudjon hozzáférni. Végül a Jinja, melyet a konzulensem hatékonyan használt a korábbiakban, a Python fájlkezelésében használt eszköz. Általa a html hozzájut a Python változóiban levő adatokhoz. [8]
 
 \subsection{SQL és SQLAlchemy}
 
@@ -747,7 +747,9 @@ Növekedési rend: $T(P,G,I,n,m,o)=\ \sim \ \Theta(G \cdot P \cdot (nmo+I^2))$.
 
 A tesztelés során az derült ki, hogy átlagosan 48 generációra van szükség, így a növekedési rend értelmében $48min 25sec$ az átlagosan várható futási idő, a Miskolci Egyetem esetében, IntelCore i7 875K processzorral. Ha vannak részmunkaidős tanárok és ezért vizsgáljuk, illetve büntetjük az ezzel kapcsolatos értékeket is a célfüggvényben, akkor néhány másodperccel több.
 
-Könnyen belátható, hogy a célfüggvény és azon belül a tanárokon végigiteráló ciklus "dobja meg" a futási időt. Amennyiben nem adunk rá lehetőséget minden tanárnak, hogy a saját \textit{balance} és \textit{extremisms} értékeivel rendelkezzen, hanem egységesen állítjuk be ezeket az értékeket/alapértelmezett értékkel számolunk, akkor kevesebb mint $5 sec$ lesz a futási idő. Amennyiben adunk, az sem jelent nagy problémát, főleg ha szervergéphez méltó, az enyémtől 2x, 3x nagyobb teljesítményű processzorral rendelkezünk. Az én processzorommal az egész órarendgenerálási folyamat átlagosan várható futási ideje, összesen $61min$ $32sec$ tanáronkénti \textit{balance} és \textit{extremisms} értékek esetén, egységes értékek esetén pedig $13min$ $12sec$. Végül kijelenthetjük, hogy nem létezik olyan méretű oktatási intézmény, melynek esetében ne tudnának belátható időn belül eredményt szolgáltatni az algoritmusaim.
+Könnyen belátható, hogy a célfüggvény és azon belül a tanárokon végigiteráló ciklus "dobja meg" a futási időt. Amennyiben nem adunk rá lehetőséget minden tanárnak, hogy a saját \textit{balance} és \textit{extremisms} értékeivel rendelkezzen, hanem egységesen állítjuk be ezeket az értékeket/alapértelmezett értékkel számolunk, akkor kevesebb mint $5 sec$ lesz a futási idő. Amennyiben adunk, az sem jelent nagy problémát, főleg ha szervergéphez méltó, az enyémtől 2x, 3x nagyobb teljesítményű processzorral rendelkezünk.
+
+Maga a generálás (a szűkebb értelemben vett generálás) a \textit{generator.py} modul algoritmusai által történik, $11 sec$ futási ideje azonban jelentéktelen. Az én processzorommal az egész órarendgenerálási folyamat átlagosan várható futási ideje, összesen $61min$ $43sec$ tanáronkénti \textit{balance} és \textit{extremisms} értékek esetén, egységes értékek esetén pedig $13min$ $23sec$. Ha a tanárokat manuálisan akarja hozzárendelni az osztályokhoz a felhasználó, akkor még kevesebb, mivel ebben az esetben a tanárhozzárendelési feladatot nem kell végrehajtani. Kijelenthetjük, hogy nem létezik olyan méretű oktatási intézmény, melynek esetében ne tudnának belátható időn belül eredményt szolgáltatni az algoritmusaim.
 
 \newpage
 
@@ -942,15 +944,13 @@ A második algoritmus elvégzi a hozzárendeléseket, két dolgot vizsgálva. Az
 \begin{python}
 DAILY_PERIODS = end_time - begin_time
 NUM_TIME_WINDOWS = DAILY_PERIODS * 5
-MAX_ASSIGNMENTS = len(teachers)
 
 
-sum_periods = [0] * len(groups)
 def getPeriod():
-    period = []
+    period = {'day': "", 'period': "", 'assignments': []}
     seated_groups = []
     viewed_groups = []
-    for _ in range(MAX_PERIODS):
+    for _ in range(len(teachers)):
         while True:
             if len(viewed_groups) == len(groups):
                 return period
@@ -985,9 +985,15 @@ def getPeriod():
                     if ok:
                         seated_groups.append(rand_group)
                         sum_periods[rand] += 1
-                        period.append(rand_group)
+                        period['assignments'].append(rand_group)
                         break
     return period
+
+
+sum_periods = [0] * len(groups)
+    periods = []
+    for period in range(NUM_TIME_WINDOWS):
+        periods.append(getPeriod(groups, teachers, sum_periods))
 \end{python}
 
 Következő az időablakok beosztása. Itt már előre definiált konstansok is vannak. A felhasználó adja meg, hogy mettől meddig terjedjenek a napi időintervallumok, amely értékek a \textit{begin\_time} és \textit{end\_time} változókban adódnak át. Pl. ha reggel 7 és délután 4 óra között van tanítás az egyes napokon, akkor a \textit{begin\_time} 7, az \textit{end\_time} pedig 16 lesz, a \textit{DAILY\_PERIODS} konstans pedig a kettő különbségeként 9, ennyi időablak lesz egy napon. A \textit{NUM\_TIME\_WINDOWS} a heti összes időablak száma, ami így ennek ötszöröse, a \textit{MAX\_ASSIGNMENTS} által pedig azt rögzítjük, legfeljebb hány osztály-tantárgy-terem-tanár hozzárendelés lehet egy időablakban, ami a tanárok számával lesz megegyező. A lényegi részt a \textit{getPeriod()} metódus adja, ami két feltételnek eleget tevő megoldást szolgáltat. Az egyik az ütközésmentesség, vagyis hogy egy időablakban ugyanaz az osztály, ugyanaz a terem és ugyanaz a tanár sem fordulhat elő többször, sőt egy alaposztály és annak évfolyamán képzett nyelvi, fakultációs vagy egyéb osztály, illetve utóbbiak közül egyszerre több sem kerülhet ugyanabba az időablakba. A másik, hogy egy osztály-tantárgy kettősnek annyiszor kell összesen előfordulnia, amennyi a rögzített heti óraszáma az adott osztálynak az adott tárgyból. Ezt a \textit{getPeriod()} metódust aztán annyiszor hívjuk meg, amennyi a heti összes időablak száma. Az, hogy ez elegendő legyen, vagyis minden tanórának jusson időablak, a felhasználó felelőssége.
@@ -999,7 +1005,6 @@ SIZE_POPULATION = 100
 CROSSOVER_RATE = 80
 MUTATION_RATE = 5
 SCALE_MAX = 5
-MAX_PERIODS = len(teachers)
 DAILY_PERIODS = end_time - begin_time
 NUM_GENS = DAILY_PERIODS * 5
 time_windows = {'m': [], 'tu': [], 'w': [], 'th': [], 'f': []}
@@ -1059,18 +1064,18 @@ def targetFunction(entity):
     diff = 0
     for period in range(NUM_GENS):
         if entity['gens']['days'][period] == "f":
-            diff += balance * len(periods[period]) * 2
+            diff += balance * len(periods[period]['assignments']) * 2
         if entity['gens']['periods'][period] == time_windows['f'][0]:
             diff += (SCALE_MAX - extremisms + 1) *\
-                len(periods[period]) * 2
+                len(periods[period]['assignments']) * 2
         elif entity['gens']['periods'][period] == time_windows['f'][1]:
-            diff += (SCALE_MAX - extremisms + 1) * len(periods[period])
+            diff += (SCALE_MAX - extremisms + 1) * len(periods[period]['assignments'])
         elif entity['gens']['periods'][period] ==\
            time_windows['f'][DAILY_PERIODS - 1]:
-            diff += extremisms * len(periods[period]) * 2
+            diff += extremisms * len(periods[period]['assignments']) * 2
         elif entity['gens']['periods'][period] ==\
            time_windows['f'][DAILY_PERIODS - 2]:
-            diff += extremisms * len(periods[period])
+            diff += extremisms * len(periods[period]['assignments'])
     return diff
 \end{python}
 
@@ -1079,8 +1084,8 @@ def targetFunction(entity):
     diff = 0
     for teacher in range(len(teachers)):
         for period in range(NUM_GENS):
-            for assignment in range(len(periods[period])):
-                if periods[period][assignment].teacher ==\
+            for assignment in range(len(periods[period]['assignments'])):
+                if periods[period]['assignments'][assignment].teacher ==\
                    teachers[teacher].name:
                     if entity['gens']['days'][period] == "f":
                         diff += teachers[teacher].balance *\
@@ -1111,8 +1116,8 @@ def targetFunction(entity):
     diff = 0
     for teacher in range(len(teachers)):
         for period in range(NUM_GENS):
-            for assignment in range(len(periods[period])):
-                if periods[period][assignment].teacher ==\
+            for assignment in range(len(periods[period]['assignments'])):
+                if periods[period]['assignments'][assignment].teacher ==\
                    teachers[teacher].name:
                     if (entity['gens']['periods'][period] < 
                        teachers[teacher].begin_time) or\
@@ -1293,9 +1298,13 @@ while True:
     sortEntities()
     if entities[0]['diff'] - entities[SIZE_POPULATION - 1]['diff'] == 0:
         break
+
+for gen in range(NUM_GENS):
+    periods[gen]['day'] = entities[0]['gens']['days'][gen]
+    periods[gen]['period'] = entities[0]['gens']['periods'][gen]
 \end{python}
 
-A generációk száma előre nem meghatározott, mert a tesztelés során kiderült, hogy az egyedek célfüggvény értékei konvergálnak az optimumhoz (a minimális értékhez) és nem csak a legjobb egyed éri el, hanem mind. Ebből kifolyólag olyan feltételhez kötöttem a leállást, hogy a legjobb egyed célfüggvény értékének meg kell egyeznie a legrosszabb egyed célfüggvény értékével. Vagyis az összes egyed célfüggvény értékének megegyezőnek kell lenni.
+A generációk száma előre nem meghatározott, mert a tesztelés során kiderült, hogy az egyedek célfüggvény értékei konvergálnak az optimumhoz (a minimális értékhez) és nem csak a legjobb egyed éri el, hanem mind. Ebből kifolyólag olyan feltételhez kötöttem a leállást, hogy a legjobb egyed célfüggvény értékének meg kell egyeznie a legrosszabb egyed célfüggvény értékével. Vagyis az összes egyed célfüggvény értékének megegyezőnek kell lenni. Végül beleírjuk a \textit{periods} listába a napokat és időintervallumokat, amire a \textit{generator.py}-nak szüksége lesz.
 
 \section{Adatbázis}
 
@@ -1309,19 +1318,24 @@ A generációk száma előre nem meghatározott, mert a tesztelés során kider�
 \caption{A relációs modell}
 \end{figure}
 
-Adatbázist kellett használni a felhasználók által létrehozott órarendek adatainak letárolásához és felhozásához. Ahogyan az ER modellben látható, 4 entitás van (osztály, tantárgy, terem, tanár), de a több-több kapcsolatok miatt további táblákat is létre kellett hozni, a relációs modell már tartalmazza ezeket. 1:N kapcsolat van az osztály-tantárgy kapcsolótábla és a tanár tábla között, a többi kapcsolat N:M (osztály-tantárgy, terem-tantárgy, tanár-tantárgy). A terem-tantárgy kapcsolatok opcionálisak, mert nem muszáj tantárgynak tartoznia egy adott teremhez, ahogyan egy adott tantárgyhoz sem muszáj, hogy tartozzon terem, a többi kapcsolat kötelező. Minden entitás esetén a név szolgál egyedi azonosítóként, ami egyedül a tanárok esetén okozhatna problémát, de felhívjuk rá a felhasználó figyelmét, hogy azonos nevű tanárok esetén római számokkal való megkülönböztetést használjon, ezt elkerülendő. Python-ban az adatbázis tábláit osztályokként definiáljuk, ennek kapcsán kell még egy magyarázatot megtennem. Az osztály-tantárgy kapcsolótábla tanár idegen kulcsának értéke alapértelmezetten üres string. Ennek oka, hogy a felhasználó új órarend létrehozásakor eldöntheti, maunálisan akarja-e majd hozzárendelni az osztály-tantárgy kettősökhöz a tanárokat, amennyiben nem, akkor is léteznie kell ennek az attribútumnak, de addig üres string marad az értéke, amíg a tanárhozzárendelési algoritmus során kapott eredmények nem tárolódnak az adatbázisban, és a felhasználó által közvetlenül nem megváltoztatható.
+Adatbázist kellett használni a felhasználók által létrehozott órarendek adatainak a letárolásához és felhozásához. 6 entitásunk van (osztály, tantárgy, terem, tanár, órarend, felhasználó), de a több-több kapcsolatok miatt további táblákat is létre kellett hozni, a relációs modell már tartalmazza ezeket. 1:N kapcsolat van az osztály-tantárgy kapcsolótábla és a tanár tábla között, az órarend tábla és az osztály, tantárgy, tanár, terem táblák között, valamint az órarend és felhasználó tábla közt, a többi kapcsolat N:M (osztály-tantárgy, terem-tantárgy, tanár-tantárgy). A terem-tantárgy kapcsolatok opcionálisak, mert nem muszáj tantárgynak tartoznia egy adott teremhez, ahogyan egy adott tantárgyhoz sem muszáj, hogy tartozzon terem, a többi kapcsolat kötelező. A felhasználókat leszámítva minden entitás esetén a név szolgál egyedi azonosítóként, ami egyedül a tanárok esetén okozhatna problémát, de felhívjuk rá a felhasználó figyelmét, hogy azonos nevű tanárok esetén római számokkal való megkülönböztetést használjon, ezt elkerülendő. Python-ban az adatbázis tábláit osztályokként definiáljuk, ennek kapcsán kell még egy magyarázatot megtennem. Az osztály-tantárgy kapcsolótábla tanár idegen kulcsának értéke alapértelmezetten üres string. Ennek oka, hogy a felhasználó új órarend létrehozásakor eldöntheti, maunálisan akarja-e majd hozzárendelni az osztály-tantárgy kettősökhöz a tanárokat, amennyiben nem, akkor is léteznie kell ennek az attribútumnak, de addig üres string marad az értéke, amíg a tanárhozzárendelési algoritmus során kapott eredmények nem tárolódnak az adatbázisban, és a felhasználó által közvetlenül nem megváltoztatható.
 
 \section{Webalkalmazás}
 
-A webalkalmazás oldalait vue fájlok alkotják, bennük egy html kódrésszel és egy script kódrésszel, amihez a Vue axios csomagját importáltam. A szkriptekben definiáltam az objektumokat (osztályok, tantárgyak, tantermek, tanárok és még többet is) a megfelelő adattagokkal és azokkal a metódusokkal, amelyek HTTP kéréseket intéznek a szerverhez (így közvetetten interakciót folytatnak az adatbázissal), illetve kliensoldali ellenőrzést végeznek. Ez utóbbira és a felhasználó által aktuálisan hozzáadott objektum példányok letárolására általam definiált metódust használtam, korábban eltárolt adatok felhozásához (bármely, de nem befoglaló objektum kapcsán) a gyári \textit{created()} metódust definiáltam felül, befoglaló objektum azonosításához és adatainak felhozásához (mert egy felhasználónak több órarend projektje is lehet) pedig a gyári \textit{mounted()} metódust. A html kódrészben a Vue által biztosított módokon átadjuk az adatokat a megfelelő metódusnak (ezáltal "felvisszük" őket), vagy fogadjuk az adatokat a megfelelő metódustól és megjelenítjük.
+Az egyoldalas webalkalmazás komponenseit vue fájlok alkotják, bennük egy html kódrésszel és egy script kódrésszel, amihez a Vue axios csomagját importáltam. A szkriptekben definiáltam az objektumokat (osztályok, tantárgyak, tantermek, tanárok és még többet is) a megfelelő adattagokkal és azokkal a metódusokkal, amelyek HTTP kéréseket intéznek a szerverhez (így közvetetten interakciót folytatnak az adatbázissal), illetve kliensoldali ellenőrzést végeznek. Ez utóbbira és a felhasználó által aktuálisan hozzáadott objektum példányok letárolására, illetve törlésre általam definiált metódust használtam, korábban eltárolt adatok felhozásához (bármely, de nem befoglaló objektum kapcsán) pedig a gyári \textit{created()} és \textit{mounted()} metódusokat definiáltam felül. Előbbi a komponens betöltésekor hívódik meg, utóbbi minden frissítéskor. A html kódrészben a Vue által biztosított módokon átadjuk az adatokat a megfelelő metódusnak (ezáltal "felvisszük" őket), vagy fogadjuk az adatokat a megfelelő metódustól és megjelenítjük.
 
-A \textit{model.py} fájlban (ez egy Python fájl) található az adatbázis tartalmának leképzése objektum-orientáltan, a \textit{timetable.py} HTTP kéréseket teljesítő metódusai ennek alapján tudnak az adatokra hivatkozni. Ezek a létrehozó, lekérdező, módosító, törlő metódusok mindig "ülést nyitnak", vagyis database session-t (a \textit{database_session.py} modul közbenjárásával), az adatokhoz való hozzáféréshez és ellenőrzést végeznek az adott objektum azonosító attribútumán. Ezenkívül egyes metódusok az adatok szerveroldali ellenőrzésére megírt metódust is meghívnak, melyeket szintén ebben a modulban definiáltam.
+A \textit{model.py} fájlban (ez egy Python modul) található az adatbázis tartalmának leképezése objektum-orientáltan, a \textit{timetable.py} HTTP kéréseket teljesítő metódusai ennek alapján tudnak az adatokra hivatkozni. Ezek a létrehozó, lekérdező, módosító, törlő metódusok mindig "ülést nyitnak", vagyis database session-t a \textit{database\_session.py} modul közbenjárásával, az adatbázishoz való hozzáféréshez. Ezenkívül egyes metódusok az adatok szerveroldali ellenőrzésére megírt metódust is meghívnak, melyeket szintén ebben a modulban definiáltam. A \textit{server.py} modulhoz futnak be a HTTP kérések a vue komponensekből, ugyanis ez a szerver. Ez a modul végzi el minden kérésnél az authentikációt, vagyis a felhasználói jogosultság ellenőrzését a token alapján, majd hívja meg a \textit{timetable.py} megfelelő metódusát, és a kapott eredményt vagy hibaértesítést aztán a HTTP protokoll szabványos formájában továbbítja a vue komponensnek. Itt használjuk fel a Falcon, a Waitress és a JWT nyújtotta szolgáltatásokat, melyeket röviden kifejtettem korábban.
 
-A \textit{server.py} modulhoz futnak be a HTTP kérések a vue komponensekből, ugyanis ez a szerver. Ez a modul végzi el minden kérésnél az authentikációt, vagyis a felhasználói jogosultság ellenőrzését, majd hívja meg a \textit{timetable.py} megfelelő metódusát, és a kapott eredményt vagy hibaértesítést aztán a HTTP protokoll szabványos formájában továbbítja a vue komponensnek. Itt használjuk fel a Falcon, a Waitress és a JWT nyújtotta szolgáltatásokat, melyeket röviden kifejtettem korábban.
+Amikor a felhasználó már minden adatot felvitt és szeretné generáltatni az órarendeket, akkor a HTTP kérelem után, a \textit{server.py}-ból az adott órarendhez tartozó összes osztály, tantárgy, tanár, tanterem felhozásra kerül az adatbázisból, és ezúttal nem adjuk vissza a vue komponensnek json-ben, hanem eredeti formátumban a \textit{generator.py} számára továbbítjuk őket. A \textit{generator.py} először objektumokat példányosít a beérkezett szótár típusú adatokból, majd ezeket paraméterként átadja az órarendgenerálási részfeladatokat elvégző modulok globális metódusainak. Utána összegyűjti az adott osztályokhoz, tanárokhoz, illetve tantermekhez tartozó hozzárendeléseket, majd rendezi őket, úgy hogy a hétfői nap legkorábbi időintervalluma legyen a lista első és a pénteki nap legutolsó időintervalluma az utolsó eleme. Legvégül átadja az eredményeket az \textit{exporter.py}-nak. Az \textit{exporter.py} felelős a fájlok létrejöttéért és tartalommal való feltöltéséért. Utóbbit a Jinja segítségével valósítja meg, amely segít az eredmények html fájlokba való beleírásában. Ehhez egy \textit{template.html} nevű sablont készítettem, ami alapján a megadott helyekre a különböző osztályok, tanárok, tantermek kapcsán aktuális adatok fognak íródni. Végül Pandoc segítségével a html-eket pdf-ekké konvertáljuk.
+
+\begin{figure}
+\includegraphics[width=\linewidth]{images/szekvencia.png}
+\caption{Az alkalmazás szekvenciadiagramja}
+\end{figure}
 
 \section{Felhasználói dokumentáció}
 
-A főoldal a \textit{login}, ahol bejelentkezésre van lehetőség, vagypedig ha még nem regisztráltunk vagy elfelejtettük a jelszavunkat, elérhetőek itt linkek, melyek az ezzel kapcsolatos oldalra irányítanak. Bejelentkezés után a menüben találjuk magunkat, ahol a fontos és egyben magyarázatra szoruló menüpontok, az Új órarend létrehozása és az Órarendjeim. Ha újat hozunk létre, meg kell adni a típust, hogy manuálisan akarjuk-e a tanárokat hozzárendelni az osztályokhoz, illetve hogy hány órától legyen a legkorábbi napi időablak és hány órakor érjen véget a legkésőbbi. Ezt a napi időintervallumot lesz lehetőség még szűkíteni a részmunkaidős tanárok esetében, az azonos nevű attribútumok állításával, tanár hozzáadásakor. A típus esetében általános iskola, középiskola és főiskola/egyetem közül választhatunk, ennek egyik jelentősége, hogy milyen típusú tantárgyakat lehet majd hozzáadni (pl. fakt típusú órák csak középiskolában vannak, elméletek és gyakorlatok pedig csak a főiskolán/egyetemen), a másik, hogy a főiskolán/egyetemen két óra hosszú egy időablak. Ha meglevő órarendet szeretnénk szerkeszteni, akkor kiválasztjuk melyiket szeretnénk és az abban a sorban található ceruza ikonra kattintunk (amennyiben törölni szeretnénk, akkor pedig nyilván a keresztre). Négy link fog megjelenni a számunkra, akkor is ha új órarendet hoztunk létre, akkor is ha meglevőt szerkesztünk. Egy a tantárgyak, egy a tantermek, egy a tanárok és egy az osztályok létrehozására. Új órarend esetén először mindenképpen tantárgyat/tantárgyakat kell hozzáadni, mert azzal kapcsolatban, hogy milyen tárgyai legyenek egy osztálynak, egy tanárnak, vagy hogy milyen tárgy(ak)ra legyen esetleg specializálódva egy terem, a korábban hozzáadottak közül választhatunk lenyíló listában. Ugyanígy, ha manuálisan rendeljük hozzá a tanárokat az osztályokhoz, csak a korábban hozzáadott tanárok közül választhatunk. Bármit is akarunk hozzáadni, egyszerre mindig egy példányt tudunk felvinni a megfelelő mezők kitöltésével (melyek elsősorban szövegmezők és lenyíló listák lesznek) és a hozzáadásra fenntartott nyomógomb lenyomásával. (Ez vonatkozik az osztály tantárgyainak hozzáadására is, osztály hozzáadásán belül.) Amint ez megtörtént, letárolódik az adatbázisban az adott objektum példány és a képernyő alján kiírásra is kerülnek a hozzáadott adatok, egyidejűleg alaphelyzetbe állnak a kitöltendő mezők és máris jöhet következő példány hozzáadása, ha szeretnénk. Mindez aszinkron, az oldal újratöltése nélkül történik. Ezenkívül van lehetőség törlésre, minden hozzáadott példánnyal kapcsolatban, a törlés ikonnal. Ha végeztünk a hozzáadásokkal és szeretnénk órarendet generáltatni, a Get it! gombra kell kattintani az \textit{edit\_timetable} oldalon. A felvitt adathalmaz méretétől függően sok időt is igénybe vehet az órarendgenerálás, de amint elkészült, letölthetővé válik az összes órarendet tartalmazó tömörített mappa. Minden osztályé, minden tanáré és minden tanteremé külön pdf fájlban kap helyet, táblázatos formában. Bármikor van lehetőség újra generáltatni, akár ugyanazzal az adathalmazzal is. A véletlenszám-generálás miatt nem determinisztikus a folyamat, így változatlan adathalmaz esetén sem ugyanazokat a megoldásokat kapjuk újból, ha éppen nem elégedett az eredménnyel a felhasználó, próbálkozhat többször is. A \textit{my\_timetables} oldalról elérhetőek a meglevő adathalmazaink, a megfelelőt kiválasztva, a szerkesztés ikonra kattintva megintcsak az \textit{edit\_timetable} oldalon találhatjuk magunkat.
+A főoldal a \textit{login}, ahol bejelentkezésre van lehetőség, vagypedig ha még nem regisztráltunk vagy elfelejtettük a jelszavunkat, elérhetőek itt linkek, melyek az ezzel kapcsolatos oldalra irányítanak. Bejelentkezés után a menüben találjuk magunkat, ahol a fontos és egyben magyarázatra szoruló menüpontok, az Új órarend létrehozása és az Órarendjeim. Ha újat hozunk létre, meg kell adni a típust, hogy manuálisan akarjuk-e a tanárokat hozzárendelni az osztályokhoz, illetve hogy hány órától legyen a legkorábbi napi időablak és hány órakor érjen véget a legkésőbbi. Ezt a napi időintervallumot lesz lehetőség még szűkíteni a részmunkaidős tanárok esetében, az azonos nevű attribútumok állításával, tanár hozzáadásakor. A típus esetében általános iskola, középiskola és főiskola/egyetem közül választhatunk, ennek egyik jelentősége, hogy milyen típusú tantárgyakat lehet majd hozzáadni (pl. fakt típusú órák csak középiskolában vannak, elméletek és gyakorlatok pedig csak a főiskolán/egyetemen), a másik, hogy a főiskolán/egyetemen két óra hosszú egy időablak. Ha meglevő órarendet szeretnénk szerkeszteni, akkor kiválasztjuk melyiket szeretnénk és az abban a sorban található ceruza ikonra kattintunk (amennyiben törölni szeretnénk, akkor pedig nyilván a keresztre). Négy link fog megjelenni a számunkra, akkor is ha új órarendet hoztunk létre, akkor is ha meglevőt szerkesztünk. Egy a tantárgyak, egy a tantermek, egy a tanárok és egy az osztályok létrehozására. Új órarend esetén először mindenképpen tantárgyat/tantárgyakat kell hozzáadni, mert azzal kapcsolatban, hogy milyen tárgyai legyenek egy osztálynak, egy tanárnak, vagy hogy milyen tárgy(ak)ra legyen esetleg specializálódva egy terem, a korábban hozzáadottak közül választhatunk lenyíló listában. Ugyanígy, ha manuálisan rendeljük hozzá a tanárokat az osztályokhoz, csak a korábban hozzáadott tanárok közül választhatunk. Bármit is akarunk hozzáadni, egyszerre mindig egy példányt tudunk felvinni a megfelelő mezők kitöltésével (melyek elsősorban szövegmezők és lenyíló listák lesznek) és a hozzáadásra fenntartott nyomógomb lenyomásával. (Ez vonatkozik az osztály tantárgyainak hozzáadására is, osztály hozzáadásán belül.) Amint ez megtörtént, letárolódik az adatbázisban az adott objektum példány és a képernyő alján kiírásra is kerülnek a hozzáadott adatok, egyidejűleg alaphelyzetbe állnak a kitöltendő mezők és máris jöhet következő példány hozzáadása, ha szeretnénk. Mindez aszinkron, az oldal újratöltése nélkül történik. Ezenkívül van lehetőség törlésre, minden hozzáadott példánnyal kapcsolatban, a törlés ikonnal. Ha végeztünk a hozzáadásokkal és szeretnénk órarendet generáltatni, a Get it! gombra kell kattintani az \textit{edit\_timetable} oldalon. A felvitt adathalmaz méretétől függően sok időt is igénybe vehet az órarendgenerálás, de létre fog jönni az összes órarend pdf-jét tartalmazó mappa a fájlrendszer megadott helyén (ha publikussá tenném a webalkalmazást, akkor pedig letölthetővé válna az adott gép számára). Minden osztályé, minden tanáré és minden tanteremé külön pdf fájlban kap helyet, táblázatos formában. Bármikor van lehetőség újra generáltatni, akár ugyanazzal az adathalmazzal is. A véletlenszám-generálás miatt nem determinisztikus a folyamat, így változatlan adathalmaz esetén sem ugyanazokat a megoldásokat kapjuk újból, ha éppen nem elégedett az eredménnyel a felhasználó, próbálkozhat többször is. A \textit{my\_timetables} oldalról elérhetőek a meglevő adathalmazaink, a megfelelőt kiválasztva, a szerkesztés ikonra kattintva megintcsak az \textit{edit\_timetable} oldalon találhatjuk magunkat.
 
 \section{Tesztelés}
 
@@ -1349,7 +1363,9 @@ Webes működések:
 \item a hitelesítésekhez használt token benne maradt-e a HTTP kérelmekben
 \item lementődtek-e az adatbázisban a felvitt adatok, máskülönben esélytelen felhozni őket
 \item a több-több kapcsolatok megfelelően tárolódtak-e le, különös tekintettel az osztály-tantárgy kapcsolatokra, ahol a kapcsolótáblához kötődő attribútumok is vannak
+\item ha csak adott példányt vagy adott feltételnek eleget tevő példányokat akarunk felhozni,  rendben történik-e a paraméterátadás
 \item csak az adott órarenden belüli tantárgyak, tantermek, tanárok és osztályok kerülnek-e felhozásra, illetve csak az adott felhasználó órarendjei vannak-e meg
+\item a \textit{template.html} sablon megfelelő-e, különben nem fogja a kívánt tartalommal vagy egyáltalán tartalommal feltölteni a Jinja a html-eket
 \end{itemize}
 
 \newpage
@@ -1411,19 +1427,23 @@ A kliensben a \textit{package.json} tartja számon a függőségeket, amiről a 
 \item \textit{components} mappa: a vue komponenseket tartalmazza, melyek funkcionálisan egy-egy html oldalnak feleltethetők meg és betöltésre várnak a webalkalmazás használata során
 \end{itemize}
 
-A szerver oldal Python fájlokat, valamint Python fájlokat tartalmazó mappákat tartalmaz. A \textit{timetable} mappában a \textit{timetable.py}, \textit{model.py} és \textit{database_session.py} modulok vannak, az \textit{exercises} mappában pedig az órarendgeneráló algoritmusokat tartalmazó modulok, részfeladatonként egy, illetve külön mappában (\textit{classes}) az osztálydefiníciók.
+A szerver oldal Python fájlokat, valamint Python fájlokat tartalmazó mappákat tartalmaz. A \textit{timetable} mappában a \textit{timetable.py}, \textit{model.py} és \textit{database\_session.py} modulok vannak, az \textit{exercises} mappában pedig az órarendgeneráló algoritmusokat tartalmazó modulok, részfeladatonként egy, illetve külön mappában (\textit{classes}) az osztálydefiníciók.
 
-Mivel az alkalmazást kipróbálni szándékozó felhasználónak is a saját gépén szükséges szervert létrehoznia, telepíteni kellhet egy pár dolgot:
+Mivel az alkalmazást kipróbálni szándékozó felhasználónak is a saját gépén szükséges szervert létrehoznia, telepíteni kellhet több dolgot:
 \begin{itemize}
 \item \textit{npm}
-\item \textit{PyCharm}
-\item \textit{Waitress}
-\item \textit{Falcon}
-\item \textit{JWT}
-\item \textit{SQLAlchemy}
 \item \textit{MySQL}
+\item \textit{PyCharm}
+\item \textit{Python kiegészítők:}
+\begin{itemize}
+	\item \textit{Falcon}
+	\item \textit{Waitress}
+	\item \textit{JWT}
+	\item \textit{Jinja}
+	\item \textit{SQLAlchemy}
+\end{itemize}
 \end{itemize}
 
-Ha mindez megvan, regisztráció helyett javaslom a molnarfi93@gmail.com e-mail címmel és 666 jelszóval való belépést. Ebben az esetben ugyanis, a \textit{my_timetables} komponensből elérhető lesz az általam felvitt órarend-adathalmaz, rögtön lehet generáltatni.
+Ha mindez megvan, regisztráció helyett javaslom a molnarfi93@gmail.com e-mail címmel és 666 jelszóval való belépést. Ebben az esetben ugyanis, a \textit{my\_timetables} komponensből elérhető lesz az általam felvitt órarend-adathalmaz, rögtön lehet generáltatni.
 
 \end{document}
