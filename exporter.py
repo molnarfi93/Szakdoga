@@ -1,30 +1,34 @@
-from jinja2 import Template
 import os
+import jinja2
+import pypandoc
 
-env = jinja2.Environment(loader=jinja2.FileSystemLoader('template'))
+template_dir = 'C:\\Users\\Brendi\\Documents\\Szakdoga\\web\\templates'
+env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir))
 
 
 def exportTimetables(group_timetables, teacher_timetables, room_timetables):
     dir = "timetables"
-    parent = 'C:/Brendi/Documents/Szakdoga/web/'
+    parent = 'C:\\Users\\Brendi\\Documents\\Szakdoga\\web'
     path = os.path.join(parent, dir)
     os.mkdir(path)
 
-    writeHTML(group_timetables)
-    writeHTML(teacher_timetables)
-    writeHTML(room_timetables)
+    writeHTML(group_timetables, 'group_template.html', "groups")
+    writeHTML(teacher_timetables, 'teacher_template.html', "teachers")
+    writeHTML(room_timetables, 'room_template.html', "rooms")
 
 
-def writeHTML(timetables):
+def writeHTML(timetables, template, dir_name):
     global env
-    dir = f'{timetables}'
-    parent = 'C:/Brendi/Documents/Szakdoga/web/timetables/'
+    dir = dir_name
+    parent = 'C:\\Users\\Brendi\\Documents\\Szakdoga\\web\\timetables'
     path = os.path.join(parent, dir)
     os.mkdir(path)
     for timetable in range(len(timetables)):
-        template = env.get_template('template.html')
+        template = env.get_template(template)
         dict = timetables[timetable]
-        template.render(dict)
-        html = open("f'{dict['name']}.html'", "w")
-        html.write('template.html')
-        html.close()
+        file = dict['name']
+        html = open(f'C:\\Users\\Brendi\\Documents\\Szakdoga\\web\\timetables\\{dir}\\{file}.html', "x")
+        render = template.render(dict=dict)
+        for line in render:
+            html.write(line)
+        pypandoc.convert_file(f'C:\\Users\\Brendi\\Documents\\Szakdoga\\web\\timetables\\{dir}\\{file}.html', 'pdf', outputfile=f'C:\\Users\\Brendi\\Documents\\Szakdoga\\web\\timetables\\{dir}\\{file}.pdf')
