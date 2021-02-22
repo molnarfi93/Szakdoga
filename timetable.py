@@ -1,6 +1,5 @@
 from sqlalchemy.orm.exc import NoResultFound
 from database_session import createSession
-from model import User, Subject, Room, Teacher, Group, Contact_room_subject, Contact_teacher_subject, Contact_group_subject
 import model
 import re
 import hashlib
@@ -20,7 +19,7 @@ class Timetable:
 
     def checkSignupDatas(self, user_datas):
         users = self._session.query(model.User).all()
-        for user in range(users):
+        for user in range(len(users)):
             if users[user].email == user_datas['email']:
                 raise ValueError('It is already registered e-mail address!')
         reg_ex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
@@ -52,15 +51,18 @@ class Timetable:
             raise ValueError('It is not registered e-mail address!')
 
     def updatePassword(self, user_email, user_datas):
+        self.checkEmail(user_email)
         user = self._session.query(model.User).filter_by(email=user_email).one()
         if 'password' in user_datas:
             if user.password != user_datas['password']:
                 raise ValueError('Password is wrong!')
             else:
                 user.password = user_datas['new_password']
+                self._session.commit()
         else:
             rand = random.randint(10000, 100000)
             user.password = rand
+            self._session.commit()
 
     def checkTimetableDatas(self, timetable_datas):
         if timetable_datas['type'] not in types:
@@ -105,7 +107,20 @@ class Timetable:
             raise ValueError(f'There is no timetables!')
 
     def destroyTimetable(self, timetable_name):
-        pass
+        groups = self._session.query(model.Group).filter_by(timetable=timetable_name).all()
+        for group in range(len(groups)):
+            self.destroyGroup(groups[group].name)
+        teachers = self._session.query(model.Teacher).filter_by(timetable=timetable_name).all()
+        for teacher in range(len(teachers)):
+            self.destroyTeacher(teachers[teacher].name)
+        rooms = self._session.query(model.Room).filter_by(timetable=timetable_name).all()
+        for room in range(len(rooms)):
+            self.destroyRoom(rooms[room].name)
+        subjects = self._session.query(model.Subject).filter_by(timetable=timetable_name).all()
+        for subject in range(len(subjects)):
+            self.destroySubject(subjects[subject].name)
+        self._session.query(model.Timetable).filter_by(name=timetable_name).delete()
+        self._session.commit()
 
     def addSubject(self, subject_datas):
         subject = model.Subject(**subject_datas)
@@ -125,7 +140,8 @@ class Timetable:
             raise ValueError(f'There is no subjects!')
 
     def destroySubject(self, subject_name):
-        pass
+        self._session.query(model.Subject).filter_by(name=subject_name).delete()
+        self._session.commit()
 
     def addRoom(self, room_datas):
         room = model.Room(**room_datas)
@@ -147,7 +163,11 @@ class Timetable:
             raise ValueError(f'There is no rooms!')
 
     def destroyRoom(self, room_name):
-        pass
+        contacts = self._session.query(model.Contact_room_subject).filter_by(room=room_name).all()
+        for contact in range(len(contacts)):
+            self.destroyRoomContact(contacts[contact].room, contacts[contact].subject)
+        self._session.query(model.Room).filter_by(name=room_name).delete()
+        self._session.commit()
 
     def addRoomContact(self, contact_datas):
         contact = model.Contact_room_subject(**contact_datas)
@@ -164,8 +184,9 @@ class Timetable:
         except NoResultFound as error:
             raise ValueError(f'There is no subjects about room {room_name}!')
 
-    def destroyRoomContact(self, contact_name):
-        pass
+    def destroyRoomContact(self, room, subject):
+        self._session.query(model.Contact_room_subject).filter_by(room=room, subject=subject).delete()
+        self._session.commit()
 
     def addTeacher(self, teacher_datas):
         teacher = model.Teacher(**teacher_datas)
@@ -190,7 +211,11 @@ class Timetable:
             raise ValueError(f'There is no teachers!')
 
     def destroyTeacher(self, teacher_name):
-        pass
+        contacts = self._session.query(model.Contact_teacher_subject).filter_by(teacher=teacher_name).all()
+        for contact in range(len(contacts)):
+            self.destroyTeacherContact(contacts[contact].teacher, contacts[contact].subject)
+        self._session.query(model.Teacher).filter_by(name=teacher_name).delete()
+        self._session.commit()
 
     def addTeacherContact(self, contact_datas):
         contact = model.Contact_teacher_subject(**contact_datas)
@@ -207,8 +232,9 @@ class Timetable:
         except NoResultFound as error:
             raise ValueError(f'There is no subjects about teacher {teacher_name}!')
 
-    def destroyTeacherContact(self, contact_name):
-        pass
+    def destroyTeacherContact(self, teacher, subject):
+        self._session.query(model.Contact_teacher_subject).filter_by(teacher=teacher, subject=subject).delete()
+        self._session.commit()
 
     def addGroup(self, group_datas):
         group = model.Group(**group_datas)
@@ -231,27 +257,32 @@ class Timetable:
             raise ValueError(f'There is no groups!')
 
     def destroyGroup(self, group_name):
-        pass
+        contacts = self._session.query(model.Contact_group_subject).filter_by(group=group_name).all()
+        for contact in range(len(contacts)):
+            self.destroyGroupContact(contacts[contact].class_name, contacts[contact].subject_name)
+        self._session.query(model.Group).filter_by(name=group_name).delete()
+        self._session.commit()
 
     def addGroupContact(self, contact_datas):
         contact = model.Contact_group_subject(**contact_datas)
         self._session.add(contact)
         self._session.commit()
 
-    def getGroupContacts(self, group_name):
+    def getGroupContacts(self, class_name):
         try:
-            contacts = self._session.query(model.Contact_group_subject).filter_by(group=group_name).all()
+            contacts = self._session.query(model.Contact_group_subject).filter_by(class_name=class_name).all()
             contact_datas = []
             for contact in range(len(contacts)):
                 contact_datas.append({
-                    'name': contacts[contact].subject,
+                    'name': contacts[contact].subject_name,
                     'type': contacts[contact].type,
                     'weekly_periods': contacts[contact].weekly_periods,
                     'teacher': contacts[contact].teacher
                 })
             return contact_datas
         except NoResultFound as error:
-            raise ValueError(f'There is no subjects about group {group_name}!')
+            raise ValueError(f'There is no subjects about group {class_name}!')
 
-    def destroyGroupContact(self, contact_name):
-        pass
+    def destroyGroupContact(self, group, subject):
+        self._session.query(model.Contact_group_subject).filter_by(group=group, subject=subject).delete()
+        self._session.commit()
