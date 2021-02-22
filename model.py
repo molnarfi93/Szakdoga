@@ -7,7 +7,7 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = "users"
 
-    email = Column(String(30), primary_key=True)
+    email = Column(String(50), primary_key=True)
     id = Column(Integer, primary_key=False)
     password = Column(String(20))
 
@@ -75,8 +75,8 @@ class Contact_teacher_subject(Base):
 class Contact_group_subject(Base):
     __tablename__ = "classes_subjects"
 
-    group = Column(String(30), ForeignKey(Group.name), primary_key=True)
-    subject = Column(String(30), ForeignKey(Subject.name), primary_key=True)
+    class_name = Column(String(30), ForeignKey(Group.name), primary_key=True)
+    subject_name = Column(String(30), ForeignKey(Subject.name), primary_key=True)
     type = Column(String(20))
     weekly_periods = Column(Integer)
-    teacher = Column(String(30), ForeignKey(Teacher.name), default="")
+    teacher = Column(String(30), default="")
