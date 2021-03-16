@@ -1,20 +1,36 @@
 \pagestyle{empty}
 
-\noindent \textbf{\Large CD Használati útmutató}
+\noindent \textbf{\Large Adathordozó Használati útmutató}
 
 \vskip 1cm
 
-Ennek a címe lehet például \textit{A mellékelt CD tartalma} vagy \textit{Adathordozó használati útmutató} is.
+Az adathordozón megtalálható először is maga a szakdolgozat, pdf és tex fájlban is. Ezenkívül van egy \textit{styles} mappa, ami a tex fájlhoz kapcsolódó csomagokat tartalmazza, egy \textit{images} mappa a szakdolgozat képeivel, és egy \textit{application} mappa. Ez utóbbiban van az alkalmazás és minden, ami a működtetéséhez szükséges. Két fő részből, ezáltal mappából áll, mivel van a kliens oldal és a szerver oldal.
 
-Ez jellemzően csak egy fél-egy oldalas leírás.
-Arra szolgál, hogy ha valaki kézhez kapja a szakdolgozathoz tartozó CD-t, akkor tudja, hogy mi hol van rajta.
-Jellemzően elég csak felsorolni, hogy milyen jegyzékek vannak, és azokban mi található.
-Az elkészített programok telepítéséhez, futtatásához tartozó instrukciók kerülhetnek ide.
+A kliensben a \textit{package.json} tartja számon a függőségeket, amiről a Felhasznált szoftverek alfejezetben beszéltem. Egyoldalas alkalmazásról beszélhetünk, melynek egységes header-jét az \textit{index.html} fájl tartalmazza, az üres body blokkba pedig az \textit{id} segítségével betöltődik az éppen aktuális vue fájl tartalma. Az \textit{src} mappában a következők találhatók:
 
-A CD lemezre mindenképpen rá kell tenni
-\begin{itemize}
-\item a dolgozatot egy \texttt{dolgozat.pdf} fájl formájában,
-\item a LaTeX forráskódját a dolgozatnak,
-\item az elkészített programot, fontosabb futási eredményeket (például ha kép a kimenet),
-\item egy útmutatót a CD használatához (ami lehet ez a fejezet külön PDF-be vagy MarkDown fájlként kimentve).
+\begin{itemize} 
+	\item \textit{app.vue}: ez a fájl gondoskodik róla, hogy a különböző vue fájlok (komponensek) felcímkéződjenek a html fájlba való betöltéshez szükséges \textit{id}-val
+	\item \textit{main.js}: ez a JavaScript fájl egy Vue objektumot példányosít, ezáltal fogjuk össze a vue komponenseinket
+	\item \textit{router} mappa: ebben található az \textit{index.js} router (útvonalválasztó) fájl, ami tartalmazza a különböző vue komponensek beazonosításához, eléréséhez szükséges információkat
+	\item \textit{components} mappa: a vue komponenseket tartalmazza, melyek funkcionálisan egy-egy html oldalnak feleltethetők meg és betöltésre várnak a webalkalmazás használata során
 \end{itemize}
+
+A szerver oldal Python fájlokat, valamint Python fájlokat tartalmazó mappákat tartalmaz. A \textit{timetable} mappában a \textit{timetable.py}, \textit{model.py} és \textit{database\_session.py} modulok vannak, az \textit{exercises} mappában pedig az órarendgeneráló algoritmusokat tartalmazó modulok, részfeladatonként egy, illetve külön mappában (\textit{classes}) az osztálydefiníciók.
+
+Mivel az alkalmazást kipróbálni szándékozó felhasználónak is a saját gépén szükséges szervert létrehoznia, telepíteni kellhet több dolgot:
+\begin{itemize}
+	\item \textit{npm}
+	\item \textit{MySQL}
+	\item \textit{PyCharm}
+	\item \textit{Python kiegészítők:}
+	\begin{itemize}
+		\item \textit{Falcon}
+		\item \textit{Waitress}
+		\item \textit{JWT}
+		\item \textit{Jinja}
+		\item \textit{SQLAlchemy}
+	\end{itemize}
+\end{itemize}
+
+Ha mindez megvan, regisztráció helyett javaslom a molnarfi93@gmail.com e-mail címmel és 666 jelszóval való belépést. Ebben az esetben ugyanis, a \textit{my\_timetables} komponensből elérhető lesz az általam felvitt órarend-adathalmaz, rögtön lehet generáltatni.
+
