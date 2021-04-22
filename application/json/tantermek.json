@@ -1,0 +1,154 @@
+{
+	"rooms": {
+		"I.": {
+			"capacity": 41,
+	                "subjects": [
+		        ]
+		},
+		"II.": {
+			"capacity": 31,
+			"subjects": [
+		        ]
+		},
+		"III.": {
+			"capacity": 43,
+			"subjects": ["informathics"
+			]
+		},
+		"IV.": {
+			"capacity": 44,
+			"subjects": [
+			]
+		},
+		"V.": {
+			"capacity": 45,
+			"subjects": [
+			]
+		},
+		"VI.": {
+			"capacity": 43,
+			"subjects": ["informathics"
+			]
+		},
+		"VII.": {
+			"capacity": 42,
+			"subjects": [
+			]
+		},
+		"VIII.": {
+			"capacity": 38,
+			"subjects": [
+			]
+		},
+		"IX.": {
+			"capacity": 32,
+			"subjects": ["informathics"
+			]
+		},
+		"X.": {
+			"capacity": 36,
+			"subjects": [
+			]
+		},
+		"XI.": {
+			"capacity": 32,
+			"subjects": [
+			]
+		},
+		"XII.": {
+			"capacity": 30,
+			"subjects": ["chemistry", "physics"
+			]
+		},
+		"XIII.": {
+			"capacity": 45,
+			"subjects": [
+			]
+		},
+		"XIV.": {
+			"capacity": 34,
+			"subjects": [
+			]
+		},
+		"XV.": {
+			"capacity": 34,
+			"subjects": ["chemistry", "physics"
+			]
+		},
+		"XVI.": {
+			"capacity": 35,
+			"subjects": [
+			]
+		},
+		"XVII.": {
+			"capacity": 37,
+			"subjects": [
+			]
+		},
+		"XVIII.": {
+			"capacity": 40,
+			"subjects": ["P.E."
+			]
+		},
+		"XIX.": {
+			"capacity": 30,
+			"subjects": [
+			]
+		},
+		"XX.": {
+			"capacity": 43,
+			"subjects": [
+			]
+		},
+		"XXI.": {
+			"capacity": 38,
+			"subjects": ["P.E."
+			]
+		},
+		"XXII.": {
+			"capacity": 43,
+			"subjects": [
+			]
+		},
+		"XXIII.": {
+			"capacity": 35,
+			"subjects": [
+			]
+		},
+		"XXIV.": {
+			"capacity": 37,
+			"subjects": ["music"
+			]
+		},
+		"XXV.": {
+			"capacity": 30,
+			"subjects": [
+			]
+		},
+		"XXVI.": {
+			"capacity": 32,
+			"subjects": [
+			]
+		},
+		"XXVII.": {
+			"capacity": 40,
+			"subjects": [
+			]
+		},
+		"XXVIII.": {
+			"capacity": 35,
+			"subjects": [
+			]
+		},
+		"XXIX.": {
+			"capacity": 44,
+			"subjects": [
+			]
+		},
+		"XXX.": {
+			"capacity": 31,
+			"subjects": [
+			]
+		}
+	}
+}

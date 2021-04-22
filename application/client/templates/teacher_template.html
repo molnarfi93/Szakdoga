@@ -1,0 +1,38 @@
+<html>
+	<head></head>
+	<body>
+		<table class="table">
+		<colgroup>
+			<col width="20%"/>
+			<col width="20%"/>
+			<col width="20%"/>
+			<col width="20%"/>
+			<col width="20%"/>
+		</colgroup>	
+			{% for period in dict["periods"] %}
+				{% if dict["days"][loop.index0] == "m" %}
+					<tr class="table">
+					{% for daily_period in dict["periods"] %}
+						{% if daily_period == period %}
+							<td class="table">{{dict["subjects"][loop.index0]}}<br />
+							{{dict["rooms"][loop.index0]}}<br />
+							{{dict["groups"][loop.index0]}}</td>
+						{% endif %}	
+					{% endfor %}
+					</tr>
+					{% if double_periods %}
+					<tr class="table">
+					{% for daily_period in dict["periods"] %}
+						{% if daily_period == period %}
+							<td class="table">{{dict["subjects"][loop.index0]}}<br />
+							{{dict["rooms"][loop.index0]}}<br />
+							{{dict["groups"][loop.index0]}}</td>
+						{% endif %}	
+					{% endfor %}
+					</tr>
+					{% endif %}
+				{% endif %}
+			{% endfor %}	
+		</table>
+	</body>
+</html>
