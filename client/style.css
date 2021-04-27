@@ -1,0 +1,34 @@
+﻿.header{
+           font-size: large;
+           font-style: bold;
+		   margin-left: 100%;
+		   margin-top: 30%;
+		   width: 500px;
+}
+
+.panel{
+           background-color: #3BE714;
+           font-size: medium;
+           font-style: bold;
+           border-radius: 10px;
+		   box-shadow: 3px 3px 5px 5px;
+		   margin-left: 100%;
+		   margin-top: 0%;
+		   width: 500px;
+}
+
+.ok{
+		   background-color: yellow;
+		   width: 100px;
+		   height: 50px;
+		   border-radius: 30px;
+}
+		   
+.link{
+		   font-size: 16pt;
+		   text-align: center;
+}
+
+.table{
+		   border: 5px double black;
+}
