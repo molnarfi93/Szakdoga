@@ -1,0 +1,23 @@
+{
+    "options": {
+        "schema": "timetable",
+        "table": "teachers_subjects",
+        "columns": [
+            "teacher",
+            "subject"
+        ],
+        "primaryIndex": "teacher",
+        "compression": "zstd",
+        "defaultCharacterSet": "utf8mb4",
+        "fieldsTerminatedBy": "\t",
+        "fieldsEnclosedBy": "",
+        "fieldsOptionallyEnclosed": false,
+        "fieldsEscapedBy": "\\",
+        "linesTerminatedBy": "\n"
+    },
+    "triggers": [],
+    "includesData": true,
+    "includesDdl": true,
+    "extension": "tsv.zst",
+    "chunking": true
+}

@@ -1,0 +1,23 @@
+{
+    "options": {
+        "schema": "timetable",
+        "table": "rooms_subjects",
+        "columns": [
+            "room",
+            "subject"
+        ],
+        "primaryIndex": "room",
+        "compression": "zstd",
+        "defaultCharacterSet": "utf8mb4",
+        "fieldsTerminatedBy": "\t",
+        "fieldsEnclosedBy": "",
+        "fieldsOptionallyEnclosed": false,
+        "fieldsEscapedBy": "\\",
+        "linesTerminatedBy": "\n"
+    },
+    "triggers": [],
+    "includesData": true,
+    "includesDdl": true,
+    "extension": "tsv.zst",
+    "chunking": true
+}

@@ -1,0 +1,20 @@
+{
+    "schema": "timetable_database",
+    "includesDdl": true,
+    "includesViewsDdl": true,
+    "includesData": true,
+    "tables": [
+        "groups",
+        "timetables",
+        "users"
+    ],
+    "views": [],
+    "events": [],
+    "functions": [],
+    "procedures": [],
+    "basenames": {
+        "groups": "timetable_database@groups",
+        "timetables": "timetable_database@timetables",
+        "users": "timetable_database@users"
+    }
+}
