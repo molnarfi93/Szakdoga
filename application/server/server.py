@@ -3,9 +3,9 @@ import waitress
 import jwt
 import json
 import hashlib
-from timetable import Timetable
-import sqlalchemy
+from timetable.timetable import Timetable
 import generator
+import sqlalchemy
 
 SECRET_KEY = ''
 
