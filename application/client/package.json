@@ -6,7 +6,7 @@
         "build": "webpack --config config/webpack.dev.conf.js"
     },
     "dependencies": {
-        "axios": "^0.18.0",
+        "axios": "^0.21.1",
         "css-loader": "^0.28.0",
         "dotenv-webpack": "^2.0.0",
         "html-webpack-plugin": "^2.30.1",
