@@ -1,8 +1,14 @@
 \chapter{Fejlesztői dokumentáció}
 
+A fejezet az alkalmazás fejlesztésének menetét, az implementáció részleteit mutatja be.
+
 \section{Algoritmizálás}
 
+Az algoritmizálás részleteit közvetlenül Python forráskód formájában tekinthetjük meg.
+
 \subsection{Osztálydefiníciók}
+
+Az algoritmizáláshoz a következőkben bemutatásra kerülő Python osztályok készültek.
 
 \begin{python}
 class Room:
@@ -58,6 +64,8 @@ class Group:
 Legelőször az osztálydefiníciókat láthatjuk. Mint már tudjuk, 4 tényezőnk van az órarendgenerálással kapcsolatban, viszont az osztályok kezelése kétféleképpen történik. A teremhozzárendelési feladat első fázisában még az eredeti formában (\textit{simple\_group}) kezeljük őket, utána viszont már "táblázatos" formában (\textit{group}). Hogy utóbbi mit jelent, azt korábban már kifejtettem.
 
 \subsection{Teremhozzárendelési feladat}
+
+A teremhozzárendelési feladat az alábbi formában került implementálásra.
 
 \begin{python}
 pairings = [[] for _ in range(len(simple_groups))]
@@ -145,7 +153,8 @@ for simple_group in range(len(simple_groups)):
                             paired = True
                             break
             if ok or counter == 10000:
-                groups[group].room = simple_groups[simple_group].room.name
+                groups[group].room =
+                 simple_groups[simple_group].room.name
 \end{python}
 
 A teremhozzárendelési feladat második fázisában a \textit{createTable()} metódus segítségével a \textit{simple\_group} típusú osztály objektumainkat \textit{group} típusúakká alakítjuk, majd minden osztály esetében végignézzük az összes hozzá tartozó tantárgyat. Ha találunk olyan tárgya(ka)t, mely(ek)hez van "speciális" terem/termek, de az első fázis során hozzárendelt terem nem ilyen, akkor az osztály úgymond költözni fog az adott tantárgy kapcsán (vagyis az adott osztály-tantárgy kettőshöz másik terem rendelődik hozzá). Kivéve ha nagyobb a létszámuk minden ilyen terem befogadóképességénél, ez esetben maradnak az eredetileg hozzárendelt teremben (vagyis az adott osztály-tantárgy kettőshöz ugyanazt a termet rendeljük hozzá).
@@ -314,7 +323,8 @@ def targetFunction(entity):
             diff += (SCALE_MAX - extremisms + 1) *\
                 len(periods[period]['assignments']) * 2
         elif entity['gens']['periods'][period] == time_windows['f'][1]:
-            diff += (SCALE_MAX - extremisms + 1) * len(periods[period]['assignments'])
+            diff += (SCALE_MAX - extremisms + 1) *
+             len(periods[period]['assignments'])
         elif entity['gens']['periods'][period] ==\
            time_windows['f'][DAILY_PERIODS - 1]:
             diff += extremisms * len(periods[period]['assignments']) * 2
@@ -425,15 +435,21 @@ def createChildren(entity):
     return child
 \end{python}
 
-Miután megvan, kik lesznek a szülők, annak eldöntésére, hogy tiszta örökés legyen (az egyik szülő teljes génkészletének öröklése), keresztezés és/vagy mutáció, újabb véletlenszám generálásokra van szükség. A keresztezési ráta (\textit{CROSSOVER\_RATE}) és a mutációs ráta (\textit{MUTATION\_RATE}) értéke határozza meg a különböző esetek bekövetkezésének valószínűségét, melyek mind külön metóduson keresztül kerülnek megvalósításra.
+Miután megvan, kik lesznek a szülők, annak eldöntésére, hogy tiszta örökés legyen (az egyik szülő teljes génkészletének öröklése), keresztezés és/vagy mutáció, újabb véletlenszám generálásokra van szükség (\ref{fig:pelda}. ábra).
+
+A keresztezési ráta (\textit{CROSSOVER\_RATE}) és a mutációs ráta \\
+(\textit{MUTATION\_RATE}) értéke határozza meg a különböző esetek bekövetkezésének valószínűségét, melyek mind külön metóduson keresztül kerülnek megvalósításra. Egy példaként létrehozott gyerek elemet \aref{tab:gyerek}. táblázatban láthatunk.
 
 \begin{figure}
+\centering
 \includegraphics[width=\linewidth]{images/pelda.png}
 \caption{A keresztezés problematikája}
+\label{fig:pelda}
 \end{figure}
 
 \begin{table}
 \caption{Gyerek egyed}
+\label{tab:gyerek}
 $$
 \begin{tabular}{|l|c|c|}
 \hline
@@ -553,17 +569,19 @@ A generációk száma előre nem meghatározott, mert a tesztelés során kider�
 
 \section{Adatbázis}
 
-\begin{figure}
+\begin{figure}[h!]
 \includegraphics[width=\linewidth]{images/ermodell.png}
 \caption{Az ER modell}
+\label{fig:er}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
 \includegraphics[width=\linewidth]{images/relmodell.png}
 \caption{A relációs modell}
+\label{fig:relacios}
 \end{figure}
 
-Adatbázist kellett használni a felhasználók által létrehozott órarendek adatainak a letárolásához és felhozásához. 6 entitásunk van (osztály, tantárgy, terem, tanár, órarend, felhasználó), de a több-több kapcsolatok miatt további táblákat is létre kellett hozni, a relációs modell már tartalmazza ezeket. 1:N kapcsolat van az osztály-tantárgy kapcsolótábla és a tanár tábla között, az órarend tábla és az osztály, tantárgy, tanár, terem táblák között, valamint az órarend és felhasználó tábla közt, a többi kapcsolat N:M (osztály-tantárgy, terem-tantárgy, tanár-tantárgy). A terem-tantárgy kapcsolatok opcionálisak, mert nem muszáj tantárgynak tartoznia egy adott teremhez, ahogyan egy adott tantárgyhoz sem muszáj, hogy tartozzon terem, a többi kapcsolat kötelező. A felhasználókat leszámítva minden entitás esetén a név szolgál egyedi azonosítóként, ami egyedül a tanárok esetén okozhatna problémát, de felhívjuk rá a felhasználó figyelmét, hogy azonos nevű tanárok esetén római számokkal való megkülönböztetést használjon, ezt elkerülendő. Python-ban az adatbázis tábláit osztályokként definiáljuk, ennek kapcsán kell még egy magyarázatot megtennem. Az osztály-tantárgy kapcsolótábla tanár idegen kulcsának értéke alapértelmezetten üres string. Ennek oka, hogy a felhasználó új órarend létrehozásakor eldöntheti, maunálisan akarja-e majd hozzárendelni az osztály-tantárgy kettősökhöz a tanárokat, amennyiben nem, akkor is léteznie kell ennek az attribútumnak, de addig üres string marad az értéke, amíg a tanárhozzárendelési algoritmus során kapott eredmények nem tárolódnak az adatbázisban, és a felhasználó által közvetlenül nem megváltoztatható.
+Adatbázist kellett használni a felhasználók által létrehozott órarendek adatainak a letárolásához és felhozásához. 6 entitásunk van (osztály, tantárgy, terem, tanár, órarend, felhasználó) (\ref{fig:er}. ábra), de a több-több kapcsolatok miatt további táblákat is létre kellett hozni, a relációs modell már tartalmazza ezeket (\ref{fig:relacios}. ábra). 1:N kapcsolat van az osztály-tantárgy kapcsolótábla és a tanár tábla között, az órarend tábla és az osztály, tantárgy, tanár, terem táblák között, valamint az órarend és felhasználó tábla közt, a többi kapcsolat N:M (osztály-tantárgy, terem-tantárgy, tanár-tantárgy). A terem-tantárgy kapcsolatok opcionálisak, mert nem muszáj tantárgynak tartoznia egy adott teremhez, ahogyan egy adott tantárgyhoz sem muszáj, hogy tartozzon terem, a többi kapcsolat kötelező. A felhasználókat leszámítva minden entitás esetén a név szolgál egyedi azonosítóként, ami egyedül a tanárok esetén okozhatna problémát, de felhívjuk rá a felhasználó figyelmét, hogy azonos nevű tanárok esetén római számokkal való megkülönböztetést használjon, ezt elkerülendő. Python-ban az adatbázis tábláit osztályokként definiáljuk, ennek kapcsán kell még egy magyarázatot megtennem. Az osztály-tantárgy kapcsolótábla tanár idegen kulcsának értéke alapértelmezetten üres string. Ennek oka, hogy a felhasználó új órarend létrehozásakor eldöntheti, maunálisan akarja-e majd hozzárendelni az osztály-tantárgy kettősökhöz a tanárokat, amennyiben nem, akkor is léteznie kell ennek az attribútumnak, de addig üres string marad az értéke, amíg a tanárhozzárendelési algoritmus során kapott eredmények nem tárolódnak az adatbázisban, és a felhasználó által közvetlenül nem megváltoztatható.
 
 \section{Webalkalmazás}
 
@@ -573,14 +591,17 @@ A \textit{model.py} fájlban (ez egy Python modul) található az adatbázis tar
 
 Amikor a felhasználó már minden adatot felvitt és szeretné generáltatni az órarendeket, akkor a HTTP kérelem után, a \textit{server.py}-ból az adott órarendhez tartozó összes osztály, tantárgy, tanár, tanterem felhozásra kerül az adatbázisból, és ezúttal nem adjuk vissza a vue komponensnek json-ben, hanem eredeti formátumban a \textit{generator.py} számára továbbítjuk őket. A \textit{generator.py} először objektumokat példányosít a beérkezett szótár típusú adatokból, majd ezeket paraméterként átadja az órarendgenerálási részfeladatokat elvégző modulok globális metódusainak. Utána összegyűjti az adott osztályokhoz, tanárokhoz, illetve tantermekhez tartozó hozzárendeléseket, majd rendezi őket, úgy hogy a hétfői nap legkorábbi időintervalluma legyen a lista első és a pénteki nap legutolsó időintervalluma az utolsó eleme. Legvégül átadja az eredményeket az \textit{exporter.py}-nak. Az \textit{exporter.py} felelős a fájlok létrejöttéért és tartalommal való feltöltéséért. Utóbbit a Jinja segítségével valósítja meg, amely segít az eredmények html fájlokba való beleírásában. Ehhez egy \textit{template.html} nevű sablont készítettem, ami alapján a megadott helyekre a különböző osztályok, tanárok, tantermek kapcsán aktuális adatok fognak íródni. Ha szeretné a felhasználó, akkor valamilyen erre alkalmas program, mondjuk Pandoc segítségével a html-eket még pdf-ekké is konvertálhatja, az én alkalmazásom keretein belül ez nem történik meg, mert több időt vesz igénybe, mint az egész generálási folyamat.
 
-\begin{figure}
+Az alkalmazás rétegeit, az egyes műveletekhez tartozó feldolgozási folyamatot egy szekvenciadiagram formájában \aref{fig:sequence}. ábrán láthatjuk.
+
+\begin{figure}[h!]
 \includegraphics[width=\linewidth]{images/szekvencia.png}
 \caption{Az alkalmazás szekvenciadiagramja}
+\label{fig:sequence}
 \end{figure}
 
 \section{Felhasználói dokumentáció}
 
-Az alkalmazás használatához legelőször szükséges picit belenyúlni a szerver kódjába. Bele kell írni a felhasználó gépén levő adatbázis jelszavát, a \textit{server.py} modul \textit{SECRET_KEY} konstansába, ezenkívül adott esetben ugyanebben a modulban átírni a host, port címeket. A főoldal a \textit{login}, ahol bejelentkezésre van lehetőség, vagypedig ha még nem regisztráltunk vagy elfelejtettük a jelszavunkat, elérhetőek itt linkek, melyek az ezzel kapcsolatos oldalra irányítanak. Bejelentkezés után a menüben találjuk magunkat, ahol a fontos és egyben magyarázatra szoruló menüpontok, az Új órarend létrehozása és az Órarendjeim. Ha újat hozunk létre, meg kell adni a típust, hogy manuálisan akarjuk-e a tanárokat hozzárendelni az osztályokhoz, illetve hogy hány órától legyen a legkorábbi napi időablak és hány órakor érjen véget a legkésőbbi. Ezt a napi időintervallumot lesz lehetőség még szűkíteni a részmunkaidős tanárok esetében, az azonos nevű attribútumok állításával, tanár hozzáadásakor. A típus esetében általános iskola, középiskola és főiskola/egyetem közül választhatunk, ennek egyik jelentősége, hogy milyen típusú tantárgyakat lehet majd hozzáadni (pl. fakt típusú órák csak középiskolában vannak, elméletek és gyakorlatok pedig csak a főiskolán/egyetemen), a másik, hogy a főiskolán/egyetemen két óra hosszú egy időablak. Ha meglevő órarendet szeretnénk szerkeszteni, akkor kiválasztjuk melyiket szeretnénk és az abban a sorban található ceruza ikonra kattintunk (amennyiben törölni szeretnénk, akkor pedig nyilván a keresztre). Négy link fog megjelenni a számunkra, akkor is ha új órarendet hoztunk létre, akkor is ha meglevőt szerkesztünk. Egy a tantárgyak, egy a tantermek, egy a tanárok és egy az osztályok létrehozására. Új órarend esetén először mindenképpen tantárgyat/tantárgyakat kell hozzáadni, mert azzal kapcsolatban, hogy milyen tárgyai legyenek egy osztálynak, egy tanárnak, vagy hogy milyen tárgy(ak)ra legyen esetleg specializálódva egy terem, a korábban hozzáadottak közül választhatunk lenyíló listában. Ugyanígy, ha manuálisan rendeljük hozzá a tanárokat az osztályokhoz, csak a korábban hozzáadott tanárok közül választhatunk. Bármit is akarunk hozzáadni, egyszerre mindig egy példányt tudunk felvinni a megfelelő mezők kitöltésével (melyek elsősorban szövegmezők és lenyíló listák lesznek) és a hozzáadásra fenntartott nyomógomb lenyomásával. (Ez vonatkozik az osztály tantárgyainak hozzáadására is, osztály hozzáadásán belül.) Amint ez megtörtént, letárolódik az adatbázisban az adott objektum példány és a képernyő alján kiírásra is kerülnek a hozzáadott adatok, egyidejűleg alaphelyzetbe állnak a kitöltendő mezők és máris jöhet következő példány hozzáadása, ha szeretnénk. Mindez aszinkron, az oldal újratöltése nélkül történik. Ezenkívül van lehetőség törlésre, minden hozzáadott példánnyal kapcsolatban, a törlés ikonnal. Ha végeztünk a hozzáadásokkal és szeretnénk órarendet generáltatni, a Get it! gombra kell kattintani az \textit{edit\_timetable} oldalon. A felvitt adathalmaz méretétől függően sok időt is igénybe vehet az órarendgenerálás, de létre fog jönni az összes órarend pdf-jét tartalmazó mappa a fájlrendszer megadott helyén (ha publikussá tenném a webalkalmazást, akkor pedig letölthetővé válna az adott gép számára). Minden osztályé, minden tanáré és minden tanteremé külön fájlban kap helyet, táblázatos formában. Bármikor van lehetőség újra generáltatni, akár ugyanazzal az adathalmazzal is. A véletlenszám-generálás miatt nem determinisztikus a folyamat, így változatlan adathalmaz esetén sem ugyanazokat a megoldásokat kapjuk újból, ha éppen nem elégedett az eredménnyel a felhasználó, próbálkozhat többször is. A \textit{my\_timetables} oldalról elérhetőek a meglevő adathalmazaink, a megfelelőt kiválasztva, a szerkesztés ikonra kattintva megintcsak az \textit{edit\_timetable} oldalon találhatjuk magunkat.
+Az alkalmazás használatához legelőször szükséges picit belenyúlni a szerver kódjába. Bele kell írni a felhasználó gépén levő adatbázis jelszavát, a \textit{server.py} modul \textit{SECRET\_KEY} konstansába, ezenkívül adott esetben ugyanebben a modulban átírni a host, port címeket. A főoldal a \textit{login}, ahol bejelentkezésre van lehetőség, vagypedig ha még nem regisztráltunk vagy elfelejtettük a jelszavunkat, elérhetőek itt linkek, melyek az ezzel kapcsolatos oldalra irányítanak. Bejelentkezés után a menüben találjuk magunkat, ahol a fontos és egyben magyarázatra szoruló menüpontok, az Új órarend létrehozása és az Órarendjeim. Ha újat hozunk létre, meg kell adni a típust, hogy manuálisan akarjuk-e a tanárokat hozzárendelni az osztályokhoz, illetve hogy hány órától legyen a legkorábbi napi időablak és hány órakor érjen véget a legkésőbbi. Ezt a napi időintervallumot lesz lehetőség még szűkíteni a részmunkaidős tanárok esetében, az azonos nevű attribútumok állításával, tanár hozzáadásakor. A típus esetében általános iskola, középiskola és főiskola/egyetem közül választhatunk, ennek egyik jelentősége, hogy milyen típusú tantárgyakat lehet majd hozzáadni (pl. fakt típusú órák csak középiskolában vannak, elméletek és gyakorlatok pedig csak a főiskolán/egyetemen), a másik, hogy a főiskolán/egyetemen két óra hosszú egy időablak. Ha meglevő órarendet szeretnénk szerkeszteni, akkor kiválasztjuk melyiket szeretnénk és az abban a sorban található ceruza ikonra kattintunk (amennyiben törölni szeretnénk, akkor pedig nyilván a keresztre). Négy link fog megjelenni a számunkra, akkor is ha új órarendet hoztunk létre, akkor is ha meglevőt szerkesztünk. Egy a tantárgyak, egy a tantermek, egy a tanárok és egy az osztályok létrehozására. Új órarend esetén először mindenképpen tantárgyat/tantárgyakat kell hozzáadni, mert azzal kapcsolatban, hogy milyen tárgyai legyenek egy osztálynak, egy tanárnak, vagy hogy milyen tárgy(ak)ra legyen esetleg specializálódva egy terem, a korábban hozzáadottak közül választhatunk lenyíló listában. Ugyanígy, ha manuálisan rendeljük hozzá a tanárokat az osztályokhoz, csak a korábban hozzáadott tanárok közül választhatunk. Bármit is akarunk hozzáadni, egyszerre mindig egy példányt tudunk felvinni a megfelelő mezők kitöltésével (melyek elsősorban szövegmezők és lenyíló listák lesznek) és a hozzáadásra fenntartott nyomógomb lenyomásával. (Ez vonatkozik az osztály tantárgyainak hozzáadására is, osztály hozzáadásán belül.) Amint ez megtörtént, letárolódik az adatbázisban az adott objektum példány és a képernyő alján kiírásra is kerülnek a hozzáadott adatok, egyidejűleg alaphelyzetbe állnak a kitöltendő mezők és máris jöhet következő példány hozzáadása, ha szeretnénk. Mindez aszinkron, az oldal újratöltése nélkül történik. Ezenkívül van lehetőség törlésre, minden hozzáadott példánnyal kapcsolatban, a törlés ikonnal. Ha végeztünk a hozzáadásokkal és szeretnénk órarendet generáltatni, a Get it! gombra kell kattintani az \textit{edit\_timetable} oldalon. A felvitt adathalmaz méretétől függően sok időt is igénybe vehet az órarendgenerálás, de létre fog jönni az összes órarend pdf-jét tartalmazó mappa a fájlrendszer megadott helyén (ha publikussá tenném a webalkalmazást, akkor pedig letölthetővé válna az adott gép számára). Minden osztályé, minden tanáré és minden tanteremé külön fájlban kap helyet, táblázatos formában. Bármikor van lehetőség újra generáltatni, akár ugyanazzal az adathalmazzal is. A véletlenszám-generálás miatt nem determinisztikus a folyamat, így változatlan adathalmaz esetén sem ugyanazokat a megoldásokat kapjuk újból, ha éppen nem elégedett az eredménnyel a felhasználó, próbálkozhat többször is. A \textit{my\_timetables} oldalról elérhetőek a meglevő adathalmazaink, a megfelelőt kiválasztva, a szerkesztés ikonra kattintva megintcsak az \textit{edit\_timetable} oldalon találhatjuk magunkat.
 
 \section{Tesztelés}
 
@@ -602,14 +623,14 @@ Genetikus algoritmus (időintervallum-hozzárendelési feladat):
 \item nem adtuk-e hozzá az új egyedeket a populációs listához, mielőtt a generáció összes egyedét kitenyésztettük, ugyanis ideiglenesen egy másik listában kell letárolni őket, mert az adott generációban született egyed még nem lehet szülő
 \end{itemize}
 
-Webes működések:
+\noindent Webes működések:
 \begin{itemize}
 \item bejelentkezési ellenőrzésnél ne a jelszó eredeti formája és a hexadecimális kóddá konvertált kerüljön egymással összehasonlításra
 \item a hitelesítésekhez használt token benne maradt-e a HTTP kérelmekben
 \item lementődtek-e az adatbázisban a felvitt adatok, máskülönben esélytelen felhozni őket
-\item a több-több kapcsolatok megfelelően tárolódtak-e le, különös tekintettel az osztály-tantárgy kapcsolatokra, ahol a kapcsolótáblához kötődő attribútumok is vannak
+\item a több-több kapcsolatok megfelelően tárolódtak-e le, különös tekintettel az osz\-tály-tantárgy kapcsolatokra, ahol a kapcsolótáblához kötődő attribútumok is vannak
 \item ha csak adott példányt vagy adott feltételnek eleget tevő példányokat akarunk felhozni,  rendben történik-e a paraméterátadás
-\item csak az adott órarenden belüli tantárgyak, tantermek, tanárok és osztályok kerülnek-e felhozásra, illetve csak az adott felhasználó órarendjei vannak-e meg
+\item csak az adott órarenden belüli tantárgyak, tantermek, tanárok és osztályok kerül\-nek-e felhozásra, illetve csak az adott felhasználó órarendjei vannak-e meg
 \item a \textit{template.html} sablon megfelelő-e, különben nem fogja a kívánt tartalommal vagy egyáltalán tartalommal feltölteni a Jinja a html-eket
 \end{itemize}
 

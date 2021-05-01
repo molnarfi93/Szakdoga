@@ -5,10 +5,7 @@ osztályok. Mindenképpen szükség van ennek a felbontására, hogy egyszerűbb
 
 \Section{Teremhozzárendelési feladat}
 
-\SubSection{Specifikáció}
-
-Az első részfeladat a teremhozzárendelési, amely kétfázisú lesz. Az első fázisban osztályokat kell hozzárendelni optimálisan a tantermekhez. Ez egy halmazfelbontási feladat, ahogyan az optimalizálásban nevezzük, ami arról szól, hogy az egyik halmaz (osztályok) és másik halmaz (tantermek) elemeihez 1:1 hozzárendelést kell elvégezni, vagyis minden osztályhoz pontosan
-1 tanteremnek kell tartoznia és minden tanteremhez pontosan 1 osztálynak. Mindezt úgy, hogy a legoptimálisabb megoldást kapjuk a kihasználatlanság minimalizálásának szempontjából, mert így elkerülhetjük azt, hogy egy osztály terem nélkül maradjon, miközben létezik olyan hozzárendelés, hogy minden osztálynak jusson terem [3]. A kihasználatlanság az adott terem kapacitásának és az adott osztály létszámának a különbsége. Természetesen amennyiben van olyan osztály, amelynek létszáma nagyobb, mint bármely terem befogadóképessége, vagy több olyan, adott létszámot elérő osztály van, mint ahány terem, amelyik rendelkezik az adott befogadóképességgel, akkor a feladat nem megoldható, így legelőször ezzel kapcsolatban kell ellenőrzést végezni. Feltétel nyilván, hogy egy osztálynak nem lehet órája olyan teremben, amelynek a kapacitása kisebb az osztály létszámánál, ezenkívül egy évfolyam osztályai és az évfolyamon képzett nyelvi, fakultációs vagy egyéb csoportok esetében megengedett ugyanannak a teremnek a hozzárendelése. A második
+Az első részfeladat a teremhozzárendelési, amely kétfázisú lesz. Az első fázisban osztályokat kell hozzárendelni optimálisan a tantermekhez. Ez egy halmazfelbontási feladat, ahogyan az optimalizálásban nevezzük, ami arról szól, hogy az egyik halmaz (osztályok) és másik halmaz (tantermek) elemeihez 1:1 hozzárendelést kell elvégezni, vagyis minden osztályhoz pontosan 1 tanteremnek kell tartoznia és minden tanteremhez pontosan 1 osztálynak. Mindezt úgy, hogy a legoptimálisabb megoldást kapjuk a kihasználatlanság minimalizálásának szempontjából, mert így elkerülhetjük azt, hogy egy osztály terem nélkül maradjon, miközben létezik olyan hozzárendelés, hogy minden osztálynak jusson terem \cite{nagy1998operaciokutatas}. A kihasználatlanság az adott terem kapacitásának és az adott osztály létszámának a különbsége. Természetesen amennyiben van olyan osztály, amelynek létszáma nagyobb, mint bármely terem befogadóképessége, vagy több olyan, adott létszámot elérő osztály van, mint ahány terem, amelyik rendelkezik az adott befogadóképességgel, akkor a feladat nem megoldható, így legelőször ezzel kapcsolatban kell ellenőrzést végezni. Feltétel nyilván, hogy egy osztálynak nem lehet órája olyan teremben, amelynek a kapacitása kisebb az osztály létszámánál, ezenkívül egy évfolyam osztályai és az évfolyamon képzett nyelvi, fakultációs vagy egyéb csoportok esetében megengedett ugyanannak a teremnek a hozzárendelése. A második
 fázis azért szükséges, mert egyes termek lehetnek elsősorban adott tantárgy(ak) számára fenntartottak). Itt már nem osztályokat, hanem osztály-tantárgy kettősöket veszünk ("táblázatos" forma), vagyis minden osztályt annyiszor kell számba venni, ahány tantárgy tartozik hozzá. 
 
 \SubSection{Formalizálás}
@@ -68,9 +65,13 @@ $$P=\prod_{i=1}^n h_i$$
 $$P=\prod_{i=1}^n h_i-(i-1)$$
 Nézzük az összes lehetséges esetek és lehetséges megoldások számát az alapesetben, az eredeti példa esetén,
 illetve évfolyamonként 6, 7, 8 osztályra kibővített esetben (ahol a termek számát plusz egy évfolyamonkénti osztály
-esetén 5-tel növeltem): 
+esetén 5-tel növeltem) (\ref{tab:complexity3}. táblázat).
 
-$$
+\begin{table}[h!]
+	\centering
+	\caption{Az esetek és megoldások száma a tanárok számának függvényében}
+	\label{tab:complexity3}
+	\medskip
 \begin{tabular}{|l|c|c|c|c|}
 \hline
 & 5 & 6 & 7 & 8 \\
@@ -80,11 +81,14 @@ $$
 Összes megoldások & $5,3 \cdot 10^{16}$ & $3,5 \cdot 10^{22}$ & $1,5 \cdot 10^{26}$ & $3,3 \cdot 10^{31}$ \\
 \hline
 \end{tabular}
-$$
+\end{table}
 
-\begin{figure}
+A teremhozzárendelések vizsgálata kapcsán a becsült bonyolultságokat \aref{fig:teremhozzarendeles}. ábrán láthatjuk.
+
+\begin{figure}[h!]
 	\includegraphics[width=\linewidth]{images/teremhozzarendeles.png}
 	\caption{Teremhozzárendelés állapottere}
+	\label{fig:teremhozzarendeles}
 \end{figure}
 
 Az első fázis növekedési rendje a következő: $T(n,m)=\ \sim \ \Theta (2nm).$
@@ -97,9 +101,7 @@ A saját példám futási idejének tudatában, a növekedési rendet felhaszná
 
 \Section{Tanárhozzárendelési feladat}
 
-\SubSection{Specifikáció}
-
-Az osztály-tantárgy kettősökhöz immáron a tanárokat rendeljük hozzá. Ez egy halmazlefedési feladat, ami abban különbözik a halmazfelbontásitól, hogy 1:N hozzárendelés van, ugyanis egy tanárhoz több osztály-tantárgy kettőst is rendelhetünk, sőt ugye kell is többet hozzárendelni. A párosításmátrixban két feltételtől is függ, hogy 0 vagy 1 kerül a rublikába. Egyrészt, hogy az adott tanár tudja-e tanítani az adott tantárgyat, másrészt hogy az adott osztálynak van-e ilyen tárgya [3]. A minimalizálás pedig itt arra vonatkozik, hogy minél kisebb legyen a tanárok heti óraszámai közötti eltérés, ne fordulhasson elő, hogy mondjuk míg valaki 30 órát tart egy héten, addig más 5-öt.
+Az osztály-tantárgy kettősökhöz immáron a tanárokat rendeljük hozzá. Ez egy halmazlefedési feladat, ami abban különbözik a halmazfelbontásitól, hogy 1:N hozzárendelés van, ugyanis egy tanárhoz több osztály-tantárgy kettőst is rendelhetünk, sőt ugye kell is többet hozzárendelni. A párosításmátrixban két feltételtől is függ, hogy 0 vagy 1 kerül a rublikába. Egyrészt, hogy az adott tanár tudja-e tanítani az adott tantárgyat, másrészt hogy az adott osztálynak van-e ilyen tárgya \cite{nagy1998operaciokutatas}. A minimalizálás pedig itt arra vonatkozik, hogy minél kisebb legyen a tanárok heti óraszámai közötti eltérés, ne fordulhasson elő, hogy mondjuk míg valaki 30 órát tart egy héten, addig más 5-öt.
 A futtatás után kapott eredményt látva megállapítható, hogy amennyire lehetett, sikerült kiküszöbölni a tanárok egyenlőtlen terhelését, megkaptuk a lehető legoptimálisabb, olyan hozzárendelés-mátrixot, amely meghatározza, hogy egy adott osztálynak egy adott tantárgyat, melyik tanár tartsa.
 
 \SubSection{Formalizálás}
@@ -112,8 +114,8 @@ A futtatás után kapott eredményt látva megállapítható, hogy amennyire leh
 	\item $v \in \Bbb{N}^p$: az egyes tárgyakat oktató tanárok száma
 	\item $t \in \Bbb{N}^m$: tanárok heti óraszáma
 	\item $o \in \Bbb{N}^n$: osztály-tantárgy kettősök heti óraszáma
-	\item $A \in \{0;1\}^{n \times m}$: párosításmátrix
-	\item $X \in \{0;1\}^{n \times m}$: hozzárendelés-mátrix
+	\item $A \in \{0;1\}^{n \times m}$: párosításmátrix, $A_{ij} = 1$, ha az $i$-edik osztály-tantárgy kettősben szereplő tantárgyat tudja tanítani a $j$-edik tanár, egyébként 0.
+	\item $X \in \{0;1\}^{n \times m}$: hozzárendelés-mátrix, $X_{ij} = 1$, ha az $i$-edik osztály-tantárgy kettősben szereplő osztálynak az ugyanezen kettősben szereplő tantárgyat a $j$-edik tanár fogja tartani, egyébként 0.
 \end{itemize}
 
 \[
@@ -121,22 +123,6 @@ t_{j} =
 \begin{cases}
 t_j+o_i,& \hbox{ha } X_{ij}=1, \\
 t_j & \hbox{egyébként}.
-\end{cases}
-\]
-
-\[
-A_{ij} =
-\begin{cases}
-1, & \hbox{ha az $i$-edik osztály-tantárgy kettősben szereplő tantárgyat tudja tanítani a $j$-edik tanár} \\
-0 & \hbox{egyébként}.
-\end{cases}
-\]
-
-\[
-X_{ij} =
-\begin{cases}
-1, & \hbox{ha az $i$-edik osztály-tantárgy kettősben szereplő osztálynak az ugyanezen kettősben szereplő tantárgyat a $j$-edik tanár fogja tartani} \\
-0 & \hbox{egyébként}.
 \end{cases}
 \]
 
@@ -150,13 +136,26 @@ $$k=1, 2, \ldots, p$$
 
 Összes esetek száma:
 
-$$P=m^n$$
+$$P=m^n.$$
 Összes megoldások száma:
 
-$$P=\prod_{k=1}^p v_k^{u_k}$$
-A lehetséges esetek és megoldások száma (a tanárok számát plusz egy évfolyamonkénti osztály esetén 3-mal növeltem):
+$$P=\prod_{k=1}^p v_k^{u_k}.$$
 
-$$
+Az esetek és megoldásoknak a számát az osztályok számának függvényében \aref{fig:tanarhozzarendeles}. ábrán lévő grafikonon láthatjuk szemléltetve.
+
+\begin{figure}[h!]
+	\includegraphics[width=\linewidth]{images/tanarhozzarendeles.png}
+	\caption{Tanárhozzárendelés állapottere}
+	\label{fig:tanarhozzarendeles}
+\end{figure}
+
+A lehetséges esetek és megoldások száma közötti összefüggésre néhány becslést láthatunk \aref{tab:complexity}. táblázatban. (A tanárok számát plusz egy évfolyamonkénti osztály esetén 3-mal növeltem.)
+
+\begin{table}[h!]
+	\centering
+	\caption{Az esetek és megoldások száma a tanárok számának függvényében}
+	\label{tab:complexity}
+	\medskip
 \begin{tabular}{|l|c|c|c|c|}
 \hline
 & 5 & 6 & 7 & 8 \\
@@ -166,20 +165,13 @@ $$
 Összes megoldások & $1,1 \cdot 10^{132}$ & $2 \cdot 10^{168}$ & $4,2 \cdot 10^{208}$ & $1,2 \cdot 10^{249}$ \\
 \hline
 \end{tabular}
-$$
-
-\begin{figure}
-	\includegraphics[width=\linewidth]{images/tanarhozzarendeles.png}
-	\caption{Tanárhozzárendelés állapottere}
-\end{figure}
+\end{table}
 
 Növekedési rend: $T(n,m)=\Theta (nm+nm^2).$
 
 A növekedési rend értelmében $4min$ $29sec$ az átlagosan várható futási idő, a Miskolci Egyetem esetében, IntelCore i7 875K processzorral. 
 
 \Section{Időablakok beosztása}
-
-\SubSection{Specifikáció}
 
 Ennek lényege, hogy a korábbiak alapján kapott osztály-tantárgy-terem-tanár
 hozzárendeléseket ütközésmentesen beosszuk időablakokba. Merthogy egy időablakban nyilván nem szerepelhet többször ugyanaz az osztály, ugyanaz a terem és ugyanaz a tanár sem. Egy időablak legfeljebb annyi hozzárendelést tartalmazhat, amennyi a tanárok száma. Amire még oda kell figyelni, hogy egy osztály-tantárgy kettős annyiszor forduljon elő, amennyi a heti óraszáma az adott osztálynak az adott tárgyból.
@@ -211,13 +203,18 @@ $$l=1, 2, \ldots, r$$
 
 Összes esetek száma:
 
-$$P=\binom{n+m-1}{m}$$
+$$P=\binom{n+m-1}{m}.$$
+
 Összes megoldások száma:
 
-$$P=\binom{n}{m}$$
-A lehetséges esetek és megoldások száma (a tanárok számát plusz egy évfolyamonkénti osztály esetén 3-mal növeltem):
+$$P=\binom{n}{m}.$$
+A lehetséges esetek és megoldások száma (\ref{tab:complexity2}. táblázat). (A tanárok számát plusz egy évfolyamonkénti osztály esetén 3-mal növeltem.)
 
-$$
+\begin{table}[h!]
+\centering
+\caption{A lehetséges esetek és megoldások száma}
+\label{tab:complexity2}
+\medskip
 \begin{tabular}{|l|c|c|c|c|}
 \hline
 & 5 & 6 & 7 & 8 \\
@@ -227,11 +224,14 @@ $$
 Összes megoldások & $8,9 \cdot 10^{36}$ & $6,8 \cdot 10^{41}$ & $4,5 \cdot 10^{46}$ & $2,7 \cdot 10^{51}$ \\
 \hline
 \end{tabular}
-$$
+\end{table}
 
-\begin{figure}
+A kapott eredményeket \aref{fig:idoablak}. ábrán láthatjuk szemléltetve.
+
+\begin{figure}[h!]
 	\includegraphics[width=\linewidth]{images/idoablak.png}
 	\caption{Időablakbeosztás állapottere}
+	\label{fig:idoablak}
 \end{figure}
 
 Növekedési rend: $T(n,m,r)=\ \sim \ \Theta(nmr)$.
@@ -240,7 +240,7 @@ A növekedési rend értelmében $6min$ $15sec$ az átlagosan várható futási 
 
 \Section{Időintervallumok hozzárendelése}
 
-A megkapott időablakok még nincsenek időintervallumhoz kötve, bármelyik felcserélhető bármelyikkel. Azt a feladatot, hogy a megadott plusz feltételek alapján lehető legoptimálisabban állapítsuk meg, mely időablak mely időintervallumba kerüljön (vagyis a legoptimálisabb legyen az időablakok sorrendje), a genetikus algoritmus végzi el nekünk.
+A megkapott időablakok még nincsenek időintervallumhoz kötve, bármelyik felcserélhető bármelyikkel. Azt a feladatot, hogy a megadott plusz feltételek alapján optimális megoldást találjunk, vagyis mely időablak mely időintervallumba kerüljön, a genetikus algoritmus végzi el nekünk.
 
 \SubSection{Probléma modellezése}
 
@@ -248,7 +248,7 @@ A megkapott időablakok még nincsenek időintervallumhoz kötve, bármelyik fel
 
 \begin{itemize}
 	\item \textbf{gén:} Egy konkrét, általános- és középiskolák esetén egy óra hosszúságú, 	          főiskolák/egyetemek esetén két óra hosszúságú időintervallum. Implementációja szótár, két elemmel: nap (enum) és a napon belüli időablak (string).
-	\item \textbf{egyed:} Az összes időablak sorrendje, az egyedek mibenlétét a gének sorrendje határozza meg. Implementációja szintén szótár, elemei a gének listája, a célfüggvény-érték és az
+	\item \textbf{egyed:} Az összes időablak sorrendje, az egyedek mibenlétét a gének sorrendje határozza meg. Implementációja szintén szótár, elemei a gének listája, a cél\-függ\-vény-érték és az
 	egyedi azonosító.
 	\item \textbf{populáció:} Az egyedek összességét tárolja, melyeknek számát a programozó állapítja meg, a hatékonysági tesztek által. Implementációja lista.
 	\item \textbf{célfüggvény:} Esetemben a kora reggeli/késői délutáni órák számát akarom minimalizálni, illetve a napi óraszámok arányos eloszlása/pénteki órák számának minimalizálása is szempont. Minden tanárhoz tartozik egy \textsl{balance} és egy \textsl{extremisms} érték,
@@ -273,38 +273,49 @@ A megkapott időablakok még nincsenek időintervallumhoz kötve, bármelyik fel
 
 $$ c=\sum_{j=1}^m \sum_{l=1}^I \quad
 \begin{cases}
-b_j, & \hbox{ha a \textit{balance}-szal kapcsolatos feltétel teljesül }l\hbox{ időablakban,}\\
-e_j, & \hbox{ha a \textit{extremisms}-zel kapcsolatos feltétel teljesül }l\hbox{ időablakban,}\\
-b_j+e_j, & \hbox{ha a \textit{balance}-szal és az \textit{extremisms}-zel kapcsolatos feltétel is teljesül }l\hbox{ időablakban,}\\
+b_j, & \hbox{ha a \textit{balance} feltétel teljesül }l\hbox{ időablakban,}\\
+e_j, & \hbox{ha a \textit{extremisms} feltétel teljesül }l\hbox{ időablakban,}\\
+b_j+e_j, & \hbox{ha az előző két feltétel egyszerre teljesül},\\
 0 & \hbox{egyébként.}
-\end{cases} 
-\rightarrow min$$
+\end{cases}
+$$
+
+$$
+c \rightarrow min
+$$
 
 \SubSection{Időbonyolultság}
 
 Összes esetek száma:
 
-$$P=I^I$$
+$$P=I^I.$$
 Összes megoldások száma:
 
 $$P=I!$$
-A számszerűsített példában itt nem évfolyamonkénti osztályok száma lesz, hanem napi időablakok száma. Az egyetemek/főiskolák kapcsán 6 (egy dupla óra egy időablak), az általános iskolák kapcsán 7, a középiskolák kapcsán pedig 8 időablakkal számolunk. Hangsúlyozom, hogy ez csak példa, a felhasználó mást is megadhat.
+A számszerűsített példában itt nem évfolyamonkénti osztályok száma lesz, hanem napi időablakok száma. Az egyetemek/főiskolák kapcsán 6 (egy dupla óra egy időablak), az általános iskolák kapcsán 7, a középiskolák kapcsán pedig 8 időablakkal számolunk. Hangsúlyozom, hogy ez csak példa, a felhasználó mást is megadhat (\ref{tab:complexity3}. táblázat).
 
-$$
+\begin{table}[h!]
+	\centering
+	\caption{A lehetséges esetek és megoldások száma}
+	\label{tab:complexity3}
+	\medskip
 \begin{tabular}{|l|c|c|c|}
 \hline
-6 & 7 & 8 \\
+& 6 & 7 & 8 \\
 \hline
 Összes esetek & $46656$ & $823543$ & $16777216$ \\
 \hline 
 Összes megoldások & $720$ & $5040$ & $40320$ \\
 \hline
 \end{tabular}
-$$
+\end{table}
 
-\begin{figure}
+A kapott, bonyolultság vizsgálatával kapcsolatos eredményeket \aref{fig:idointervallum}. ábrán láthatjuk.
+
+\begin{figure}[h!]
 	\includegraphics[width=\linewidth]{images/idointervallum.png}
 	\caption{Időintervallum-hozzárendelés állapottere}
+	\label{fig:idointervallum}
 \end{figure}
 
 Célfüggvény növekedési rendje: $T(n,m,o)=\Theta(nmo)$.
@@ -315,9 +326,9 @@ Hozzájön még ehhez a tiszta öröklődés, a mutáció és a rendező metódu
 
 Növekedési rend: $T(P,G,I,n,m,o)=\ \sim \ \Theta(G \cdot P \cdot (nmo+I^2))$.
 
-A tesztelés során az derült ki, hogy átlagosan 48 generációra van szükség, így a növekedési rend értelmében $48min 25sec$ az átlagosan várható futási idő, a Miskolci Egyetem esetében, IntelCore i7 875K processzorral. Ha vannak részmunkaidős tanárok és ezért vizsgáljuk, illetve büntetjük az ezzel kapcsolatos értékeket is a célfüggvényben, akkor néhány másodperccel több.
+A tesztelés során az derült ki, hogy átlagosan 48 generációra van szükség, így a növekedési rend értelmében 48 perc 25 másodperc az átlagosan várható futási idő, a Miskolci Egyetem esetében, IntelCore i7 875K processzorral. Ha vannak részmunkaidős tanárok és ezért vizsgáljuk, illetve büntetjük az ezzel kapcsolatos értékeket is a célfüggvényben, akkor néhány másodperccel több.
 
-Könnyen belátható, hogy a célfüggvény és azon belül a tanárokon végigiteráló ciklus "dobja meg" a futási időt. Amennyiben nem adunk rá lehetőséget minden tanárnak, hogy a saját \textit{balance} és \textit{extremisms} értékeivel rendelkezzen, hanem egységesen állítjuk be ezeket az értékeket/alapértelmezett értékkel számolunk, akkor kevesebb mint $5 sec$ lesz a futási idő. Amennyiben adunk, az sem jelent nagy problémát, főleg ha szervergéphez méltó, az enyémtől 2x, 3x nagyobb teljesítményű processzorral rendelkezünk.
+Könnyen belátható, hogy a célfüggvény és azon belül a tanárokon végigiteráló ciklus "dobja meg" a futási időt. Amennyiben nem adunk rá lehetőséget minden tanárnak, hogy a saját \textit{balance} és \textit{extremisms} értékeivel rendelkezzen, hanem egységesen állítjuk be ezeket az értékeket/alapértelmezett értékkel számolunk, akkor kevesebb mint 5 másodperc lesz a futási idő. Amennyiben adunk, az sem jelent nagy problémát, főleg ha szervergéphez méltó, az enyémtől 2$\times$, 3$\times$ nagyobb teljesítményű processzorral rendelkezünk.
 
-Maga a generálás (a szűkebb értelemben vett generálás) a \textit{generator.py} modul algoritmusai által történik, $11 sec$ futási ideje azonban jelentéktelen. Az én processzorommal az egész órarendgenerálási folyamat átlagosan várható futási ideje, összesen $61min$ $43sec$ tanáronkénti \textit{balance} és \textit{extremisms} értékek esetén, egységes értékek esetén pedig $13min$ $23sec$. Ha a tanárokat manuálisan akarja hozzárendelni az osztályokhoz a felhasználó, akkor még kevesebb, mivel ebben az esetben a tanárhozzárendelési feladatot nem kell végrehajtani. Kijelenthetjük, hogy nem létezik olyan méretű oktatási intézmény, melynek esetében ne tudnának belátható időn belül eredményt szolgáltatni az algoritmusaim.
+Maga a generálás (a szűkebb értelemben vett generálás) a \textit{generator.py} modul algoritmusai által történik, 11 másodperc futási ideje azonban jelentéktelen. Az én processzorommal az egész órarendgenerálási folyamat átlagosan várható futási ideje, összesen 61 perc 43 másodperc tanáronkénti \textit{balance} és \textit{extremisms} értékek esetén, egységes értékek esetén pedig 13 perc 23 másodperc. Ha a tanárokat manuálisan akarja hozzárendelni az osztályokhoz a felhasználó, akkor még kevesebb, mivel ebben az esetben a tanárhozzárendelési feladatot nem kell végrehajtani. Kijelenthetjük, hogy nem létezik olyan méretű oktatási intézmény, melynek esetében ne tudnának belátható időn belül eredményt szolgáltatni az algoritmusaim.
 

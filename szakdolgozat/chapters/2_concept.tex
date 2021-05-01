@@ -1,6 +1,10 @@
 \Chapter{Az órarendgenerálási probléma}
 
+A fejezet áttekinti az órarendgenerális probléma megoldásához szükséges eszközkészletet, a hasonló célú alkalmazásokat és a felhasználásra szánt szoftveres eszközkészletet.
+
 \Section{A genetikus algoritmus}
+
+Az órarendgenerálási probléma megoldásához először vizsgáljuk meg, hogy genetikus algoritmusok használatával milyen lehetőségünk van.
 
 \SubSection{Biológiai háttér}
 
@@ -13,17 +17,19 @@ rendelkező egyedeknek el kell pusztulniuk annak érdekében, hogy az adott faj 
 hátráltatná és mivel az állatvilágban táplálkozási hierarchia van, továbbá az éghajlati 
 körülményekhez való alkalmazkodás is szerepet játszik a túlélésben, ebben az esetben félő 
 lenne a populáció kihalása. A nőstények ösztönösen a kedvezőbb tulajdonságokkal rendelkező 
-hímeket választják párosodásra, vagypedig egymás elleni csatában lejátsszák a hímek, ki 
+hímeket választják párosodásra, vagy egymás elleni csatában mérik össze erejüket a hímek, ki 
 juthasson hozzá a nőstényhez. Ez lehet nem halálos vagy halálos játszma is. Szintén kegyetlen 
-világ figyelhető meg pl. a fókák esetében, ahol a győztes hím az összes nősténnyel párosodik, 
+világ figyelhető meg például a fókák esetében, ahol a győztes hím az összes nősténnyel párosodik, 
 a vesztes pedig eggyel sem. Többnyire az erősebb egyedek örökítik így tovább a génjeiket, a
 gyengébbek fokozatosan elhullanak a populációból, amely így generációról generációra erősebb,
-életképesebb lesz. A mutáció szerepe is fontos, melynek eredménye hogy néha-néha egy egyed
+életképesebb lesz.
+
+A mutáció szerepe is fontos, melynek eredménye hogy néha-néha egy egyed
 valamely génje egyik szülőtől sem származó lesz, hanem egészen más lesz, következményként
 nagymértékben különbözni fog mindkét szülőtől valamely tulajdonság kapcsán. Ez a jelenség is 
 jó a populáció számára, mert csökkenti a belterjesség mértékét, a korai generációk folyamán
 bekövetkező mutációk segíthetnek az adott ökoszisztémában hasznos, korábban nem jellemző
-tulajdonságok térnyerésében, a későbbi mutációk már hamar elhalnak, nem játszanak szerepet. [1]
+tulajdonságok térnyerésében, a későbbi mutációk már hamar elhalnak, nem játszanak szerepet \cite{okologia}, \cite{jelasity1999genetikus}.
 
 \SubSection{Általánosságban a genetikus algoritmusról}
 
@@ -46,19 +52,19 @@ egy adathalmaz optimális értékekkel rendelkező tagjait az evolúció mozzana
 öröklődés, mutáció) a maga módján leutánzó genetikus algoritmussal, az adott probléma 
 megoldása érdekében. Ahogyan más területeken, úgy itt is leképezzük a valós világot a
 programozás nyelvére, nézzük az analógiákat általánosságban:
-
 \begin{itemize}
-	\item populáció $\rightarrow$ adathalmaz
-	\item egyed $\rightarrow$ adathalmaz egy tagja
-	\item gén $\rightarrow$ adathalmaz egy tagjának egy attribútuma
-	\item túléléshez szükséges tulajdonságok $\rightarrow$ adathalmaz tagjainak attribútumai
-	\item ezen tulajdonságok kedvező mivolta $\rightarrow$ az attribútumok optimális értéke
+	\item populáció $\rightarrow$ adathalmaz,
+	\item egyed $\rightarrow$ adathalmaz egy tagja,
+	\item gén $\rightarrow$ adathalmaz egy tagjának egy attribútuma,
+	\item túléléshez szükséges tulajdonságok $\rightarrow$ adathalmaz tagjainak attribútumai,
+	\item ezen tulajdonságok kedvező mivolta $\rightarrow$ az attribútumok optimális értéke.
 \end{itemize}
 
 A szelekció, öröklődés és mutáció függvények segítségével valósul meg, de ezekkel
 kapcsolatban többféle lehetőség létezik és az adott problémánk ismeretében választjuk ki,
 hogy milyen fajta szelekciós, öröklődési, illetve mutációs eljárást alkalmazunk. Ezekre nem
-térek ki, csak az én munkám során használt eljárásokat fogom bemutatni.
+térek ki, csak az én munkám során használt eljárásokat fogom bemutatni \cite{sivanandam2008genetic}.
+
 A genetikus algoritmus esetleges sikertelenségét a lokális optimumok problematikája okozza. 
 Azt képzeljük el, hogy egy hegyvidék legalacsonyabb völgyét kell megtalálnunk, de miután a
 genetikus algoritmus talál egy völgyet (vagyis egy lokális minimumot), nem tudja megmondani,
@@ -69,40 +75,38 @@ ekkor távolodunk az optimális megoldástól. Csakhogy ez az optimális megold�
 hogy csak lokális optimum, ami nekünk nem elég. Ahhoz, hogy a globális optimumot megtaláljuk,
 átmenetileg el kell távolodnunk a már viszonylag jó megoldástól. Nézzük, miként tudjuk
 módosítani a paramétereket a lokális minimumon való megrekedés elkerülése érdekében:
-
 \begin{itemize}
-	\item nagyobb populációval
-	\item a keresztezések és mutációk valószínűségének növelésével
+	\item nagyobb populációval,
+	\item a keresztezések és mutációk valószínűségének növelésével,
 	\item generációnként kevesebb egyed kiszelektálásával
-	\item de az is előfordulhat, hogy hibát követtünk el a probléma lemodellezése során
-	\item ezenkívül egyes, rendkívüli összetettségű problémák esetén lehetséges és érdemes                 több, egymással kapcsolatban álló populációt létrehozni
+	\item de az is előfordulhat, hogy hibát követtünk el a probléma lemodellezése során,
+	\item ezenkívül egyes, rendkívüli összetettségű problémák esetén lehetséges és érdemes több, egymással kapcsolatban álló populációt létrehozni.
 \end{itemize}
-[2]
 
 \Section{Kitekintés}
 
-Több, erre a célre létrehozott szoftver készült már, ingyenes/fizetős, platformfüggetlen/
+Több, órarend generálás céljára létrehozott szoftver készült már, ingyenes/fizetős, platformfüggetlen/
 valamely platformra létrehozott, interaktív/automatikus. Az interaktív használat itt azt
 jelenti, hogy mi adunk meg órarendet, melynek ütközésmentességét leteszteljük a programmal,
 ami jelzésünkre adja, mi mivel ütközik és milyen lehetőségeink vannak a kiküszöbölésre. 
 A legnépszerűbb applikációkat hasonlítom össze:
 
 \begin{itemize}
-	\item \textbf{TimeTabler:} A legrégebbi, mai napig nagyon népszerű órarendütemező, olyan extra funkciókkal,
+	\item \textbf{TimeTabler}: A legrégebbi, mai napig nagyon népszerű órarendütemező, olyan extra funkciókkal,
 	mint a részmunkaidős tanárok felvétele a rendszerbe, a lyukas órák számának minimalizálása és a választható
 	tanóra-időtartamok (szimpla vagy dupla órák). Interaktív módon is használható. Többféle exportálási lehetőséget biztosít.
 	Ingyenesen letölthető egy demo verzió nem megváltoztatható, demo adatokkal és 
 	tutorial videóval. Előfizetés nincs, csak megvásárlás lehetséges. 
-	Platformfüggetlen, telefonos verzióval viszont nem rendelkezik. [4]
-	\item \textbf{Schedule Builder:} Ingyenes, webes alkalmazás. Csak az alapfunkciókkal rendelkezik,
-	nincsenek extrák, illetve nem elérhető az automatikus használat sem. [5]
+	Platformfüggetlen, telefonos verzióval viszont nem rendelkezik \cite{coenen1995spatial}, \cite{timetabler}.
+	\item \textbf{Schedule Builder}: Ingyenes, webes alkalmazás. Csak az alapfunkciókkal rendelkezik,
+	nincsenek extrák, illetve nem elérhető az automatikus használat sem \cite{schedulebuilder}.
 	Platformfüggetlen, többféle exportálási lehetőséggel.
-	\item \textbf{Prime TimeTable:} Macintosh, Linux, Android és IOS rendszereken egyaránt elérhető, viszont
+	\item \textbf{Prime TimeTable}: Macintosh, Linux, Android és IOS rendszereken egyaránt elérhető, viszont
 	Windowson nem. Rendelkezik minden olyan funkcióval, amivel a TimeTabler. 30 napos próbaverzióval vagy éves
-	előfizetéssel lehet használni. [6]
-	\item \textbf{aSc TimeTables:} A közelmúltban legjobbnak választott órarendgeneráló applikáció. Itt is elérhető interaktív és
+	előfizetéssel lehet használni \cite{primetimetable}.
+	\item \textbf{aSc TimeTables}: A közelmúltban legjobbnak választott órarendgeneráló applikáció. Itt is elérhető interaktív és
 	automatikus használat, ugyanazok az extra funkciók, többféle exportálási lehetőség, próbaverzió. Előfizetés nincs, csak
-	megvásárlás lehetséges, használata Windowsra és Macintoshra korlátozódik. [7]
+	megvásárlás lehetséges, használata Windowsra és Macintoshra korlátozódik \cite{asctimetables}.
 \end{itemize}
 
 Mint látható, mindegyik fizetős applikáció rendelkezik automatikus és interaktív használati
@@ -110,6 +114,8 @@ lehetőséggel, valamint ugyanazokkal az extra funkciókkal. A nyomtatási és e
 pedig az ingyenes Schedule Builder is. 
 
 \Section{Felhasznált technológiák}
+
+A következőkben a probléma megoldásához használt szoftverek rövid áttekintése következik.
 
 \SubSection{Python}
 
@@ -126,11 +132,11 @@ elemei rendelkeznek azonosító névvel vagy kóddal, ennek megadásával lehet 
 nem tömbindexszel, ami különböző típusú elemek esetén hasznos. A szemétgyűjtés 
 automatikusan történik, nincsen szükség memóriafelszabadításra és memóriafoglalásra az 
 algoritmus során kiszelektálódó, illetve létrejövő egyedek kapcsán, bár mint kiderült,
-erre nem volt szükségem. [8]
+erre nem volt szükségem \cite{van2007python}.
 
 \SubSection{Python kiegészítők}
 
-Több kiegészítőt is telepítenem és használnom kellett a szerver létrehozásával kapcsolatban Python-ban, ezek a Falcon, a Waitress, a JWT és az SQLAlchemy. A Falcon egy olyan webes keretrendszer, amely a HTTP kérések (get, post, put, delete) és a REST (internetes szoftverarchitektúra) közötti  kapcsolatért felel. Vagyis egy interfész, amire azért van szükség, mert a REST nem korlátozódik a HTTP protokollra. Azért esett rá a választás, mert kifejezetten REST-hez készült és gyors. A Waitress többféle felhasználásra alkalmas, interfészt biztosít webszerver és alkalmazásszerver között. Arra használtam, hogy az adatbázissal kapcsolatos betöltési kérelmek kapcsán biztosítsa az elérést, host és port, valamint egy olyan objektum segítségével, amivel hozzáférünk a HTTP kérések eredményeihez. Azért ezt használtam, mert közvetlenül elindítható a Python kódból. A JWT a JSON Web Token rövidítése. Kizárólagos vezérlést biztosít a token, melyet a felhasználó egyedi azonosítójából (user hozzáadáskor automatikusan hozárendelt sorszám) és a programozó által megadott kulcsból generál a szerver, hash algoritmussal. Ezzel a titkosítással érjük el a jelszavak védelmét. Elterjedt, jól támogatott megoldás, úgy tárolja a token által az adatokat, hogy a kliens ne tudjon hozzáférni. Végül a Jinja, melyet a konzulensem hatékonyan használt a korábbiakban, a Python fájlkezelésében használt eszköz. Általa a html hozzájut a Python változóiban levő adatokhoz. [8]
+Több kiegészítőt is telepítenem és használnom kellett a szerver létrehozásával kapcsolatban Python-ban, ezek a Falcon, a Waitress, a JWT és az SQLAlchemy. A Falcon egy olyan webes keretrendszer, amely a HTTP kérések (GET, POST, PUT, DELETE) és a REST (internetes szoftverarchitektúra) közötti  kapcsolatért felel. Vagyis egy interfész, amire azért van szükség, mert a REST nem korlátozódik a HTTP protokollra. Azért esett rá a választás, mert kifejezetten REST-hez készült és gyors. A Waitress többféle felhasználásra alkalmas, interfészt biztosít webszerver és alkalmazásszerver között. Arra használtam, hogy az adatbázissal kapcsolatos betöltési kérelmek kapcsán biztosítsa az elérést, host és port, valamint egy olyan objektum segítségével, amivel hozzáférünk a HTTP kérések eredményeihez. Azért ezt használtam, mert közvetlenül elindítható a Python kódból. A JWT a JSON Web Token rövidítése. Kizárólagos vezérlést biztosít a token, melyet a felhasználó egyedi azonosítójából (user hozzáadáskor automatikusan hozárendelt sorszám) és a programozó által megadott kulcsból generál a szerver, hash algoritmussal. Ezzel a titkosítással érjük el a jelszavak védelmét. Elterjedt, jól támogatott megoldás, úgy tárolja a token által az adatokat, hogy a kliens ne tudjon hozzáférni. Végül a Jinja, melyet a konzulensem hatékonyan használt a korábbiakban, a Python fájlkezelésében használt eszköz. Általa a HTML hozzájut a Python változóiban levő adatokhoz.
 
 \SubSection{SQL és SQLAlchemy}
 
@@ -143,7 +149,7 @@ tettem. Erre azért van szükség, mert ha objektum-orientált paradigmát köve
 relációs struktúrája ugyan képes minden szükséges információt megfelelő formában rögzíteni, 
 ezenfelül a viszonyok objektum-orientált feldolgozása szükséges. Az SQLAlchemy automatikus 
 sessionkezelést biztosít, ami jelentősen megkönnyíti a munkát, főleg a felhasználókezeléssel 
-kapcsolatban. [8]
+kapcsolatban \cite{copeland2008essential}.
 
 \SubSection{JavaScript és Vue}
 
@@ -155,10 +161,10 @@ a Jquery vagy az AJAX, mind elérhetőek beépítetten, továbbá olyan keretren
 használhatunk, mint a Bootstrap vagy a Vue. Ez utóbbi nagyon hasznos volt a számomra, a 
 felhasználói interfészek létrehozásával kapcsolatban, a Vue jobb altenatívát adott az 
 űrlapokkal történő megoldás helyett. Az egyszerűség kedvéért nem is HTML, hanem Vue fájlokat
-készítettem, bennük HMTL kódrésszel. Önmagában a JavaScript-et pedig a router 
-(útvonalválasztó) fájl létrehozásához használtam. [8]
+készítettem, bennük HTML kódrésszel. Önmagában a JavaScript-et pedig a router 
+(útvonalválasztó) fájl létrehozásához használtam \cite{filipova2016learning}.
 
-\Section{Felhasznált szoftverek}
+\Section{Felhasznált fejlesztőkörnyezet}
 
-A Python nyelven való munkához a JetBrains PyCharm fejlesztői alkalmazását használtam, mert kényelmetlen volt számomra a leginkább elterjedt Jupyter böngészőablakos használata. Az Oracle MySQL-jét használtam, mint adatbázis-kezelő szervert, mert az órarendgeneráló alkalmazás piacra kerülése esetén feltételezhetnénk, hogy az érdeklődés mértéke (felhasználók száma) szükségessé tenné szerver használatát. A webfejlesztéssel kapcsolatban egyrészt szintén a PyCharm-ra volt szükség, szerver létrehozásához és az adatbázis-kezeléshez (sessionkezeléshez), másrészt a vue fájlokhoz egy szövegszerkesztőre. Telepíteni kellett továbbá az npm-et, ami egy package manager. Feladata a függőségek (ilyen a webpack, az axios, sőt a vue is) és azok elfogadott verziószám tartományának számon tartása, melynek köszönhetően egyben tudunk telepíteni minden szükséges függőséget és később az upgradelés sem okoz problémát. Nem kell mindig egyenként vizsgálni, hogy milyen új verzió érhető el hozzájuk és egyenként upgradelni őket. Korábban a WebStorm-ot használtam, előfizetve rá egy hónap erejéig, de a konzulensem javasolt ingyenes szövegszerkesztőket, melyek megfelelőek lehetnek. Ezek közül a Notepad++ volt ismerős, logójában egy aranyos kaméleonnal, így ezt választottam. [8]
+A Python nyelven való munkához a JetBrains PyCharm fejlesztői alkalmazását használtam, mert kényelmetlen volt számomra a leginkább elterjedt Jupyter böngészőablakos használata. Az Oracle MySQL-jét használtam, mint adatbázis-kezelő szervert, mert az órarendgeneráló alkalmazás piacra kerülése esetén feltételezhetnénk, hogy az érdeklődés mértéke (felhasználók száma) szükségessé tenné szerver használatát. A webfejlesztéssel kapcsolatban egyrészt szintén a PyCharm-ra volt szükség, szerver létrehozásához és az adatbázis-kezeléshez (sessionkezeléshez), másrészt a vue fájlokhoz egy szövegszerkesztőre. Telepíteni kellett továbbá az npm-et, ami egy package manager. Feladata a függőségek (ilyen a webpack, az axios, sőt a vue is) és azok elfogadott verziószám tartományának számon tartása, melynek köszönhetően egyben tudunk telepíteni minden szükséges függőséget és később az upgradelés sem okoz problémát. Nem kell mindig egyenként vizsgálni, hogy milyen új verzió érhető el hozzájuk és egyenként upgradelni őket. Korábban a WebStorm-ot használtam, előfizetve rá egy hónap erejéig, de a konzulensem javasolt ingyenes szövegszerkesztőket, melyek megfelelőek lehetnek. Ezek közül a Notepad++ volt ismerős, logójában egy aranyos kaméleonnal, így ezt választottam.
 
