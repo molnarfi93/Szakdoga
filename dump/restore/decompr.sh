@@ -1,0 +1,12 @@
+unzstd -d timetable@classes@@0.tsv.zst -o timetable@classes@@0.tsv
+unzstd -d timetable@classes_subjects@@0.tsv.zst -o  timetable@classes_subjects@@0.tsv
+unzstd -d timetable@rooms@@0.tsv.zst -o  timetable@rooms@@0.tsv
+unzstd -d timetable@rooms_subjects@@0.tsv.zst -o  timetable@rooms_subjects@@0.tsv
+unzstd -d timetable@subjects@@0.tsv.zst -o  timetable@subjects@@0.tsv
+unzstd -d timetable@teachers@@0.tsv.zst -o  timetable@teachers@@0.tsv
+unzstd -d timetable@teachers_subjects@@0.tsv.zst -o  timetable@teachers_subjects@@0.tsv
+unzstd -d timetable@timetables@@0.tsv.zst -o  timetable@timetables@@0.tsv
+unzstd -d timetable@users@@0.tsv.zst -o  timetable@users@@0.tsv
+unzstd -d timetable_database@groups.tsv.zst -o  timetable_database@groups.tsv
+unzstd -d timetable_database@timetables.tsv.zst -o  timetable_database@timetables.tsv
+unzstd -d timetable_database@users@@0.tsv.zst -o  timetable_database@users@@0.tsv

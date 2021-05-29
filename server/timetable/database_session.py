@@ -1,5 +1,5 @@
 from sqlalchemy.orm import sessionmaker
-from model import Base
+from timetable.model import Base
 
 
 def createSession(engine):

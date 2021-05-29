@@ -1,0 +1,10 @@
+load data infile '/var/lib/mysql-files/timetable@timetables@@0.tsv' into table timetables;
+load data infile '/var/lib/mysql-files/timetable_database@users@@0.tsv' into table users;
+load data infile '/var/lib/mysql-files/timetable@teachers@@0.tsv' into table teachers;
+load data infile '/var/lib/mysql-files/timetable@classes@@0.tsv' into table classes;
+load data infile '/var/lib/mysql-files/timetable@rooms@@0.tsv' into table rooms;
+load data infile '/var/lib/mysql-files/timetable@subjects@@0.tsv' into table subjects;
+load data infile '/var/lib/mysql-files/timetable@classes_subjects@@0.tsv' into table classes_subjects;
+load data infile '/var/lib/mysql-files/timetable@rooms_subjects@@0.tsv' into table rooms_subjects;
+load data infile '/var/lib/mysql-files/timetable@teachers_subjects@@0.tsv' into table teachers_subjects;
+load data infile '/var/lib/mysql-files/timetable_database@groups.tsv' into table groups;

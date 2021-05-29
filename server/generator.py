@@ -1,7 +1,7 @@
 import exercises.room_assignment
 import exercises.teacher_assignment
 import exercises.window_classification
-import exercises.genetic_algorithm
+import exercises.genetic_algorithm as genetic_algorithm
 import exporter
 
 time_windows = genetic_algorithm.time_windows

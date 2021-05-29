@@ -1,6 +1,6 @@
 from sqlalchemy.orm.exc import NoResultFound
-from database_session import createSession
-import model
+from timetable.database_session import createSession
+import timetable.model as model
 import re
 import hashlib
 import random

@@ -1,4 +1,4 @@
-from class_definitions.group import Group
+from exercises.class_definitions.group import Group
 import math
 import random
 

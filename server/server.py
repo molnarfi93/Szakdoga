@@ -366,7 +366,7 @@ class GeneratorResource:
         generator.generateTimetables(timetable_datas, rooms, teachers, groups)
 
 
-engine = sqlalchemy.create_engine(f'mysql+mysqlconnector://root:{SECRET_KEY}@localhost:3306/timetable?auth_plugin=mysql_native_password')
+engine = sqlalchemy.create_engine(f'mysql+mysqlconnector://root:{SECRET_KEY}@localhost:3306/timetable_database?auth_plugin=mysql_native_password')
 engine.connect()
 timetable = Timetable(engine)
 
